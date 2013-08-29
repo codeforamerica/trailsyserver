@@ -46,3 +46,4 @@ end
 
 gem 'activerecord-postgis-adapter'
 gem 'rgeo'
+gem 'rgeo-geojson'

@@ -9,12 +9,12 @@ class CreateTrails < ActiveRecord::Migration
       t.string :horses
       t.string :dogs
       t.string :bikes
-      t.string :description
+      t.text :description
       t.string :difficulty
       t.string :hike_time
       t.string :print_map_url
       t.string :surface
-      
+
       t.timestamps
     end
   end

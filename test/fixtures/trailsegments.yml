@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  length: 9.99
+  source: MyString
+  steward: MyString
+  geom: 
+
+two:
+  length: 9.99
+  source: MyString
+  steward: MyString
+  geom: 
