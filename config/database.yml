@@ -15,7 +15,7 @@
 # gem 'pg'
 #
 development:
-  adapter: postgresql
+  adapter: postgis
   encoding: unicode
   database: trailsy
   pool: 5

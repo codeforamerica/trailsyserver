@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  name: MyString
+  source: MyString
+  trail1: MyString
+  trail2: MyString
+  trail3: MyString
+  geom: 
+
+two:
+  name: MyString
+  source: MyString
+  trail1: MyString
+  trail2: MyString
+  trail3: MyString
+  geom: 
