@@ -23,9 +23,9 @@ ActiveRecord::Schema.define(version: 20130829213732) do
     t.string   "trail1"
     t.string   "trail2"
     t.string   "trail3"
-    t.spatial  "geom",       limit: {:srid=>4326, :type=>"point", :geographic=>true}
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.spatial  "geom",       limit: {:srid=>4326, :type=>"point"}
   end
 
   create_table "trails", force: true do |t|
@@ -50,9 +50,12 @@ ActiveRecord::Schema.define(version: 20130829213732) do
     t.decimal  "length"
     t.string   "source"
     t.string   "steward"
+    t.string   "name1"
+    t.string   "name2"
+    t.string   "name3"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.spatial  "geom",       limit: {:srid=>0, :type=>"line_string"}
+    t.spatial  "geom",       limit: {:srid=>4326, :type=>"multi_line_string"}
   end
 
 end

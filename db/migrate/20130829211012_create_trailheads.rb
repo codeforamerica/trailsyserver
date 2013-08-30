@@ -6,7 +6,7 @@ class CreateTrailheads < ActiveRecord::Migration
       t.string :trail1
       t.string :trail2
       t.string :trail3
-      t.point :geom, :geographic => true
+      t.point :geom, limit: {srid: 4326}
 
       t.timestamps
     end
