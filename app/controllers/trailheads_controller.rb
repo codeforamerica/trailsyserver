@@ -5,11 +5,22 @@ class TrailheadsController < ApplicationController
   # GET /trailheads.json
   def index
     @trailheads = Trailhead.all
+    @entity_factory = ::RGeo::GeoJSON::EntityFactory.instance
+    features = []
+    @trailheads.each do |trailhead|
+      feature = @entity_factory.feature(trailhead.geom, trailhead.id, trailhead.attributes.except("geom", "wkt"))
+      features.push(feature)
+    end
+    collection = @entity_factory.feature_collection(features)
+    render json: RGeo::GeoJSON::encode(collection)
   end
 
   # GET /trailheads/1
   # GET /trailheads/1.json
   def show
+    @entity_factory = ::RGeo::GeoJSON::EntityFactory.instance
+    feature = @entity_factory.feature(@trailhead.geom, @trailhead.id, @trailhead.attributes.except("geom", "wkt") )
+    render json: RGeo::GeoJSON::encode(feature)
   end
 
   # GET /trailheads/new
@@ -71,4 +82,5 @@ class TrailheadsController < ApplicationController
     def trailhead_params
       params.require(:trailhead).permit(:name, :source, :trail1, :trail2, :trail3, :geom)
     end
+
 end
