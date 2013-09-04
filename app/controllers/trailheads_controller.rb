@@ -5,13 +5,26 @@ class TrailheadsController < ApplicationController
   # GET /trailheads.json
   def index
     @trailheads = Trailhead.all
-    @entity_factory = ::RGeo::GeoJSON::EntityFactory.instance
+    entity_factory = ::RGeo::GeoJSON::EntityFactory.instance
+    factory = RGeo::Geographic.spherical_factory(:srid => 4326)
+    if (params[:loc])
+      lat, lng = params[:loc].split(',')
+      loc = factory.point(lng,lat) 
+      logger.info(loc)
+      @trailheads.each do |trailhead|
+        trailhead.distance =  trailhead.geom.distance(loc)
+      end
+      @trailheads_sort = @trailheads.sort do |a,b|
+        a.distance <=> b.distance
+      end      
+    end
     features = []
-    @trailheads.each do |trailhead|
-      feature = @entity_factory.feature(trailhead.geom, trailhead.id, trailhead.attributes.except("geom", "wkt"))
+    @trailheads_sort.each do |trailhead|
+      logger.info(trailhead.attributes)
+      feature = entity_factory.feature(trailhead.geom, trailhead.id, trailhead.attributes.except("geom", "wkt").merge( {:distance => trailhead.distance} ))
       features.push(feature)
     end
-    collection = @entity_factory.feature_collection(features)
+    collection = entity_factory.feature_collection(features)
     my_geojson = RGeo::GeoJSON::encode(collection)
     render json: Oj.dump(my_geojson)
   end
@@ -19,8 +32,8 @@ class TrailheadsController < ApplicationController
   # GET /trailheads/1
   # GET /trailheads/1.json
   def show
-    @entity_factory = ::RGeo::GeoJSON::EntityFactory.instance
-    feature = @entity_factory.feature(@trailhead.geom, @trailhead.id, @trailhead.attributes.except("geom", "wkt") )
+    entity_factory = ::RGeo::GeoJSON::EntityFactory.instance
+    feature = entity_factory.feature(@trailhead.geom, @trailhead.id, @trailhead.attributes.except("geom", "wkt") )
     render json: RGeo::GeoJSON::encode(feature)
   end
 
@@ -81,7 +94,7 @@ class TrailheadsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def trailhead_params
-      params.require(:trailhead).permit(:name, :source, :trail1, :trail2, :trail3, :geom)
+      params.require(:trailhead).permit(:name, :source, :trail1, :trail2, :trail3, :geom, :distance)
     end
 
-end
+  end

@@ -9,7 +9,6 @@ class TrailsegmentsController < ApplicationController
     features = []
     @trailsegments.each_with_index do |trailsegment, index|
       feature = @entity_factory.feature(trailsegment.geom, trailsegment.id, trailsegment.attributes.except("geom", "wkt"))
-      logger.info(index)
       features.push(feature)
     end
     collection = @entity_factory.feature_collection(features)
