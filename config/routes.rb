@@ -1,4 +1,6 @@
 Trailsyserver::Application.routes.draw do
+  resources :trailsegments
+
   resources :trailheads
 
   resources :trails

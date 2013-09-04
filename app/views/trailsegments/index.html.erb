@@ -1,0 +1,39 @@
+<h1>Listing trailsegments</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Length</th>
+      <th>Source</th>
+      <th>Steward</th>
+      <th>Geom</th>
+      <th>Name1</th>
+      <th>Name2</th>
+      <th>Name3</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @trailsegments.each do |trailsegment| %>
+      <tr>
+        <td><%= trailsegment.length %></td>
+        <td><%= trailsegment.source %></td>
+        <td><%= trailsegment.steward %></td>
+        <td><%= trailsegment.geom %></td>
+        <td><%= trailsegment.name1 %></td>
+        <td><%= trailsegment.name2 %></td>
+        <td><%= trailsegment.name3 %></td>
+        <td><%= link_to 'Show', trailsegment %></td>
+        <td><%= link_to 'Edit', edit_trailsegment_path(trailsegment) %></td>
+        <td><%= link_to 'Destroy', trailsegment, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Trailsegment', new_trailsegment_path %>

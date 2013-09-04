@@ -12,7 +12,8 @@ class TrailheadsController < ApplicationController
       features.push(feature)
     end
     collection = @entity_factory.feature_collection(features)
-    render json: RGeo::GeoJSON::encode(collection)
+    my_geojson = RGeo::GeoJSON::encode(collection)
+    render json: Oj.dump(my_geojson)
   end
 
   # GET /trailheads/1
