@@ -1,0 +1,34 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @trailhead.name %>
+</p>
+
+<p>
+  <strong>Source:</strong>
+  <%= @trailhead.source %>
+</p>
+
+<p>
+  <strong>Trail1:</strong>
+  <%= @trailhead.trail1 %>
+</p>
+
+<p>
+  <strong>Trail2:</strong>
+  <%= @trailhead.trail2 %>
+</p>
+
+<p>
+  <strong>Trail3:</strong>
+  <%= @trailhead.trail3 %>
+</p>
+
+<p>
+  <strong>Geom:</strong>
+  <%= @trailhead.geom %>
+</p>
+
+<%= link_to 'Edit', edit_trailhead_path(@trailhead) %> |
+<%= link_to 'Back', trailheads_path %>

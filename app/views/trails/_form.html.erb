@@ -1,0 +1,69 @@
+<%= form_for(@trail) do |f| %>
+  <% if @trail.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@trail.errors.count, "error") %> prohibited this trail from being saved:</h2>
+
+      <ul>
+      <% @trail.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :name %><br>
+    <%= f.text_field :name %>
+  </div>
+  <div class="field">
+    <%= f.label :opdmd_access %><br>
+    <%= f.text_field :opdmd_access %>
+  </div>
+  <div class="field">
+    <%= f.label :source %><br>
+    <%= f.text_field :source %>
+  </div>
+  <div class="field">
+    <%= f.label :steward %><br>
+    <%= f.text_field :steward %>
+  </div>
+  <div class="field">
+    <%= f.label :length %><br>
+    <%= f.text_field :length %>
+  </div>
+  <div class="field">
+    <%= f.label :horses %><br>
+    <%= f.text_field :horses %>
+  </div>
+  <div class="field">
+    <%= f.label :dogs %><br>
+    <%= f.text_field :dogs %>
+  </div>
+  <div class="field">
+    <%= f.label :bikes %><br>
+    <%= f.text_field :bikes %>
+  </div>
+  <div class="field">
+    <%= f.label :description %><br>
+    <%= f.text_area :description %>
+  </div>
+  <div class="field">
+    <%= f.label :difficulty %><br>
+    <%= f.text_field :difficulty %>
+  </div>
+  <div class="field">
+    <%= f.label :hike_time %><br>
+    <%= f.text_field :hike_time %>
+  </div>
+  <div class="field">
+    <%= f.label :print_map_url %><br>
+    <%= f.text_field :print_map_url %>
+  </div>
+  <div class="field">
+    <%= f.label :surface %><br>
+    <%= f.text_field :surface %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

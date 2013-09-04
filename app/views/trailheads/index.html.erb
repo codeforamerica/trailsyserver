@@ -1,0 +1,37 @@
+<h1>Listing trailheads</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Source</th>
+      <th>Trail1</th>
+      <th>Trail2</th>
+      <th>Trail3</th>
+      <th>Geom</th>
+      <th></th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @trailheads.each do |trailhead| %>
+      <tr>
+        <td><%= trailhead.name %></td>
+        <td><%= trailhead.source %></td>
+        <td><%= trailhead.trail1 %></td>
+        <td><%= trailhead.trail2 %></td>
+        <td><%= trailhead.trail3 %></td>
+        <td><%= trailhead.geom %></td>
+        <td><%= link_to 'Show', trailhead %></td>
+        <td><%= link_to 'Edit', edit_trailhead_path(trailhead) %></td>
+        <td><%= link_to 'Destroy', trailhead, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Trailhead', new_trailhead_path %>

@@ -1,0 +1,69 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @trail.name %>
+</p>
+
+<p>
+  <strong>Opdmd access:</strong>
+  <%= @trail.opdmd_access %>
+</p>
+
+<p>
+  <strong>Source:</strong>
+  <%= @trail.source %>
+</p>
+
+<p>
+  <strong>Steward:</strong>
+  <%= @trail.steward %>
+</p>
+
+<p>
+  <strong>Length:</strong>
+  <%= @trail.length %>
+</p>
+
+<p>
+  <strong>Horses:</strong>
+  <%= @trail.horses %>
+</p>
+
+<p>
+  <strong>Dogs:</strong>
+  <%= @trail.dogs %>
+</p>
+
+<p>
+  <strong>Bikes:</strong>
+  <%= @trail.bikes %>
+</p>
+
+<p>
+  <strong>Description:</strong>
+  <%= @trail.description %>
+</p>
+
+<p>
+  <strong>Difficulty:</strong>
+  <%= @trail.difficulty %>
+</p>
+
+<p>
+  <strong>Hike time:</strong>
+  <%= @trail.hike_time %>
+</p>
+
+<p>
+  <strong>Print map url:</strong>
+  <%= @trail.print_map_url %>
+</p>
+
+<p>
+  <strong>Surface:</strong>
+  <%= @trail.surface %>
+</p>
+
+<%= link_to 'Edit', edit_trail_path(@trail) %> |
+<%= link_to 'Back', trails_path %>

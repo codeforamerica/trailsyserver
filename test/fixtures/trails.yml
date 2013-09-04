@@ -5,9 +5,27 @@ one:
   opdmd_access: MyString
   source: MyString
   steward: MyString
+  length: 9.99
+  horses: MyString
+  dogs: MyString
+  bikes: MyString
+  description: MyText
+  difficulty: MyString
+  hike_time: MyString
+  print_map_url: MyString
+  surface: MyString
 
 two:
   name: MyString
   opdmd_access: MyString
   source: MyString
   steward: MyString
+  length: 9.99
+  horses: MyString
+  dogs: MyString
+  bikes: MyString
+  description: MyText
+  difficulty: MyString
+  hike_time: MyString
+  print_map_url: MyString
+  surface: MyString

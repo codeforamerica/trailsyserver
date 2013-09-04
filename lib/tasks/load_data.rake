@@ -28,7 +28,7 @@ namespace :load do
             @trailhead.send "#{property[0].downcase.to_sym}=", property[1]
           end
         end
-        p feature.geometry
+        # p feature.geometry
         @trailhead.geom = feature.geometry
         @trailhead.save
       end
