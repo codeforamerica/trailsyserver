@@ -49,6 +49,6 @@ gem 'rgeo'
 gem 'rgeo-geojson'
 gem 'oj'
 
-group :development, :test do
+group :development, :development_aws, :test do
   gem 'rack-cors', :require => 'rack/cors'
 end
