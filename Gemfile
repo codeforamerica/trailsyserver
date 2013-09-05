@@ -1,4 +1,5 @@
 source 'https://rubygems.org'
+ruby '2.0.0'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.0.0'
@@ -51,4 +52,8 @@ gem 'oj'
 
 group :development, :development_aws, :test do
   gem 'rack-cors', :require => 'rack/cors'
+end
+
+group :production do
+  gem 'rails_12factor'
 end
