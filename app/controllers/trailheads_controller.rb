@@ -6,21 +6,11 @@ class TrailheadsController < ApplicationController
   def index
     @trailheads = Trailhead.all
     entity_factory = ::RGeo::GeoJSON::EntityFactory.instance
-    factory = RGeo::Geographic.spherical_factory(:srid => 4326)
     if (params[:loc])
-      lat, lng = params[:loc].split(',')
-      loc = factory.point(lng,lat) 
-      logger.info(loc)
-      @trailheads.each do |trailhead|
-        trailhead.distance =  trailhead.geom.distance(loc)
-      end
-      @trailheads_sort = @trailheads.sort do |a,b|
-        a.distance <=> b.distance
-      end      
+      @trailheads = sort_by_distance(@trailheads)   
     end
     features = []
-    @trailheads_sort.each do |trailhead|
-      logger.info(trailhead.attributes)
+    @trailheads.each do |trailhead|
       feature = entity_factory.feature(trailhead.geom, trailhead.id, trailhead.attributes.except("geom", "wkt").merge( {:distance => trailhead.distance} ))
       features.push(feature)
     end
@@ -95,6 +85,20 @@ class TrailheadsController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def trailhead_params
       params.require(:trailhead).permit(:name, :source, :trail1, :trail2, :trail3, :geom, :distance)
+    end
+
+    def sort_by_distance(trailheads)
+      factory = RGeo::Geographic.spherical_factory(:srid => 4326)
+      lat, lng = params[:loc].split(',')
+      loc = factory.point(lng,lat) 
+      logger.info(loc)
+      trailheads.each do |trailhead|
+        trailhead.distance =  trailhead.geom.distance(loc)
+      end
+      trailheads_sort = @trailheads.sort do |a,b|
+        a.distance <=> b.distance
+      end
+      trailheads_sort      
     end
 
   end
