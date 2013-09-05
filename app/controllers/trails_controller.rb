@@ -5,6 +5,16 @@ class TrailsController < ApplicationController
   # GET /trails.json
   def index
     @trails = Trail.all
+    entity_factory = ::RGeo::GeoJSON::EntityFactory.instance
+    features = []
+    @trails.each do |trail|
+      # taking a trip to Null Island, because RGeo::GeoJSON chokes on empty geometry here
+      feature = entity_factory.feature(RGeo::Geographic.spherical_factory.point(0,0), trail.id, trail.attributes)
+      features.push(feature)
+    end
+    collection = entity_factory.feature_collection(features)
+    my_geojson = RGeo::GeoJSON::encode(collection)
+    render json: Oj.dump(my_geojson)
   end
 
   # GET /trails/1
