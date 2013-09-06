@@ -36,7 +36,7 @@ development_aws:
   password: <%= ENV["TRAILSY_DB_DEV_PASSWD"] %>
   su_username: trailsy_su_dev
   su_password: <%= ENV["TRAILSY_DB_DEV_SU_PASSWD"] %>
-  schema_search_path: "public, postgis"
+  # schema_search_path: "public, postgis"
   postgis_extension: true
 
   # Connect on a TCP socket. Omitted by default since the client uses a
