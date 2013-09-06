@@ -49,6 +49,7 @@ gem 'activerecord-postgis-adapter'
 gem 'rgeo'
 gem 'rgeo-geojson'
 gem 'oj'
+gem 'unicorn'
 
 group :development, :development_aws, :production, :test do
   gem 'rack-cors', :require => 'rack/cors'
