@@ -5,16 +5,21 @@ class TrailsController < ApplicationController
   # GET /trails.json
   def index
     @trails = Trail.all
-    entity_factory = ::RGeo::GeoJSON::EntityFactory.instance
-    features = []
-    @trails.each do |trail|
-      # taking a trip to Null Island, because RGeo::GeoJSON chokes on empty geometry here
-      feature = entity_factory.feature(RGeo::Geographic.spherical_factory.point(0,0), trail.id, trail.attributes)
-      features.push(feature)
+    respond_to do |format|
+      format.html
+      format.json do
+        entity_factory = ::RGeo::GeoJSON::EntityFactory.instance
+        features = []
+        @trails.each do |trail|
+          # taking a trip to Null Island, because RGeo::GeoJSON chokes on empty geometry here
+          feature = entity_factory.feature(RGeo::Geographic.spherical_factory.point(0,0), trail.id, trail.attributes)
+          features.push(feature)
+        end
+        collection = entity_factory.feature_collection(features)
+        my_geojson = RGeo::GeoJSON::encode(collection)
+        render json: Oj.dump(my_geojson)
+      end
     end
-    collection = entity_factory.feature_collection(features)
-    my_geojson = RGeo::GeoJSON::encode(collection)
-    render json: Oj.dump(my_geojson)
   end
 
   # GET /trails/1
@@ -81,4 +86,4 @@ class TrailsController < ApplicationController
     def trail_params
       params.require(:trail).permit(:name, :opdmd_access, :source, :steward, :length, :horses, :dogs, :bikes, :description, :difficulty, :hike_time, :print_map_url, :surface)
     end
-end
+  end

@@ -4,18 +4,18 @@
   <thead>
     <tr>
       <th>Name</th>
-      <th>Opdmd access</th>
+<!--       <th>Opdmd access</th>
       <th>Source</th>
       <th>Steward</th>
       <th>Length</th>
       <th>Horses</th>
       <th>Dogs</th>
-      <th>Bikes</th>
+      <th>Bikes</th> -->
       <th>Description</th>
-      <th>Difficulty</th>
-      <th>Hike time</th>
-      <th>Print map url</th>
-      <th>Surface</th>
+      <!-- <th>Difficulty</th> -->
+      <!-- <th>Hike time</th> -->
+      <!-- <th>Print map url</th> -->
+      <!-- <th>Surface</th> -->
       <th></th>
       <th></th>
       <th></th>
@@ -26,18 +26,18 @@
     <% @trails.each do |trail| %>
       <tr>
         <td><%= trail.name %></td>
-        <td><%= trail.opdmd_access %></td>
+<!--         <td><%= trail.opdmd_access %></td>
         <td><%= trail.source %></td>
         <td><%= trail.steward %></td>
         <td><%= trail.length %></td>
         <td><%= trail.horses %></td>
         <td><%= trail.dogs %></td>
-        <td><%= trail.bikes %></td>
+        <td><%= trail.bikes %></td> -->
         <td><%= trail.description %></td>
-        <td><%= trail.difficulty %></td>
-        <td><%= trail.hike_time %></td>
-        <td><%= trail.print_map_url %></td>
-        <td><%= trail.surface %></td>
+        <!-- <td><%= trail.difficulty %></td> -->
+        <!-- <td><%= trail.hike_time %></td> -->
+        <!-- <td><%= trail.print_map_url %></td> -->
+        <!-- <td><%= trail.surface %></td> -->
         <td><%= link_to 'Show', trail %></td>
         <td><%= link_to 'Edit', edit_trail_path(trail) %></td>
         <td><%= link_to 'Destroy', trail, method: :delete, data: { confirm: 'Are you sure?' } %></td>
