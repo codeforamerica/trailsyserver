@@ -6,14 +6,17 @@ namespace :load do
     CSV.foreach(ENV["TRAIL_INPUT"], headers: true) do |row|
       @trail = Trail.new
       row.headers.each do |header|
+        # don't include the WKT field -- we've got geom
         if header.downcase == "wkt" 
           next
+        # updates for DS 0.3.1
         elsif header.downcase == "horses"
           header = "equestrian"
         elsif header.downcase == "bikes"
           header = "roadbike"
         elsif header.downcase == "print_map_url"
           header = "map_url"
+        # send it to the trail object
         else
           @trail.send "#{header.downcase.to_sym}=", row[header]
         end
