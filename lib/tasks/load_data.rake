@@ -8,6 +8,12 @@ namespace :load do
       row.headers.each do |header|
         if header.downcase == "wkt" 
           next
+        elsif header.downcase == "horses"
+          header = "equestrian"
+        elsif header.downcase == "bikes"
+          header = "roadbike"
+        elsif header.downcase == "print_map_url"
+          header = "map_url"
         else
           @trail.send "#{header.downcase.to_sym}=", row[header]
         end
