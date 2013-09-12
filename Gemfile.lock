@@ -39,6 +39,8 @@ GEM
     coffee-script-source (1.6.3)
     erubis (2.7.0)
     execjs (2.0.1)
+    heroku_rails_deflate (0.2.0)
+      rack (~> 1.5.0)
     hike (1.2.3)
     i18n (0.6.5)
     jbuilder (1.5.1)
@@ -133,6 +135,7 @@ PLATFORMS
 DEPENDENCIES
   activerecord-postgis-adapter
   coffee-rails (~> 4.0.0)
+  heroku_rails_deflate
   jbuilder (~> 1.2)
   jquery-rails
   oj
