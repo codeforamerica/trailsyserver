@@ -3,7 +3,9 @@ require 'rgeo-geojson'
 
 namespace :load do
   task :trails => :environment do
-    CSV.foreach(ENV["TRAIL_INPUT"], headers: true) do |row|
+    input_file_name = ENV["TRAIL_INPUT"] || "lib/summit_traildata.csv"
+    p input_file_name
+    CSV.foreach(input_file_name, headers: true) do |row|
       @trail = Trail.new
       row.headers.each do |header|
         dbheader = header
@@ -28,8 +30,8 @@ namespace :load do
   end
 
   task :trailheads => :environment do
-
-    File.open(ENV["TRAILHEADS_INPUT"]) do |geojson|
+    input_file_name = ENV["TRAILHEADS_INPUT"] || "lib/summit_trailheads.geojson"
+    File.open(input_file_name) do |geojson|
       feature_collection = RGeo::GeoJSON.decode(geojson, { geo_factory: RGeo::Geographic.spherical_factory(:srid => 4326), json_parser: :json})
       feature_collection.each do |feature|
         @trailhead = Trailhead.new
@@ -46,7 +48,8 @@ namespace :load do
   end
 
   task :segments => :environment do
-    File.open(ENV["SEGMENTS_INPUT"]) do |geojson|
+    input_file_name = ENV["SEGMENTS_INPUT"] || "lib/summit_trailsegments.geojson"
+    File.open(input_file_name) do |geojson|
       feature_collection = RGeo::GeoJSON.decode(geojson, { geo_factory: RGeo::Geographic.spherical_factory(:srid => 4326), json_parser: :json})
       feature_collection.each do |feature|
         @segment = Trailsegment.new
