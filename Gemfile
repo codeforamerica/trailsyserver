@@ -33,8 +33,6 @@ group :doc do
   gem 'sdoc', require: false
 end
 
-gem 'heroku_rails_deflate', :group => :production
-
 # Use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
 
@@ -59,4 +57,5 @@ end
 
 group :production do
   gem 'rails_12factor'
+  gem 'heroku_rails_deflate'
 end
