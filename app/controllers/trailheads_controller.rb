@@ -93,6 +93,7 @@ class TrailheadsController < ApplicationController
       loc = factory.point(lng,lat) 
       logger.info(loc)
       trailheads.each do |trailhead|
+        logger.info trailhead.geom
         trailhead.distance =  trailhead.geom.distance(loc)
         logger.info(trailhead.distance)
       end
