@@ -16,7 +16,7 @@ class CreateTrailheads < ActiveRecord::Migration
       t.string :kiosk
       t.string :park
       
-      t.point :geom, limit: {srid: 4326}
+      t.point :geom, geographic: true
 
       t.timestamps
     end

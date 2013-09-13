@@ -5,6 +5,7 @@ class TrailheadsController < ApplicationController
   # GET /trailheads.json
   def index
     @trailheads = Trailhead.all
+    logger.info @trailheads.inspect
     entity_factory = ::RGeo::GeoJSON::EntityFactory.instance
     if (params[:loc])
       @trailheads = sort_by_distance(@trailheads)   
@@ -93,7 +94,9 @@ class TrailheadsController < ApplicationController
       loc = factory.point(lng,lat) 
       logger.info(loc)
       trailheads.each do |trailhead|
-        logger.info RGeo::Geos.supported?
+        logger.info trailhead.inspect
+        logger.info trailhead.geom.inspect
+        logger.info loc.inspect
         trailhead.distance =  trailhead.geom.distance(loc)
         logger.info(trailhead.distance)
       end
