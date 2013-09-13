@@ -94,6 +94,7 @@ class TrailheadsController < ApplicationController
       logger.info(loc)
       trailheads.each do |trailhead|
         trailhead.distance =  trailhead.geom.distance(loc)
+        logger.info(trailhead.distance)
       end
       trailheads_sort = @trailheads.sort do |a,b|
         a.distance <=> b.distance
@@ -101,4 +102,4 @@ class TrailheadsController < ApplicationController
       trailheads_sort      
     end
 
-  end
+end
