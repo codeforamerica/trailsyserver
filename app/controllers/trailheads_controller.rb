@@ -94,7 +94,6 @@ class TrailheadsController < ApplicationController
       logger.info(loc)
       trailheads.each do |trailhead|
         logger.info RGeo::Geos.supported?
-        logger.info trailhead.geom
         trailhead.distance =  trailhead.geom.distance(loc)
         logger.info(trailhead.distance)
       end
