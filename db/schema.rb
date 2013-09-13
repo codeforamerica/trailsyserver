@@ -13,10 +13,6 @@
 
 ActiveRecord::Schema.define(version: 20130904183625) do
 
-  # These are extensions that must be enabled in order to support this database
-  enable_extension "plpgsql"
-  enable_extension "postgis"
-
   create_table "trailheads", force: true do |t|
     t.string   "name"
     t.string   "steward"
@@ -32,9 +28,9 @@ ActiveRecord::Schema.define(version: 20130904183625) do
     t.string   "restrooms"
     t.string   "kiosk"
     t.string   "park"
+    t.spatial  "geom",       limit: {:srid=>4326, :type=>"point", :geographic=>true}
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.spatial  "geom",       limit: {:srid=>4326, :type=>"point"}
   end
 
   create_table "trails", force: true do |t|

@@ -5,7 +5,7 @@ class CreateTrailsegments < ActiveRecord::Migration
       t.decimal :length
       t.string :source
  
-      t.multi_line_string :geom, limit: {srid: 4326}
+      t.multi_line_string :geom, geographic: true
       t.string :trail1
       t.string :trail2
       t.string :trail3
