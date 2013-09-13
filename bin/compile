@@ -1,0 +1,8 @@
+#!/bin/sh
+# bin/compile <build-dir> <cache-dir>
+ 
+echo "-----> Removing all rgeo files to force compilation during bundling"
+ 
+echo "-----> cleaning cache dir"
+find $2 -name '*rgeo*'
+find $2 -name '*rgeo*' | xargs rm -rf
