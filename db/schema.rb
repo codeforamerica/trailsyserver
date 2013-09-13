@@ -60,6 +60,7 @@ ActiveRecord::Schema.define(version: 20130904183625) do
     t.string   "steward"
     t.decimal  "length"
     t.string   "source"
+    t.spatial  "geom",       limit: {:srid=>4326, :type=>"multi_line_string", :geographic=>true}
     t.string   "trail1"
     t.string   "trail2"
     t.string   "trail3"
@@ -68,7 +69,6 @@ ActiveRecord::Schema.define(version: 20130904183625) do
     t.string   "trail6"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.spatial  "geom",       limit: {:srid=>4326, :type=>"multi_line_string"}
   end
 
 end
