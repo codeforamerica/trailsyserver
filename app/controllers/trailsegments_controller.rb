@@ -81,6 +81,6 @@ class TrailsegmentsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def trailsegment_params
-      params.require(:trailsegment).permit(:length, :source, :steward, :geom, :name1, :name2, :name3)
+      params.require(:trailsegment).permit(:length, :source, :steward, :geom, :trail1, :trail2, :trail3)
     end
 end

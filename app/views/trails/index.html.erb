@@ -30,17 +30,17 @@
         <td><%= trail.source %></td>
         <td><%= trail.steward %></td>
         <td><%= trail.length %></td>
-        <td><%= trail.horses %></td>
+        <td><%= trail.equestrian %></td>
         <td><%= trail.dogs %></td>
-        <td><%= trail.bikes %></td> -->
+        <td><%= trail.roadbike %></td> -->
         <td><%= trail.description %></td>
         <!-- <td><%= trail.difficulty %></td> -->
         <!-- <td><%= trail.hike_time %></td> -->
-        <!-- <td><%= trail.print_map_url %></td> -->
+        <!-- <td><%= trail.map_url %></td> -->
         <!-- <td><%= trail.surface %></td> -->
         <td><%= link_to 'Show', trail %></td>
         <td><%= link_to 'Edit', edit_trail_path(trail) %></td>
-        <td><%= link_to 'Destroy', trail, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to 'Delete', trail, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>
