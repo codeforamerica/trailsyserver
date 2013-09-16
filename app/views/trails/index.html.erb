@@ -16,7 +16,7 @@
       <!-- <th>Hike time</th> -->
       <!-- <th>Print map url</th> -->
       <!-- <th>Surface</th> -->
-      <th width=3>Action</th>
+      <th colspan=3>Action</th>
       <th></th>
       <th></th>
     </tr>
@@ -37,7 +37,7 @@
         <!-- <td><%= trail.difficulty %></td> -->
         <!-- <td><%= trail.hike_time %></td> -->
         <!-- <td><%= trail.map_url %></td> -->
-        <% if @current_user %>
+        <% if current_user %>
         <td><%= link_to 'Show', trail %></td>
         <td><%= link_to 'Edit', edit_trail_path(trail) %></td>
         <td><%= link_to 'Delete', trail, method: :delete, data: { confirm: 'Are you sure?' } %></td>
