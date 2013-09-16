@@ -16,7 +16,7 @@
       <!-- <th>Hike time</th> -->
       <!-- <th>Print map url</th> -->
       <!-- <th>Surface</th> -->
-      <th></th>
+      <th width=3>Action</th>
       <th></th>
       <th></th>
     </tr>
@@ -33,14 +33,15 @@
         <td><%= trail.equestrian %></td>
         <td><%= trail.dogs %></td>
         <td><%= trail.roadbike %></td> -->
-        <td><%= trail.description %></td>
+        <td><%= truncate(trail.description, length: 50) %></td>
         <!-- <td><%= trail.difficulty %></td> -->
         <!-- <td><%= trail.hike_time %></td> -->
         <!-- <td><%= trail.map_url %></td> -->
-        <!-- <td><%= trail.surface %></td> -->
+        <% if @current_user %>
         <td><%= link_to 'Show', trail %></td>
         <td><%= link_to 'Edit', edit_trail_path(trail) %></td>
         <td><%= link_to 'Delete', trail, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <% end %>
       </tr>
     <% end %>
   </tbody>
@@ -48,4 +49,4 @@
 
 <br>
 
-<%= link_to 'New Trail', new_trail_path %>
+<!-- <%= link_to 'New Trail', new_trail_path %> -->

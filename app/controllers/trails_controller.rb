@@ -1,12 +1,16 @@
 class TrailsController < ApplicationController
   before_action :set_trail, only: [:show, :edit, :update, :destroy]
 
+  before_action :authenticate_user!, except: [:index]
+  
   # GET /trails
   # GET /trails.json
   def index
     @trails = Trail.all
     respond_to do |format|
-      format.html
+      format.html do
+        authenticate_user!
+      end
       format.json do
         entity_factory = ::RGeo::GeoJSON::EntityFactory.instance
         features = []

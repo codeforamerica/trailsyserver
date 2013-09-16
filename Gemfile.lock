@@ -29,6 +29,7 @@ GEM
       tzinfo (~> 0.3.37)
     arel (4.0.0)
     atomic (1.1.13)
+    bcrypt-ruby (3.1.2)
     builder (3.1.4)
     coffee-rails (4.0.0)
       coffee-script (>= 2.2.0)
@@ -37,6 +38,12 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.6.3)
+    devise (3.1.0)
+      bcrypt-ruby (~> 3.0)
+      orm_adapter (~> 0.1)
+      railties (>= 3.2.6, < 5)
+      thread_safe (~> 0.1)
+      warden (~> 1.2.3)
     erubis (2.7.0)
     execjs (2.0.1)
     heroku_rails_deflate (0.2.0)
@@ -58,6 +65,7 @@ GEM
     minitest (4.7.5)
     multi_json (1.7.9)
     oj (2.1.4)
+    orm_adapter (0.4.0)
     pg (0.16.0)
     polyglot (0.3.3)
     rack (1.5.2)
@@ -128,6 +136,8 @@ GEM
       kgio (~> 2.6)
       rack
       raindrops (~> 0.7)
+    warden (1.2.3)
+      rack (>= 1.0)
 
 PLATFORMS
   ruby
@@ -135,6 +145,7 @@ PLATFORMS
 DEPENDENCIES
   activerecord-postgis-adapter
   coffee-rails (~> 4.0.0)
+  devise
   heroku_rails_deflate
   jbuilder (~> 1.2)
   jquery-rails

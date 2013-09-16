@@ -1,6 +1,7 @@
 class TrailheadsController < ApplicationController
   before_action :set_trailhead, only: [:show, :edit, :update, :destroy]
-
+  before_action :authenticate_user!, except: [:index]
+  
   # GET /trailheads
   # GET /trailheads.json
   def index

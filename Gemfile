@@ -51,6 +51,7 @@ gem 'rgeo'
 gem 'rgeo-geojson'
 gem 'oj'
 gem 'unicorn'
+gem 'devise'
 
 group :development, :development_aws, :production, :test do
   gem 'rack-cors', :require => 'rack/cors'
