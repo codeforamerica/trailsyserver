@@ -1,0 +1,22 @@
+
+<h1>Users</h1>
+
+<%= link_to "All Users", :action => "index" %>
+
+<%= link_to "Users awaiting approval", :action => "index", :approved => "false" %>
+
+<table border=1>
+  <th>Email</th>
+  <th>Approved?</th>
+  <% @users.each do |user| %>
+    <tr>
+      <td><%= user.email %></td>
+      <td><%= user.approved %></td>
+      <% if user != current_user %>
+      <td><%= link_to "Edit", edit_user_path(user) %></td>
+      <% else %>
+      <td>(current user)</td>
+      <% end %>
+    </tr>
+  <% end %>
+</table>

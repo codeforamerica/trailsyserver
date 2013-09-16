@@ -46,6 +46,13 @@ GEM
       warden (~> 1.2.3)
     erubis (2.7.0)
     execjs (2.0.1)
+    haml (4.0.3)
+      tilt
+    haml-rails (0.4)
+      actionpack (>= 3.1, < 4.1)
+      activesupport (>= 3.1, < 4.1)
+      haml (>= 3.1, < 4.1)
+      railties (>= 3.1, < 4.1)
     heroku_rails_deflate (0.2.0)
       rack (~> 1.5.0)
     hike (1.2.3)
@@ -146,6 +153,7 @@ DEPENDENCIES
   activerecord-postgis-adapter
   coffee-rails (~> 4.0.0)
   devise
+  haml-rails (>= 0.3.4)
   heroku_rails_deflate
   jbuilder (~> 1.2)
   jquery-rails
