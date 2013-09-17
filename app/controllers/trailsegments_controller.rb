@@ -6,17 +6,24 @@ class TrailsegmentsController < ApplicationController
   # GET /trailsegments.json
   def index
     @trailsegments = Trailsegment.all
-    @entity_factory = ::RGeo::GeoJSON::EntityFactory.instance
-    features = []
-    @trailsegments.each_with_index do |trailsegment, index|
-      feature = @entity_factory.feature(trailsegment.geom, trailsegment.id, trailsegment.attributes.except("geom", "wkt"))
-      features.push(feature)
+    respond_to do |format|
+      format.html do
+        authenticate_user!
+      end
+      format.json do
+        @entity_factory = ::RGeo::GeoJSON::EntityFactory.instance
+        features = []
+        @trailsegments.each_with_index do |trailsegment, index|
+          feature = @entity_factory.feature(trailsegment.geom, trailsegment.id, trailsegment.attributes.except("geom", "wkt"))
+          features.push(feature)
+        end
+        collection = @entity_factory.feature_collection(features)
+        my_geojson = RGeo::GeoJSON::encode(collection)
+        render json: Oj.dump(my_geojson)
+      end
     end
-    collection = @entity_factory.feature_collection(features)
-    my_geojson = RGeo::GeoJSON::encode(collection)
-    render json: Oj.dump(my_geojson)
   end
-
+  
   # GET /trailsegments/1
   # GET /trailsegments/1.json
   def show

@@ -6,21 +6,28 @@ class TrailheadsController < ApplicationController
   # GET /trailheads.json
   def index
     @trailheads = Trailhead.all
-    logger.info @trailheads.inspect
-    entity_factory = ::RGeo::GeoJSON::EntityFactory.instance
-    if (params[:loc])
-      @trailheads = sort_by_distance(@trailheads)   
-    end
-    features = []
-    @trailheads.each do |trailhead|
-      feature = entity_factory.feature(trailhead.geom, trailhead.id, trailhead.attributes.except("geom", "wkt").merge( {:distance => trailhead.distance} ))
-      features.push(feature)
-    end
-    collection = entity_factory.feature_collection(features)
-    my_geojson = RGeo::GeoJSON::encode(collection)
-    render json: Oj.dump(my_geojson)
-  end
 
+    respond_to do |format|
+      format.html do 
+        authenticate_user!
+      end
+      format.json do
+        entity_factory = ::RGeo::GeoJSON::EntityFactory.instance
+        if (params[:loc])
+          @trailheads = sort_by_distance(@trailheads)   
+        end
+        features = []
+        @trailheads.each do |trailhead|
+          feature = entity_factory.feature(trailhead.geom, trailhead.id, trailhead.attributes.except("geom", "wkt").merge( {:distance => trailhead.distance} ))
+          features.push(feature)
+        end
+        collection = entity_factory.feature_collection(features)
+        my_geojson = RGeo::GeoJSON::encode(collection)
+        render json: Oj.dump(my_geojson)
+      end
+    end
+  end
+  
   # GET /trailheads/1
   # GET /trailheads/1.json
   def show
@@ -107,4 +114,4 @@ class TrailheadsController < ApplicationController
       trailheads_sort      
     end
 
-end
+  end
