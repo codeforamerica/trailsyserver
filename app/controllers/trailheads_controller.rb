@@ -31,9 +31,14 @@ class TrailheadsController < ApplicationController
   # GET /trailheads/1
   # GET /trailheads/1.json
   def show
-    entity_factory = ::RGeo::GeoJSON::EntityFactory.instance
-    feature = entity_factory.feature(@trailhead.geom, @trailhead.id, @trailhead.attributes.except("geom", "wkt") )
-    render json: RGeo::GeoJSON::encode(feature)
+    respond_to do |format|   
+      format.html
+      format.json do
+        entity_factory = ::RGeo::GeoJSON::EntityFactory.instance
+        feature = entity_factory.feature(@trailhead.geom, @trailhead.id, @trailhead.attributes.except("geom", "wkt") )
+        render json: RGeo::GeoJSON::encode(feature) 
+      end
+    end
   end
 
   # GET /trailheads/new
@@ -78,17 +83,27 @@ class TrailheadsController < ApplicationController
   # DELETE /trailheads/1
   # DELETE /trailheads/1.json
   def destroy
-    @trailhead.destroy
     respond_to do |format|
-      format.html { redirect_to trailheads_url }
-      format.json { head :no_content }
+      if (@trailhead.source == current_user.organization || current_user.admin?) && @trail.destroy
+        format.html { redirect_to trailheads_url, notice: "Trailhead '" + @trailhead.name + "' was successfully deleted." }
+        format.json { render :json => { head: no_content }, status: :ok }
+      else
+        format.html { redirect_to trailheads_url, notice: "Trailhead '" + @trailhead.name + "' was not deleted."}
+        format.json { render :json => { head: no_content }, status: :unprocessable_entity }
+      end
     end
   end
 
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_trailhead
-      @trailhead = Trailhead.find(params[:id])
+      trailhead = Trailhead.find(params[:id])
+      if params[:all] == "true" || trailhead.source == current_user.organization || current_user.admin?
+        @trailhead = trailhead
+      else
+        # this should do something smarter
+        head 403
+      end
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

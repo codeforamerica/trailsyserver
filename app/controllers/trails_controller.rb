@@ -9,10 +9,10 @@ class TrailsController < ApplicationController
     respond_to do |format|
       format.html do
         authenticate_user!
-        if params[:all] != "true"
-          @trails = Trail.where(source: current_user.organization)
+        if params[:all] == "true"
+          @trails = Trail.all   
         else
-          @trails = Trail.all
+          @trails = Trail.where(source: current_user.organization)
         end
       end
       format.json do
@@ -34,6 +34,14 @@ class TrailsController < ApplicationController
   # GET /trails/1
   # GET /trails/1.json
   def show
+    respond_to do |format|
+      format.html
+      format.json do
+        entity_factory = ::RGeo::GeoJSON::EntityFactory.instance
+        feature = entity_factory.feature(RGeo::Geographic.spherical_factory.point(0,0), @trail.id, @trail.attributes.except("geom", "wkt"))
+        render json: RGeo::GeoJSON::encode(feature)
+      end
+    end
   end
 
   # GET /trails/new
@@ -78,10 +86,9 @@ class TrailsController < ApplicationController
   # DELETE /trails/1
   # DELETE /trails/1.json
   def destroy
-    logger.info @trail.source
-    logger.info current_user.organization
+
     respond_to do |format|
-      if @trail.source == current_user.organization && @trail.destroy
+      if (@trail.source == current_user.organization || current_user.admin?) && @trail.destroy
         format.html { redirect_to trails_url, notice: "Trail '" + @trail.name + "' was successfully deleted." }
         format.json { render :json => { head: no_content }, status: :ok }
       else
@@ -97,7 +104,13 @@ class TrailsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_trail
-      @trail = Trail.find(params[:id])
+      trail = Trail.find(params[:id])
+      if params[:all] == "true" || trail.source == current_user.organization || current_user.admin?
+        @trail = trail
+      else
+        # this should do something smarter
+        head 403
+      end
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
