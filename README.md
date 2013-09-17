@@ -8,6 +8,6 @@ This will eventually provide:
 This is still very much in early development. We hope to merge this repo and the [Trailsy](http://www.github.com/danavery/trailsy) repo soon.
 
 ### Sample working resource requests
-  http://trailsyserver-prod.herokuapp.com/trails.json
-  http://trailsyserver-prod.herokuapp.com/trailheads.json?loc=41.1,-81.5 
-  http://trailsyserver-prod.herokuapp.com/trailsegments.json
+ - [http://trailsyserver-prod.herokuapp.com/trails.json](http://trailsyserver-prod.herokuapp.com/trails.json)
+ - [http://trailsyserver-prod.herokuapp.com/trailheads.json?loc=41.1,-81.5](http://trailsyserver-prod.herokuapp.com/trailheads.json?loc=41.1,-81.5)
+ - [http://trailsyserver-prod.herokuapp.com/trailsegments.json](http://trailsyserver-prod.herokuapp.com/trailsegments.json)
