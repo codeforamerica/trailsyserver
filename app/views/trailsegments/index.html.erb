@@ -1,5 +1,8 @@
-<h1>Listing trailsegments</h1>
+<h1>Listing Segments</h1>
 
+<%= link_to "All Segments", :action => "index", :all => "true" %>
+
+<%= link_to "#{current_user.organization} Segments", :action => "index" %>
 <table>
   <thead>
     <tr>

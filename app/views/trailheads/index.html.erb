@@ -1,5 +1,8 @@
-<h1>Listing trailheads</h1>
+<h1>Listing Trailheads</h1>
 
+<%= link_to "All Trailheads", :action => "index", :all => "true" %>
+
+<%= link_to "#{current_user.organization} Trailheads", :action => "index" %>
 <table>
   <thead>
     <tr>

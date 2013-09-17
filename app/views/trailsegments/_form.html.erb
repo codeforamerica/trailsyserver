@@ -12,32 +12,28 @@
   <% end %>
 
   <div class="field">
-    <%= f.label :length %><br>
-    <%= f.text_field :length %>
-  </div>
-  <div class="field">
     <%= f.label :source %><br>
-    <%= f.text_field :source %>
+    <%= @trailsegment.source %>
   </div>
   <div class="field">
     <%= f.label :steward %><br>
     <%= f.text_field :steward %>
   </div>
   <div class="field">
-    <%= f.label :geom %><br>
-    <%= f.text_field :geom %>
+    <%= f.label :length %><br>
+    <%= f.text_field :length %>
   </div>
   <div class="field">
-    <%= f.label :name1 %><br>
-    <%= f.text_field :name1 %>
+    <%= f.label :trail1 %><br>
+    <%= f.text_field :trail1 %>
   </div>
   <div class="field">
-    <%= f.label :name2 %><br>
-    <%= f.text_field :name2 %>
+    <%= f.label :trail2 %><br>
+    <%= f.text_field :trail2 %>
   </div>
   <div class="field">
-    <%= f.label :name3 %><br>
-    <%= f.text_field :name3 %>
+    <%= f.label :trail3 %><br>
+    <%= f.text_field :trail3 %>
   </div>
   <div class="actions">
     <%= f.submit %>

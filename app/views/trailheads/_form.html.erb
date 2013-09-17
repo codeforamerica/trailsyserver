@@ -17,7 +17,7 @@
   </div>
   <div class="field">
     <%= f.label :source %><br>
-    <%= f.text_field :source %>
+    <%= @trailhead.source %>
   </div>
   <div class="field">
     <%= f.label :trail1 %><br>
@@ -30,10 +30,6 @@
   <div class="field">
     <%= f.label :trail3 %><br>
     <%= f.text_field :trail3 %>
-  </div>
-  <div class="field">
-    <%= f.label :geom %><br>
-    <%= f.text_field :geom %>
   </div>
   <div class="actions">
     <%= f.submit %>
