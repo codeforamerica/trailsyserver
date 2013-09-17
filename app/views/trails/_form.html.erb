@@ -16,10 +16,6 @@
     <%= @trail.name %>
   </div>
   <div class="field">
-    <%= f.label :opdmd_access %><br>
-    <%= f.text_field :opdmd_access %>
-  </div>
-  <div class="field">
     <%= f.label :source %><br>
     <%= @trail.source %>
   </div>
@@ -32,8 +28,16 @@
     <%= f.text_field :length %>
   </div>
   <div class="field">
-    <%= f.label :equestrian %><br>
+    <%= f.label :equestrian, "Equestrian (Y or N)" %><br>
     <%= f.text_field :equestrian %>
+  </div>
+  <div class="field">
+    <%= f.label :xcntryski %><br>
+    <%= f.text_field :xcntryski %>
+  </div>
+  <div class="field">
+    <%= f.label :trlsurface %><br>
+    <%= f.text_field :trlsurface %>
   </div>
   <div class="field">
     <%= f.label :dogs %><br>
@@ -45,7 +49,7 @@
   </div>
   <div class="field">
     <%= f.label :description %><br>
-    <%= f.text_area :description, cols: 80, rows: 10 %>
+    <%= f.text_area :description, cols: 100, rows: 10 %>
   </div>
   <div class="field">
     <%= f.label :difficulty %><br>
@@ -57,7 +61,7 @@
   </div>
   <div class="field">
     <%= f.label :map_url %><br>
-    <%= f.text_field :map_url %>
+    <%= f.text_field :map_url, size: 120 %>
   </div>
   <div class="field">
     <%= f.label :surface %><br>

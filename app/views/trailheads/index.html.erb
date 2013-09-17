@@ -1,14 +1,19 @@
 <h1>Listing trailheads</h1>
 
+<!-- <%= form_tag({ action: :upload}, multipart: true) do %>
+  <%= file_field_tag 'trails' %>
+  <% end %>
+-->
+
 <table>
   <thead>
     <tr>
       <th>Name</th>
       <th>Source</th>
+      <th>Steward</th>
       <th>Trail1</th>
       <th>Trail2</th>
       <th>Trail3</th>
-      <th>Geom</th>
       <th></th>
       <th></th>
       <th></th>
@@ -20,10 +25,10 @@
       <tr>
         <td><%= trailhead.name %></td>
         <td><%= trailhead.source %></td>
+        <td><%= trailhead.steward %></td>
         <td><%= trailhead.trail1 %></td>
         <td><%= trailhead.trail2 %></td>
         <td><%= trailhead.trail3 %></td>
-        <td><%= trailhead.geom %></td>
         <td><%= link_to 'Show', trailhead %></td>
         <td><%= link_to 'Edit', edit_trailhead_path(trailhead) %></td>
         <td><%= link_to 'Destroy', trailhead, method: :delete, data: { confirm: 'Are you sure?' } %></td>
