@@ -5,13 +5,18 @@ class TrailsController < ApplicationController
   
   # GET /trails
   # GET /trails.json
-  def index
-    @trails = Trail.all
+  def index    
     respond_to do |format|
       format.html do
         authenticate_user!
+        if params[:all] != "true"
+          @trails = Trail.where(source: current_user.organization)
+        else
+          @trails = Trail.all
+        end
       end
       format.json do
+        @trails = Trail.all
         entity_factory = ::RGeo::GeoJSON::EntityFactory.instance
         features = []
         @trails.each do |trail|
@@ -73,11 +78,20 @@ class TrailsController < ApplicationController
   # DELETE /trails/1
   # DELETE /trails/1.json
   def destroy
-    @trail.destroy
+    logger.info @trail.source
+    logger.info current_user.organization
     respond_to do |format|
-      format.html { redirect_to trails_url }
-      format.json { head :no_content }
+      if @trail.source == current_user.organization && @trail.destroy
+        format.html { redirect_to trails_url, notice: "Trail '" + @trail.name + "' was successfully deleted." }
+        format.json { render :json => { head: no_content }, status: :ok }
+      else
+        format.html { redirect_to trails_url, notice: "Trail '" + @trail.name + "' was not deleted." }
+        format.json { render :json => { head: no_content }, status: :unprocessable_entity }
+      end
     end
+  end
+
+  def upload
   end
 
   private

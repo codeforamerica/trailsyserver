@@ -9,7 +9,12 @@ Trailsyserver::Application.routes.draw do
 
   resources :trailheads
 
-  resources :trails
+  resources :trails do
+    collection do
+      post 'upload'
+    end
+  end
+
 
   root :to => "trails#index"
   

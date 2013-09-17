@@ -1,5 +1,13 @@
 <h1>Listing trails</h1>
 
+<%= form_tag({ action: :upload}, multipart: true) do %>
+  <%= file_field_tag 'trails' %>
+<% end %>
+
+<%= link_to "All Trails", :action => "index", :all => "true" %>
+
+<%= link_to "#{current_user.organization} Trails", :action => "index" %>
+
 <table>
   <thead>
     <tr>

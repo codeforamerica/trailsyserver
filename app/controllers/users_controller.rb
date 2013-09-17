@@ -29,7 +29,7 @@ class UsersController < ApplicationController
     end
 
     def user_params
-      params.require(:user).permit(:approved)
+      params.require(:user).permit(:approved, :organization)
     end
 
     def check_admin
