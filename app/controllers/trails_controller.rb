@@ -114,22 +114,14 @@ class TrailsController < ApplicationController
       existing_org_trails.each do |old_trail|
         removed_trail = Hash.new
         removed_trail[:trail] = old_trail
-        if old_trail.destroy
-          removed_trail[:success] = 1
-        else
-          removed_trail[:success] = 0
-        end
+        removed_trail[:success] = old_trail.destroy
         @removed_trails.push(removed_trail)
       end
       @added_trails = []
       source_trails.each do |new_trail|
         added_trail = Hash.new
         added_trail[:trail] = new_trail
-        if new_trail.save
-          added_trail[:success] = 1
-        else
-          added_trail[:success] = 0
-        end
+        added_trail[:success] = new_trail.save
         @added_trails.push(added_trail)
       end
     end

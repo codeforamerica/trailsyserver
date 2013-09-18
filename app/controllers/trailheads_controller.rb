@@ -23,7 +23,11 @@ class TrailheadsController < ApplicationController
         end
         features = []
         @trailheads.each do |trailhead|
-          feature = entity_factory.feature(trailhead.geom, trailhead.id, trailhead.attributes.except("geom", "wkt").merge( {:distance => trailhead.distance} ))
+          logger.info trailhead.inspect
+          feature = entity_factory.feature(trailhead.geom, 
+                                           trailhead.id, 
+                                           trailhead.attributes.except("geom", "wkt", "created_at", "updated_at")
+                                           .merge( {:distance => trailhead.distance} ))
           features.push(feature)
         end
         collection = entity_factory.feature_collection(features)
@@ -95,6 +99,33 @@ class TrailheadsController < ApplicationController
       else
         format.html { redirect_to trailheads_url, notice: "Trailhead '" + @trailhead.name + "' was not deleted."}
         format.json { render :json => { head: no_content }, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  def upload
+    redirect_to trails_url, notice: "Please enter a source organization code for uploading trail data." if params[:source].empty?
+    parsed_trailheads = Trailhead.parse(params[:trailheads])
+    if parsed_trailheads.nil?
+      redirect_to trailheads_url, notice: "Unable to parse file #{params[:trailheads].original_filename}. Make sure it is a valid GeoJSON file or zipped shapefile."
+    end
+    source_trailheads = Trailhead.source_trailheads(parsed_trailheads, current_user.organization || params[:source])
+    @non_source_trailheads = Trailhead.non_source_trailheads(parsed_trailheads, current_user.organization || params[:source])
+    if source_trailheads
+      existing_org_trailheads = Trailhead.where(source: current_user.organization)
+      @removed_trailheads = []
+      existing_org_trailheads.each do |old_trailhead|
+        removed_trailhead = Hash.new
+        removed_trailhead[:trailhead] = old_trailhead
+        removed_trailhead[:success] = old_trailhead.destroy
+        @removed_trailheads.push(removed_trailhead)
+      end
+      @added_trailheads = []
+      source_trailheads.each do |new_trailhead|
+        added_trailhead = Hash.new
+        added_trailhead[:trailhead] = new_trailhead
+        added_trailhead[:success] = new_trailhead.save
+        @added_trailheads.push(added_trailhead)
       end
     end
   end

@@ -1,0 +1,44 @@
+<h1>Processing Trailhead Upload</h1>
+
+<h3>Source matches</h3>
+<table>
+
+  <% @added_trailheads.each do |added_trailhead| %>
+  <tr>
+    <td>
+      <% if added_trailhead[:success] %>
+      <b>Added</b>
+      <% else %>
+      <b>Not Added</b> 
+      <% end %>
+    </td>
+    <td>
+      <%= added_trailhead[:trailhead].name %>
+    </td>
+    <td>
+      <!-- <%= added_trailhead[:trailhead] %> -->
+    </td>
+  </tr>
+  <% end %>
+  <% @removed_trailheads.each do |removed_trailhead| %>
+  <tr>
+    <td>  
+      <% if removed_trailhead[:success] %>
+      <b>Deleted</b> 
+      <% else %>
+      <b>Not Deleted</b>
+      <% end %>
+    </td>
+    <td>
+      <%= removed_trailhead[:trailhead].name %>
+    </td>
+    <td>
+      <%= removed_trailhead[:trailhead].created_at %>
+    </td>
+  </tr>
+  <% end %>
+</table>
+<h3>Source non-matches</h3>
+<% @non_source_trailheads.each do |trailhead| %>
+  <%= trailhead.name %>,<%= trailhead.source %><br>
+<% end %>

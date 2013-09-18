@@ -1,8 +1,25 @@
 <h1>Listing Trailheads</h1>
 
+<hr>
+Upload data (this will replace all of your organization's current data!)
+<br><br>
+<%= form_tag({ action: :upload }, multipart: true) do %>
+  <% if current_user.admin? %>
+  <%= text_field_tag 'source', nil, placeholder: "Organization" %>
+  <% else %>
+  <%= hidden_field_tag 'source', current_user.organization %>
+  <% end %>
+  <%= file_field_tag 'trailheads' %><br>
+  <%= submit_tag "Submit" %>
+<% end %>
+<hr>
+<% if current_user.admin? %>
+Showing all trailheads.
+<% else %>
 <%= link_to "All Trailheads", :action => "index", :all => "true" %>
 
 <%= link_to "#{current_user.organization} Trailheads", :action => "index" %>
+<% end %>
 <table>
   <thead>
     <tr>
@@ -37,4 +54,4 @@
 
 <br>
 
-<%= link_to 'New Trailhead', new_trailhead_path %>
+<!-- <%= link_to 'New Trailhead', new_trailhead_path %> -->
