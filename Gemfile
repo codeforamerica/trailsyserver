@@ -52,7 +52,6 @@ gem 'rgeo-geojson'
 gem 'oj'
 gem 'unicorn'
 gem 'devise'
-gem 'haml-rails', '>= 0.3.4'
 
 group :development, :development_aws, :production, :test do
   gem 'rack-cors', :require => 'rack/cors'

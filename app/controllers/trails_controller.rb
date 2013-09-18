@@ -21,7 +21,8 @@ class TrailsController < ApplicationController
         features = []
         @trails.each do |trail|
           # taking a trip to Null Island, because RGeo::GeoJSON chokes on empty geometry here
-          feature = entity_factory.feature(RGeo::Geographic.spherical_factory.point(0,0), trail.id, trail.attributes)
+          filtered_attributes = trail.attributes.clone.except!("created_at", "updated_at")
+          feature = entity_factory.feature(RGeo::Geographic.spherical_factory.point(0,0), trail.id, filtered_attributes)
           features.push(feature)
         end
         collection = entity_factory.feature_collection(features)
@@ -44,10 +45,10 @@ class TrailsController < ApplicationController
     end
   end
 
-  # GET /trails/new
-  def new
-    @trail = Trail.new
-  end
+  # # GET /trails/new
+  # def new
+  #   @trail = Trail.new
+  # end
 
   # GET /trails/1/edit
   def edit
@@ -98,9 +99,39 @@ class TrailsController < ApplicationController
     end
   end
 
+  # POST /trails
   def upload
-    if params[:source].empty?
-      redirect_to trails_url, notice: "Please enter a source organization code for uploading trail data."
+    redirect_to trails_url, notice: "Please enter a source organization code for uploading trail data." if params[:source].empty?
+    parsed_trails = Trail.parse(params[:trails])
+    if parsed_trails.nil?
+      redirect_to trails_url, notice: "Unable to parse file #{params[:trails].original_filename}. Make sure it is a valid CSV file."
+    end
+    source_trails = Trail.source_trails(parsed_trails, current_user.organization || params[:source])
+    @non_source_trails = Trail.non_source_trails(parsed_trails, current_user.organization || params[:source])
+    if source_trails
+      existing_org_trails = Trail.where(source: current_user.organization)
+      @removed_trails = []
+      existing_org_trails.each do |old_trail|
+        removed_trail = Hash.new
+        removed_trail[:trail] = old_trail
+        if old_trail.destroy
+          removed_trail[:success] = 1
+        else
+          removed_trail[:success] = 0
+        end
+        @removed_trails.push(removed_trail)
+      end
+      @added_trails = []
+      source_trails.each do |new_trail|
+        added_trail = Hash.new
+        added_trail[:trail] = new_trail
+        if new_trail.save
+          added_trail[:success] = 1
+        else
+          added_trail[:success] = 0
+        end
+        @added_trails.push(added_trail)
+      end
     end
   end
 

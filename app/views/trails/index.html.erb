@@ -6,6 +6,8 @@ Upload data (this will replace all of your organization's current data!)
 <%= form_tag({ action: :upload }, multipart: true) do %>
   <% if current_user.admin? %>
   <%= text_field_tag 'source', nil, placeholder: "Organization" %>
+  <% else %>
+  <%= hidden_field_tag 'source', current_user.organization %>
   <% end %>
   <%= file_field_tag 'trails' %><br>
   <%= submit_tag "Submit" %>

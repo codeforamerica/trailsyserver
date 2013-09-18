@@ -1,0 +1,44 @@
+<h1>Processing Upload</h1>
+
+<h3>Source matches</h3>
+<table>
+
+  <% @added_trails.each do |added_trail| %>
+  <tr>
+    <td>
+      <% if added_trail[:success] %>
+      <b>Added</b>
+      <% else %>
+      <b>Not Added</b> 
+      <% end %>
+    </td>
+    <td>
+      <%= added_trail[:trail].name %>
+    </td>
+    <td>
+      <!-- <%= added_trail[:trail] %> -->
+    </td>
+  </tr>
+  <% end %>
+  <% @removed_trails.each do |removed_trail| %>
+  <tr>
+    <td>  
+      <% if removed_trail[:success] %>
+      <b>Deleted</b> 
+      <% else %>
+      <b>Not Deleted</b>
+      <% end %>
+    </td>
+    <td>
+      <%= removed_trail[:trail].name %>
+    </td>
+    <td>
+      <%= removed_trail[:trail].created_at %>
+    </td>
+  </tr>
+  <% end %>
+</table>
+<h3>Source non-matches</h3>
+<% @non_source_trails.each do |trail| %>
+  <%= trail.name %>,<%= trail.source %><br>
+<% end %>
