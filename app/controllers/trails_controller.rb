@@ -9,7 +9,7 @@ class TrailsController < ApplicationController
     respond_to do |format|
       format.html do
         authenticate_user!
-        if params[:all] == "true"
+        if params[:all] == "true" || current_user.admin?
           @trails = Trail.all   
         else
           @trails = Trail.where(source: current_user.organization)
@@ -99,6 +99,9 @@ class TrailsController < ApplicationController
   end
 
   def upload
+    if params[:source].empty?
+      redirect_to trails_url, notice: "Please enter a source organization code for uploading trail data."
+    end
   end
 
   private

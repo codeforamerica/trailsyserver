@@ -1,17 +1,27 @@
 <h1>Listing Trails</h1>
 
-<%= form_tag({ action: :upload}, multipart: true) do %>
-  <%= file_field_tag 'trails' %>
+<hr>
+Upload data (this will replace all of your organization's current data!)
+<br><br>
+<%= form_tag({ action: :upload }, multipart: true) do %>
+  <% if current_user.admin? %>
+  <%= text_field_tag 'source', nil, placeholder: "Organization" %>
+  <% end %>
+  <%= file_field_tag 'trails' %><br>
+  <%= submit_tag "Submit" %>
 <% end %>
-
+<hr>
+<% if current_user.admin? %>
+Showing all trails.
+<% else %> 
 <%= link_to "All Trails", :action => "index", :all => "true" %>
-
 <%= link_to "#{current_user.organization} Trails", :action => "index" %>
-
+<% end %>
 <table>
   <thead>
     <tr>
       <th>Name</th>
+
 <!--       <th>Opdmd access</th>
       <th>Source</th>
       <th>Steward</th>
@@ -19,7 +29,9 @@
       <th>Horses</th>
       <th>Dogs</th>
       <th>Bikes</th> -->
+
       <th>Description</th>
+      <th>Source</th>
       <!-- <th>Difficulty</th> -->
       <!-- <th>Hike time</th> -->
       <!-- <th>Print map url</th> -->
@@ -34,6 +46,7 @@
     <% @trails.each do |trail| %>
       <tr>
         <td><%= trail.name %></td>
+
 <!--         <td><%= trail.opdmd_access %></td>
         <td><%= trail.source %></td>
         <td><%= trail.steward %></td>
@@ -42,6 +55,7 @@
         <td><%= trail.dogs %></td>
         <td><%= trail.roadbike %></td> -->
         <td><%= truncate(trail.description, length: 50) %></td>
+        <td><%= trail.source %></td>
         <!-- <td><%= trail.difficulty %></td> -->
         <!-- <td><%= trail.hike_time %></td> -->
         <!-- <td><%= trail.map_url %></td> -->

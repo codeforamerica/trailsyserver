@@ -10,6 +10,11 @@ class TrailheadsController < ApplicationController
     respond_to do |format|
       format.html do 
         authenticate_user!
+        if params[:all] == "true" || current_user.admin?
+          @trailheads = Trailhead.all
+        else
+          @trailheads = Trailhead.where(source: current_user.organization)
+        end
       end
       format.json do
         entity_factory = ::RGeo::GeoJSON::EntityFactory.instance

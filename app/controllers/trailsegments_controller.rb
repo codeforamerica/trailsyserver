@@ -9,7 +9,7 @@ class TrailsegmentsController < ApplicationController
     respond_to do |format|
       format.html do
         authenticate_user!
-        if params[:all] == "true"
+        if params[:all] == "true" || current_user.admin?
           @trailsegments = Trailsegment.all
         else
           @trailsegments = Trailsegment.where(source: current_user.organization)
