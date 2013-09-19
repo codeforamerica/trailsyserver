@@ -19,6 +19,24 @@ class Trailhead < ActiveRecord::Base
     parsed_trailheads
   end
 
+  def self.parse_shapefile(file)
+    shapefile_parts = []
+    shapefile_directory = "#{Rails.root.to_s}/tmp/#{file.original_filename}"
+    Zip::File.open(file.path) do |zip|
+      zip.each do |entry|
+        shapefile_parts.push(entry.name)
+        FileUtils.mkdir_p(shapefile_directory)
+        filename =  "#{shapefile_directory}/#{entry.name}"
+        zip.extract(entry, filename) { true }
+      end
+    end
+    shp_name = shapefile_parts[shapefile_parts.index { |name| name =~ /.shp$/}]
+    shp_path = "#{shapefile_directory}/#{shp_name}"
+    logger.info shp_path
+    logger.info `/app/vendor/gdal/1.10.0/bin/ogrinfo shp_path`
+    nil
+  end
+
   def self.parse(file)
     if (file.original_filename =~ /zip$/)
       return self.parse_shapefile(file)
