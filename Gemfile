@@ -49,7 +49,6 @@ end
 gem 'activerecord-postgis-adapter'
 gem 'rgeo'
 gem 'rgeo-geojson'
-gem 'rgeo-shapefile'
 gem 'oj'
 gem 'unicorn'
 gem 'devise'
