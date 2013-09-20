@@ -55,7 +55,14 @@ namespace :load do
         # p feature.geometry
         @trailhead.geom = feature.geometry
         print "."
-        @trailhead.save
+        if @trailhead.steward.nil?
+          @trailhead.steward == @trailhead.source
+        end
+        if !@trailhead.save
+          p "Error!: #{@trailhead.errors.full_messages}"
+          p @trailhead.inspect
+          puts "\n"
+        end
       end
     end  
   end

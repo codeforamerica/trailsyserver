@@ -4,7 +4,7 @@ class Trailhead < ActiveRecord::Base
   validates :name, presence: true
   validates :source, presence: true
   validates :trail1, presence: true
-  validates :steward, presence: true
+  # validates :steward, presence: true
 
   # checking to make sure this isn't a trail segment file
   validates :length, absence: true

@@ -16,6 +16,7 @@ class TrailsegmentsController < ApplicationController
         end
       end
       format.json do
+        @trailsegments = Trailsegment.all
         @entity_factory = ::RGeo::GeoJSON::EntityFactory.instance
         features = []
         @trailsegments.each_with_index do |trailsegment, index|
