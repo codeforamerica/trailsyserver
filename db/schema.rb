@@ -28,10 +28,10 @@ ActiveRecord::Schema.define(version: 20130917183000) do
     t.string   "trail5"
     t.string   "trail6"
     t.string   "parking"
-    t.string   "water"
+    t.string   "drinkwater"
     t.string   "restrooms"
     t.string   "kiosk"
-    t.string   "park"
+    t.string   "contactnum"
     t.spatial  "geom",       limit: {:srid=>4326, :type=>"point", :geographic=>true}
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -39,23 +39,22 @@ ActiveRecord::Schema.define(version: 20130917183000) do
 
   create_table "trails", force: true do |t|
     t.string   "name"
-    t.string   "opdmd_access"
     t.string   "source"
     t.string   "steward"
     t.decimal  "length"
-    t.string   "opdmd"
+    t.string   "accessible"
+    t.string   "roadbike"
+    t.string   "hike"
+    t.string   "mtnbike"
     t.string   "equestrian"
     t.string   "xcntryski"
+    t.string   "conditions"
     t.string   "trlsurface"
-    t.string   "dogs"
-    t.string   "hike"
-    t.string   "roadbike"
-    t.text     "description"
-    t.string   "difficulty"
-    t.string   "hike_time"
     t.string   "map_url"
-    t.string   "surface"
-    t.string   "designatio"
+    t.string   "dogs"
+    t.text     "description"
+    t.string   "status"
+    t.string   "statustext"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -90,7 +89,7 @@ ActiveRecord::Schema.define(version: 20130917183000) do
     t.datetime "updated_at"
     t.boolean  "admin",                  default: false
     t.boolean  "approved",               default: false, null: false
-    t.string   "organization"
+    t.string   "organization",           default: "f",   null: false
   end
 
   add_index "users", ["approved"], :name => "index_users_on_approved"
