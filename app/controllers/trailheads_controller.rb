@@ -108,10 +108,11 @@ class TrailheadsController < ApplicationController
     parsed_trailheads = Trailhead.parse(params[:trailheads])
     if parsed_trailheads.nil?
       redirect_to trailheads_url, notice: "Unable to parse file #{params[:trailheads].original_filename}. Make sure it is a valid GeoJSON file or zipped shapefile."
+      return
     end
     source_trailheads = Trailhead.source_trailheads(parsed_trailheads, current_user.organization || params[:source])
     @non_source_trailheads = Trailhead.non_source_trailheads(parsed_trailheads, current_user.organization || params[:source])
-    if source_trailheads
+    if source_trailheads.length
       existing_org_trailheads = Trailhead.where(source: current_user.organization)
       @removed_trailheads = []
       existing_org_trailheads.each do |old_trailhead|
@@ -124,7 +125,13 @@ class TrailheadsController < ApplicationController
       source_trailheads.each do |new_trailhead|
         added_trailhead = Hash.new
         added_trailhead[:trailhead] = new_trailhead
-        added_trailhead[:success] = new_trailhead.save
+        if (new_trailhead.save)
+          added_trailhead[:success] = true
+        else
+          logger.info "fail"
+          added_trailhead[:success] = false
+          added_trailhead[:message] = new_trailhead.errors.full_messages
+        end
         @added_trailheads.push(added_trailhead)
       end
     end

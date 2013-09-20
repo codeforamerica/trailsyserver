@@ -1,8 +1,18 @@
-<h1>Processing Trailhead Upload</h1>
+<h1>Processed Trailhead Upload</h1>
 
 <h3>Source matches</h3>
 <table>
-
+  <tr>
+    <th>
+      Status
+    </th>
+    <th>
+      Trailhead Name
+    </th>
+    <th>
+      Import errors
+    </th>
+  </tr>
   <% @added_trailheads.each do |added_trailhead| %>
   <tr>
     <td>
@@ -16,7 +26,7 @@
       <%= added_trailhead[:trailhead].name %>
     </td>
     <td>
-      <!-- <%= added_trailhead[:trailhead] %> -->
+      <%= added_trailhead[:message] %>
     </td>
   </tr>
   <% end %>
@@ -38,7 +48,20 @@
   </tr>
   <% end %>
 </table>
-<h3>Source non-matches</h3>
+<h3>Source non-matches (should be "<%= current_user.organization %>")</h3>
+<table>
+  <tr>
+    <th>Trailhead name</th>
+    <th>Source field in Upload</th>
+  </tr>
 <% @non_source_trailheads.each do |trailhead| %>
-  <%= trailhead.name %>,<%= trailhead.source %><br>
+  <tr>
+    <td>
+      <%= trailhead.name %>
+    </td>
+    <td>
+      <%= trailhead.source %>
+    </td>
+  </tr>
 <% end %>
+</table>
