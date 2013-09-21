@@ -5,19 +5,20 @@ class CreateTrails < ActiveRecord::Migration
       t.string :source
       t.string :steward
       t.decimal :length
-      t.string :opdmd
+      t.string :accessible
+      t.string :roadbike
+      t.string :hike
+      t.string :mtnbike
       t.string :equestrian
       t.string :xcntryski
+      t.string :conditions
       t.string :trlsurface
-      t.string :dogs
-      t.string :hike
-      t.string :roadbike
-      t.text :description
-      t.string :difficulty
-      t.string :hike_time
       t.string :map_url
-      t.string :surface
-      t.string :designatio
+      t.string :dogs
+      t.text :description
+      # app-only, not in data spec
+      t.integer :status, default: 0
+      t.string :statustext
       t.timestamps
     end
   end

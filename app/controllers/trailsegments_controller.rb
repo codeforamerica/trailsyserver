@@ -5,12 +5,18 @@ class TrailsegmentsController < ApplicationController
   # GET /trailsegments
   # GET /trailsegments.json
   def index
-    @trailsegments = Trailsegment.all
+
     respond_to do |format|
       format.html do
         authenticate_user!
+        if params[:all] == "true" || current_user.admin?
+          @trailsegments = Trailsegment.all
+        else
+          @trailsegments = Trailsegment.where(source: current_user.organization)
+        end
       end
       format.json do
+        @trailsegments = Trailsegment.all
         @entity_factory = ::RGeo::GeoJSON::EntityFactory.instance
         features = []
         @trailsegments.each_with_index do |trailsegment, index|
@@ -27,9 +33,14 @@ class TrailsegmentsController < ApplicationController
   # GET /trailsegments/1
   # GET /trailsegments/1.json
   def show
-    @entity_factory = ::RGeo::GeoJSON::EntityFactory.instance
-    feature = @entity_factory.feature(@trailsegment.geom, @trailsegment.id, @trailsegment.attributes.except("geom", "wkt") )
-    render json: RGeo::GeoJSON::encode(feature)
+    respond_to do |format|
+      format.html
+      format.json do
+        @entity_factory = ::RGeo::GeoJSON::EntityFactory.instance
+        feature = @entity_factory.feature(@trailsegment.geom, @trailsegment.id, @trailsegment.attributes.except("geom", "wkt") )
+        render json: RGeo::GeoJSON::encode(feature)
+      end
+    end
   end
 
   # GET /trailsegments/new
@@ -84,7 +95,13 @@ class TrailsegmentsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_trailsegment
-      @trailsegment = Trailsegment.find(params[:id])
+      trailsegment = Trailsegment.find(params[:id])
+      if params[:all] == "true" || trailsegment.source == current_user.organization || current_user.admin?
+        @trailsegment = trailsegment
+      else
+        # this should do something smarter
+        head 403
+      end
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

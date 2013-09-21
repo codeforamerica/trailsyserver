@@ -7,7 +7,11 @@ Trailsyserver::Application.routes.draw do
   
   resources :trailsegments
 
-  resources :trailheads
+  resources :trailheads do
+    collection do
+      post 'upload'
+    end
+  end
 
   resources :trails do
     collection do

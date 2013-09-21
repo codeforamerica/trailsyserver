@@ -6,8 +6,17 @@
 </p>
 
 <p>
-  <strong>Opdmd access:</strong>
-  <%= @trail.opdmd_access %>
+  <strong>Status:</strong>
+  <%= @trail.status %>
+</p>
+
+<p>
+  <strong>Status Text:</strong>
+  <%= @trail.statustext %>
+
+<p>
+  <strong>Description:</strong>
+  <%= @trail.description %>
 </p>
 
 <p>
@@ -26,8 +35,18 @@
 </p>
 
 <p>
-  <strong>Horses:</strong>
+  <strong>Hiking:</strong>
+  <%= @trail.hike %>
+</p>
+
+<p>
+  <strong>Equestrian:</strong>
   <%= @trail.equestrian %>
+</p>
+
+<p>
+  <strong>Cross-Country Ski:</strong>
+  <%= @trail.xcntryski %>
 </p>
 
 <p>
@@ -36,33 +55,23 @@
 </p>
 
 <p>
-  <strong>Bikes:</strong>
+  <strong>Road Bikes:</strong>
   <%= @trail.roadbike %>
 </p>
 
 <p>
-  <strong>Description:</strong>
-  <%= @trail.description %>
+  <strong>Mountain Bikes:</strong>
+  <%= @trail.mtnbike %>
 </p>
 
 <p>
-  <strong>Difficulty:</strong>
-  <%= @trail.difficulty %>
-</p>
-
-<p>
-  <strong>Hike time:</strong>
-  <%= @trail.hike_time %>
-</p>
-
-<p>
-  <strong>Print map url:</strong>
+  <strong>Map url:</strong>
   <%= @trail.map_url %>
 </p>
 
 <p>
   <strong>Surface:</strong>
-  <%= @trail.surface %>
+  <%= @trail.trlsurface %>
 </p>
 
 <%= link_to 'Edit', edit_trail_path(@trail) %> |

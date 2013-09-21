@@ -11,11 +11,11 @@ class CreateTrailheads < ActiveRecord::Migration
       t.string :trail5
       t.string :trail6
       t.string :parking
-      t.string :water
+      t.string :drinkwater
       t.string :restrooms
       t.string :kiosk
-      t.string :park
-      
+      t.string :parking
+      t.string :contactnum
       t.point :geom, geographic: true
 
       t.timestamps

@@ -10,6 +10,11 @@ class TrailheadsController < ApplicationController
     respond_to do |format|
       format.html do 
         authenticate_user!
+        if params[:all] == "true" || current_user.admin?
+          @trailheads = Trailhead.all
+        else
+          @trailheads = Trailhead.where(source: current_user.organization)
+        end
       end
       format.json do
         entity_factory = ::RGeo::GeoJSON::EntityFactory.instance
@@ -18,7 +23,11 @@ class TrailheadsController < ApplicationController
         end
         features = []
         @trailheads.each do |trailhead|
-          feature = entity_factory.feature(trailhead.geom, trailhead.id, trailhead.attributes.except("geom", "wkt").merge( {:distance => trailhead.distance} ))
+          logger.info trailhead.inspect
+          feature = entity_factory.feature(trailhead.geom, 
+                                           trailhead.id, 
+                                           trailhead.attributes.except("geom", "wkt", "created_at", "updated_at")
+                                           .merge( {:distance => trailhead.distance} ))
           features.push(feature)
         end
         collection = entity_factory.feature_collection(features)
@@ -31,9 +40,14 @@ class TrailheadsController < ApplicationController
   # GET /trailheads/1
   # GET /trailheads/1.json
   def show
-    entity_factory = ::RGeo::GeoJSON::EntityFactory.instance
-    feature = entity_factory.feature(@trailhead.geom, @trailhead.id, @trailhead.attributes.except("geom", "wkt") )
-    render json: RGeo::GeoJSON::encode(feature)
+    respond_to do |format|   
+      format.html
+      format.json do
+        entity_factory = ::RGeo::GeoJSON::EntityFactory.instance
+        feature = entity_factory.feature(@trailhead.geom, @trailhead.id, @trailhead.attributes.except("geom", "wkt") )
+        render json: RGeo::GeoJSON::encode(feature) 
+      end
+    end
   end
 
   # GET /trailheads/new
@@ -78,17 +92,61 @@ class TrailheadsController < ApplicationController
   # DELETE /trailheads/1
   # DELETE /trailheads/1.json
   def destroy
-    @trailhead.destroy
     respond_to do |format|
-      format.html { redirect_to trailheads_url }
-      format.json { head :no_content }
+      if (@trailhead.source == current_user.organization || current_user.admin?) && @trail.destroy
+        format.html { redirect_to trailheads_url, notice: "Trailhead '" + @trailhead.name + "' was successfully deleted." }
+        format.json { render :json => { head: no_content }, status: :ok }
+      else
+        format.html { redirect_to trailheads_url, notice: "Trailhead '" + @trailhead.name + "' was not deleted."}
+        format.json { render :json => { head: no_content }, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  def upload
+    redirect_to trails_url, notice: "Please enter a source organization code for uploading trail data." if params[:source].empty?
+    parsed_trailheads = Trailhead.parse(params[:trailheads])
+    if parsed_trailheads.nil?
+      redirect_to trailheads_url, notice: "Unable to parse file #{params[:trailheads].original_filename}. Make sure it is a valid GeoJSON file or zipped shapefile."
+      return
+    end
+    source_trailheads = Trailhead.source_trailheads(parsed_trailheads, current_user.organization || params[:source])
+    @non_source_trailheads = Trailhead.non_source_trailheads(parsed_trailheads, current_user.organization || params[:source])
+    if source_trailheads.length
+      existing_org_trailheads = Trailhead.where(source: current_user.organization)
+      @removed_trailheads = []
+      existing_org_trailheads.each do |old_trailhead|
+        removed_trailhead = Hash.new
+        removed_trailhead[:trailhead] = old_trailhead
+        removed_trailhead[:success] = old_trailhead.destroy
+        @removed_trailheads.push(removed_trailhead)
+      end
+      @added_trailheads = []
+      source_trailheads.each do |new_trailhead|
+        added_trailhead = Hash.new
+        added_trailhead[:trailhead] = new_trailhead
+        if (new_trailhead.save)
+          added_trailhead[:success] = true
+        else
+          logger.info "fail"
+          added_trailhead[:success] = false
+          added_trailhead[:message] = new_trailhead.errors.full_messages
+        end
+        @added_trailheads.push(added_trailhead)
+      end
     end
   end
 
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_trailhead
-      @trailhead = Trailhead.find(params[:id])
+      trailhead = Trailhead.find(params[:id])
+      if params[:all] == "true" || trailhead.source == current_user.organization || current_user.admin?
+        @trailhead = trailhead
+      else
+        # this should do something smarter
+        head 403
+      end
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
