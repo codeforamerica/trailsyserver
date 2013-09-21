@@ -1,7 +1,11 @@
 require 'csv'
 require 'rgeo-geojson'
 
+
+
 namespace :load do
+  task :all => [:trails, :trailheads, :segments]
+  
   task :trails => :environment do
     input_file_name = ENV["TRAIL_INPUT"] || "lib/summit_traildata.csv"
     p input_file_name
