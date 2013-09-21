@@ -23,21 +23,10 @@ Showing all trails.
   <thead>
     <tr>
       <th>Name</th>
-
-<!--       <th>Opdmd access</th>
-      <th>Source</th>
-      <th>Steward</th>
-      <th>Length</th>
-      <th>Horses</th>
-      <th>Dogs</th>
-      <th>Bikes</th> -->
-
+      <th>Status</th>
+      <th>Status Text</th>
       <th>Description</th>
       <th>Source</th>
-      <!-- <th>Difficulty</th> -->
-      <!-- <th>Hike time</th> -->
-      <!-- <th>Print map url</th> -->
-      <!-- <th>Surface</th> -->
       <th colspan=3>Action</th>
       <th></th>
       <th></th>
@@ -48,19 +37,18 @@ Showing all trails.
     <% @trails.each do |trail| %>
       <tr>
         <td><%= trail.name %></td>
-
-<!--         <td><%= trail.opdmd_access %></td>
-        <td><%= trail.source %></td>
-        <td><%= trail.steward %></td>
-        <td><%= trail.length %></td>
-        <td><%= trail.equestrian %></td>
-        <td><%= trail.dogs %></td>
-        <td><%= trail.roadbike %></td> -->
+        <td>
+          <% if trail.status == 0 %>
+          Open
+          <% elsif trail.status == 1 %>
+          Notice
+          <% elsif trail.status == 2 %>
+          Closed
+          <% end %>
+        </td>
+        <td><%= truncate(trail.statustext, length: 50) %></td>
         <td><%= truncate(trail.description, length: 50) %></td>
         <td><%= trail.source %></td>
-        <!-- <td><%= trail.difficulty %></td> -->
-        <!-- <td><%= trail.hike_time %></td> -->
-        <!-- <td><%= trail.map_url %></td> -->
         <% if current_user %>
         <td><%= link_to 'Show', trail %></td>
         <td><%= link_to 'Edit', edit_trail_path(trail) %></td>

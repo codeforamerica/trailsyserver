@@ -12,7 +12,7 @@ class TrailsController < ApplicationController
         if params[:all] == "true" || current_user.admin?
           @trails = Trail.all   
         else
-          @trails = Trail.where(source: current_user.organization)
+          @trails = Trail.where(source: current_user.organization).order("name")
         end
       end
       format.json do
@@ -46,6 +46,8 @@ class TrailsController < ApplicationController
   end
 
   # # GET /trails/new
+  # We're not currently allowing trails to be created from the admin UI
+  #
   # def new
   #   @trail = Trail.new
   # end
@@ -61,7 +63,7 @@ class TrailsController < ApplicationController
 
     respond_to do |format|
       if @trail.save
-        format.html { redirect_to @trail, notice: 'Trail was successfully created.' }
+        format.html { redirect_to trails_path, notice: 'Trail was successfully created.' }
         format.json { render action: 'show', status: :created, location: @trail }
       else
         format.html { render action: 'new' }
@@ -75,7 +77,7 @@ class TrailsController < ApplicationController
   def update
     respond_to do |format|
       if @trail.update(trail_params)
-        format.html { redirect_to @trail, notice: 'Trail was successfully updated.' }
+        format.html { redirect_to trails_path, notice: 'Trail was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: 'edit' }
@@ -141,6 +143,6 @@ class TrailsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def trail_params
-      params.require(:trail).permit(:name, :opdmd_access, :source, :steward, :length, :equestrian, :dogs, :roadbike, :description, :hike_time, :print_map_url, :surface)
+      params.require(:trail).permit(:name, :status, :statustext, :description, :source, :steward, :length, :hike, :equestrian, :xcntryski, :dogs, :roadbike, :mtnbike, :map_url, :surface)
     end
 end

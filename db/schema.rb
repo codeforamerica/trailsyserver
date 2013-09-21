@@ -53,7 +53,7 @@ ActiveRecord::Schema.define(version: 20130917183000) do
     t.string   "map_url"
     t.string   "dogs"
     t.text     "description"
-    t.string   "status"
+    t.integer  "status",      default: 0
     t.string   "statustext"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -89,7 +89,7 @@ ActiveRecord::Schema.define(version: 20130917183000) do
     t.datetime "updated_at"
     t.boolean  "admin",                  default: false
     t.boolean  "approved",               default: false, null: false
-    t.string   "organization",           default: "f",   null: false
+    t.string   "organization"
   end
 
   add_index "users", ["approved"], :name => "index_users_on_approved"

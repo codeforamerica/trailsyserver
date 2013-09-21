@@ -17,7 +17,7 @@ class CreateTrails < ActiveRecord::Migration
       t.string :dogs
       t.text :description
       # app-only, not in data spec
-      t.string :status
+      t.integer :status, default: 0
       t.string :statustext
       t.timestamps
     end
