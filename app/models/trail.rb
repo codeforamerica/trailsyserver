@@ -16,13 +16,10 @@ class Trail < ActiveRecord::Base
     parsed_trails
   end
 
-  def self.parse_json(file)
-  end
+ 
 
   def self.parse(file)
-    if (file.original_filename =~ /json$/)
-      return self.parse_json(file)
-    elsif (file.original_filename =~ /csv$/)
+    if (file.original_filename =~ /csv$/)
       return self.parse_csv(file)
     else
       nil

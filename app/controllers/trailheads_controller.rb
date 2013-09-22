@@ -1,22 +1,22 @@
 class TrailheadsController < ApplicationController
   before_action :set_trailhead, only: [:show, :edit, :update, :destroy]
   before_action :authenticate_user!, except: [:index]
-  
+  before_action :set_show_all_param
+
   # GET /trailheads
   # GET /trailheads.json
   def index
-    @trailheads = Trailhead.all
-
     respond_to do |format|
       format.html do 
         authenticate_user!
         if params[:all] == "true" || current_user.admin?
-          @trailheads = Trailhead.all
+          @trailheads = Trailhead.order("name")
         else
-          @trailheads = Trailhead.where(source: current_user.organization)
+          @trailheads = Trailhead.where(source: current_user.organization).order("name")
         end
       end
       format.json do
+        @trailheads = Trailhead.order("name")
         entity_factory = ::RGeo::GeoJSON::EntityFactory.instance
         if (params[:loc])
           @trailheads = sort_by_distance(@trailheads)   
@@ -25,9 +25,9 @@ class TrailheadsController < ApplicationController
         @trailheads.each do |trailhead|
           logger.info trailhead.inspect
           feature = entity_factory.feature(trailhead.geom, 
-                                           trailhead.id, 
-                                           trailhead.attributes.except("geom", "wkt", "created_at", "updated_at")
-                                           .merge( {:distance => trailhead.distance} ))
+           trailhead.id, 
+           trailhead.attributes.except("geom", "wkt", "created_at", "updated_at")
+           .merge( {:distance => trailhead.distance} ))
           features.push(feature)
         end
         collection = entity_factory.feature_collection(features)
@@ -66,7 +66,7 @@ class TrailheadsController < ApplicationController
 
     respond_to do |format|
       if @trailhead.save
-        format.html { redirect_to @trailhead, notice: 'Trailhead was successfully created.' }
+        format.html { redirect_to trailheads_path, notice: 'Trailhead was successfully created.' }
         format.json { render action: 'show', status: :created, location: @trailhead }
       else
         format.html { render action: 'new' }
@@ -79,8 +79,9 @@ class TrailheadsController < ApplicationController
   # PATCH/PUT /trailheads/1.json
   def update
     respond_to do |format|
-      if @trailhead.update(trailhead_params)
-        format.html { redirect_to @trailhead, notice: 'Trailhead was successfully updated.' }
+      if (@trailhead.source == current_user.organization || current_user.admin?) && @trailhead.update(trailhead_params)
+
+        format.html { redirect_to trailheads_path, notice: 'Trailhead was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: 'edit' }
@@ -135,6 +136,14 @@ class TrailheadsController < ApplicationController
         @added_trailheads.push(added_trailhead)
       end
     end
+  end
+
+  def default_url_options
+    { all: @show_all }.merge(super)
+  end
+
+  def set_show_all_param
+    @show_all = params[:all] if params[:all]
   end
 
   private

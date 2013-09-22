@@ -1,8 +1,6 @@
 class TrailsController < ApplicationController
   before_action :set_trail, only: [:show, :edit, :update, :destroy]
-
   before_action :authenticate_user!, except: [:index]
-  
   before_action :set_show_all_param
 
   # GET /trails
@@ -78,7 +76,7 @@ class TrailsController < ApplicationController
   # PATCH/PUT /trails/1.json
   def update
     respond_to do |format|
-      if @trail.update(trail_params)
+      if (@trail.source == current_user.organization || current_user.admin?) && @trail.update(trail_params)
         format.html { redirect_to trails_path, notice: 'Trail was successfully updated.' }
         format.json { head :no_content }
       else
