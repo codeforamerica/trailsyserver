@@ -1,8 +1,25 @@
 <h1>Listing Segments</h1>
 
+<hr>
+Upload new segments (this will replace all of your organization's current data!)
+<br><br>
+<%= form_tag({ action: :upload }, multipart: true) do %>
+  <% if current_user.admin? %>
+  <%= text_field_tag 'source', nil, placeholder: "Organization" %>
+  <% else %>
+  <%= hidden_field_tag 'source', current_user.organization %>
+  <% end %>
+  <%= file_field_tag 'trailsegments' %><br>
+  <%= submit_tag "Submit" %>
+<% end %>
+<hr>
+<% if current_user.admin? %>
+Showing all trail segments.
+<% else %>
 <%= link_to "All Segments", :action => "index", :all => "true" %>
 
-<%= link_to "#{current_user.organization} Segments", :action => "index" %>
+<%= link_to "#{current_user.organization} Segments", :action => "index", :all => "false" %>
+<% end -%>
 <table>
   <thead>
     <tr>

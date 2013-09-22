@@ -23,7 +23,6 @@ class TrailheadsController < ApplicationController
         end
         features = []
         @trailheads.each do |trailhead|
-          logger.info trailhead.inspect
           feature = entity_factory.feature(trailhead.geom, 
            trailhead.id, 
            trailhead.attributes.except("geom", "wkt", "created_at", "updated_at")
@@ -51,9 +50,11 @@ class TrailheadsController < ApplicationController
   end
 
   # GET /trailheads/new
-  def new
-    @trailhead = Trailhead.new
-  end
+  # We're not currently allowing trailheads to be created from the admin UI
+  #
+  # def new
+  #   @trailhead = Trailhead.new
+  # end
 
   # GET /trailheads/1/edit
   def edit
@@ -96,10 +97,10 @@ class TrailheadsController < ApplicationController
     respond_to do |format|
       if (@trailhead.source == current_user.organization || current_user.admin?) && @trail.destroy
         format.html { redirect_to trailheads_url, notice: "Trailhead '" + @trailhead.name + "' was successfully deleted." }
-        format.json { render :json => { head: no_content }, status: :ok }
+        format.json { render :json => { head: :no_content }, status: :ok }
       else
         format.html { redirect_to trailheads_url, notice: "Trailhead '" + @trailhead.name + "' was not deleted."}
-        format.json { render :json => { head: no_content }, status: :unprocessable_entity }
+        format.json { render :json => { head: :no_content }, status: :unprocessable_entity }
       end
     end
   end
