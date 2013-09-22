@@ -12,11 +12,11 @@
   <% end %>
 
   <div class="field">
-    <%= f.label :name %><br>
+    <%= f.label :name %>:
     <%= @trail.name %>
   </div>
   <div class="field">
-    <%= f.label :status %><br>
+    <%= f.label :status %>:
     <%= f.select :status, [["Open", 0], ["Notice", 1], ["Closed", 2]] %>
   </div>
   <div class="field">
@@ -28,51 +28,51 @@
     <%= f.text_area :description, cols: 100, rows: 10 %>
   </div>
   <div class="field">
-    <%= f.label :source %><br>
+    <%= f.label :source %>:
     <%= @trail.source %>
   </div>
   <div class="field">
-    <%= f.label :steward %><br>
+    <%= f.label :steward %>:
     <%= f.text_field :steward, size: 6 %>
   </div>
   <div class="field">
-    <%= f.label :length, "Length (miles)" %><br>
+    <%= f.label :length, "Length (miles)" %>
     <%= f.text_field :length, size: 3 %>
   </div>
   <div class="field">
-    <%= f.label :hike, "Hiking" %>
+    <%= f.label :hike, "Hiking" %>:
     <%= f.select :hike, ["Y", "N"] %>
   </div>
   <div class="field">
-    <%= f.label :equestrian %><br>
+    <%= f.label :equestrian %>:
     <%= f.select :equestrian, ["Y", "N"] %>
   </div>
   <div class="field">
-    <%= f.label :xcntryski, "Cross-Country Ski" %><br>
+    <%= f.label :xcntryski, "Cross-Country Ski" %>:
     <%= f.select :xcntryski, ["Y", "N"] %>
   </div>
   <div class="field">
-    <%= f.label :dogs %><br>
+    <%= f.label :dogs %>:
     <%= f.select :dogs, ["Y", "N"] %>
   </div>
   <div class="field">
-    <%= f.label :roadbike, "Road Bikes" %><br>
+    <%= f.label :roadbike, "Road Bikes" %>:
     <%= f.select :roadbike, ["Y", "N"] %>
   </div>
   <div class="field">
-    <%= f.label :mtnbike, "Mountain Bikes" %><br>
+    <%= f.label :mtnbike, "Mountain Bikes" %>:
     <%= f.select :mtnbike, ["Y", "N"] %>
   </div>
   <div class="field">
-    <%= f.label :conditions, "Special Notes on Accessibility or Use" %><br>
+    <%= f.label :conditions, "Special Notes on Accessibility or Use" %>:<br>
     <%= f.text_area :conditions, cols: 100, rows: 5 %>
   </div>
   <div class="field">
-    <%= f.label :map_url, "Map URL" %><br>
+    <%= f.label :map_url, "Map URL" %>:<br>
     <%= f.text_field :map_url, size: 120 %>
   </div>
   <div class="field">
-    <%= f.label :trlsurface, "Trail Surface" %><br>
+    <%= f.label :trlsurface, "Trail Surface" %>:<br>
     <%= f.text_field :trlsurface %>
   </div>
   <div class="actions">

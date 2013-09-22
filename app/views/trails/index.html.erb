@@ -16,8 +16,8 @@ Upload data (this will replace all of your organization's current data!)
 <% if current_user.admin? %>
 Showing all trails.
 <% else %> 
-<%= link_to "All Trails", :action => "index", :all => "true" %>
-<%= link_to "#{current_user.organization} Trails", :action => "index" %>
+<%= link_to "Show All Trails", :action => "index", :all => "true" %>
+<%= link_to "Show #{current_user.organization} Trails only", :action => "index", :all => "false" %>
 <% end %>
 <table>
   <thead>
@@ -49,7 +49,7 @@ Showing all trails.
         <td><%= truncate(trail.statustext, length: 50) %></td>
         <td><%= truncate(trail.description, length: 50) %></td>
         <td><%= trail.source %></td>
-        <% if current_user %>
+        <% if current_user && current_user.organization == trail.source %>
         <td><%= link_to 'Show', trail %></td>
         <td><%= link_to 'Edit', edit_trail_path(trail) %></td>
         <td><%= link_to 'Delete', trail, method: :delete, data: { confirm: 'Are you sure?' } %></td>

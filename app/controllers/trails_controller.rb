@@ -3,20 +3,22 @@ class TrailsController < ApplicationController
 
   before_action :authenticate_user!, except: [:index]
   
+  before_action :set_show_all_param
+
   # GET /trails
   # GET /trails.json
   def index    
     respond_to do |format|
       format.html do
         authenticate_user!
-        if params[:all] == "true" || current_user.admin?
-          @trails = Trail.all   
+        if @show_all == "true" || current_user.admin?
+          @trails = Trail.all.order("name")  
         else
           @trails = Trail.where(source: current_user.organization).order("name")
         end
       end
       format.json do
-        @trails = Trail.all
+        @trails = Trail.order("name")
         entity_factory = ::RGeo::GeoJSON::EntityFactory.instance
         features = []
         @trails.each do |trail|
@@ -129,11 +131,19 @@ class TrailsController < ApplicationController
     end
   end
 
+  def default_url_options
+    { all: @show_all }.merge(super)
+  end
+
+  def set_show_all_param
+    @show_all = params[:all] if params[:all]
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_trail
       trail = Trail.find(params[:id])
-      if params[:all] == "true" || trail.source == current_user.organization || current_user.admin?
+      if @show_all == "true" || trail.source == current_user.organization || current_user.admin?
         @trail = trail
       else
         # this should do something smarter
@@ -143,6 +153,9 @@ class TrailsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def trail_params
-      params.require(:trail).permit(:name, :status, :statustext, :description, :source, :steward, :length, :hike, :equestrian, :xcntryski, :dogs, :roadbike, :mtnbike, :map_url, :surface)
+      params.require(:trail).permit(:name, :status, :statustext, :description, :source, :steward, :length, :hike, :equestrian, :xcntryski, :dogs, :roadbike, :mtnbike, :conditions, :map_url, :surface)
     end
+
+    
+ 
 end
