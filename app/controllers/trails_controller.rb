@@ -1,7 +1,8 @@
 class TrailsController < ApplicationController
-  before_action :set_trail, only: [:show, :edit, :destroy]
+  before_action :set_trail, only: [:show, :edit, :destroy, :update]
   before_action :authenticate_user!, except: [:index]
   before_action :set_show_all_param
+  before_action :check_for_cancel, only: [:update]
 
   # GET /trails
   # GET /trails.json
@@ -143,16 +144,10 @@ class TrailsController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_trail
       @trail = Trail.find(params[:id])
-      if @show_all == "true" || trail.source == current_user.organization || current_user.admin?
-        @trail = trail
-      else
-        # this should do something smarter
-        head 403
-      end
     end
 
     def authorized?
-      (current_user.organization == @trailsegment.source || current_user.admin?)
+      (current_user.organization == @trail.source) || current_user.admin?
     end
     
     # Never trust parameters from the scary internet, only allow the white list through.

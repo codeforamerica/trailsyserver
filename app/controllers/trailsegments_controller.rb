@@ -1,6 +1,7 @@
 class TrailsegmentsController < ApplicationController
   before_action :set_trailsegment, only: [:show, :edit, :update, :destroy]
   before_action :authenticate_user!, except: [:index]
+  before_action :check_for_cancel, only: [:update]
   
   # GET /trailsegments
   # GET /trailsegments.json

@@ -1,7 +1,8 @@
 class TrailheadsController < ApplicationController
-  before_action :set_trailhead, only: [:show, :edit, :destroy]
+  before_action :set_trailhead, only: [:show, :edit, :destroy, :update]
   before_action :authenticate_user!, except: [:index]
   before_action :set_show_all_param
+  before_action :check_for_cancel, only: [:update]
 
   # GET /trailheads
   # GET /trailheads.json
@@ -157,7 +158,7 @@ class TrailheadsController < ApplicationController
     end
 
     def authorized?
-      (current_user.organization == @trailsegment.source || current_user.admin?)
+      (current_user.organization == @trailhead.source || current_user.admin?)
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
@@ -183,4 +184,9 @@ class TrailheadsController < ApplicationController
       trailheads_sort      
     end
 
+    def check_for_cancel
+      if params[:commit] == "Cancel"
+        redirect_to trailheads_path
+      end
+    end
   end
