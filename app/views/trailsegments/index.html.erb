@@ -48,9 +48,11 @@ Showing all trail segments.
           <% end %>
           </ul>
         </td>
+        <% if (current_user && current_user.organization == trailsegment.source) || current_user.admin? %> 
         <td><%= link_to 'Show', trailsegment %></td>
         <td><%= link_to 'Edit', edit_trailsegment_path(trailsegment) %></td>
         <td><%= link_to 'Destroy', trailsegment, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <% end %>
       </tr>
     <% end %>
   </tbody>

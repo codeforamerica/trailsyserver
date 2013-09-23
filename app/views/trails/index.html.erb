@@ -49,10 +49,10 @@ Showing all trails.
         <td><%= truncate(trail.statustext, length: 50) %></td>
         <td><%= truncate(trail.description, length: 50) %></td>
         <td><%= trail.source %></td>
-        <% if current_user && current_user.organization == trail.source %>
-        <td><%= link_to 'Show', trail %></td>
-        <td><%= link_to 'Edit', edit_trail_path(trail) %></td>
-        <td><%= link_to 'Delete', trail, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <% if (current_user && current_user.organization == trail.source) || current_user.admin? %>
+          <td><%= link_to 'Show', trail %></td>
+          <td><%= link_to 'Edit', edit_trail_path(trail) %></td>
+          <td><%= link_to 'Delete', trail, method: :delete, data: { confirm: 'Are you sure?' } %></td>
         <% end %>
       </tr>
     <% end %>

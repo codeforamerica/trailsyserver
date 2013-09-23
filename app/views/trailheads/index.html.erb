@@ -49,7 +49,7 @@ Showing all trailheads.
           <% end %>
           </ul>
         </td>
-        <% if current_user && current_user.organization == trailhead.source %>
+        <% if (current_user && current_user.organization == trailhead.source) || current_user.admin? %>
         <td><%= link_to 'Show', trailhead %></td>
         <td><%= link_to 'Edit', edit_trailhead_path(trailhead) %></td>
         <td><%= link_to 'Destroy', trailhead, method: :delete, data: { confirm: 'Are you sure?' } %></td>
