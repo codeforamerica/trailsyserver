@@ -16,9 +16,11 @@ This is still very much in early development. We hope to merge this repo and the
 
 ### Heroku setup
 
-(more instructions to come on DB user setup -- you need a user that can create databases and tables. After setup, you can remove those privileges if you prefer.)
+(Note: more instructions to come -- for example, you need a database user that can create databases and tables. After setup, you can remove those privileges if you prefer.)
 
-To set up an instance on Heroku, you need a instance of PostGIS available (we're currently using one installed an EC2 server)
+To set up an instance on Heroku, you need a instance of PostGIS available (we're currently using one installed an EC2 server.)
+
+An Amazon S3 account may soon be required for photo storage, but that depends on how photo storage gets built out.
 
 To install on Heroku, you'll need to set the following app config vars:
 
@@ -26,7 +28,7 @@ To install on Heroku, you'll need to set the following app config vars:
  - GDAL_BINDIR:                /app/vendor/gdal/1.10.0/bin
  - DATABASE_URL:               postgis://[db_username]:[db_password]@[host]:[port]/[db_name]
 
-To add these to your Heroku app, assuming you have the Heroku toolbelt installed:
+To add these to your Heroku app (Heroku toolbelt required):
 
     heroku config:add BUILDPACK_URL=https://github.com/ddollar/heroku-buildpack-multi.git
     heroku config:add GDAL_BINDIR=/app/vendor/gdal/1.10.0/bin
@@ -36,10 +38,10 @@ To initialize the database:
 
     heroku run rake db:create && db:migrate && db:seed
 
-To populate the database with sample trails, trailheads, and segments:
+To populate the database with sample trails, trailheads, and segments from CVNP and MPSSC:
 
     heroku run rake load:all
-    
+
 ---
 
 ### Local setup
@@ -68,15 +70,15 @@ Environment variables required:
 ---
 
 #### Users created on initialization
-Three users will be set up on DB creation. They should be email addresses:
+Three users will be set up on DB creation. They should be email addresses. The first is the admin user:
 
  - DEFAULT_ADMIN_USER
 
-These users will acquire more generic names soon:
+These users will have organizations of "CVNP" and "MPSSC" respectively (more generic user names and organizations should be provide for testing, but for now they're not):
 
  - TEST_CVNP_USER
  - TEST_MPSSC_USER
 
-All of these initial users will share the password in the environment variable
+All of these initial users will share the password in the environment variable:
 
  - DEFAULT_ADMIN_PASSWORD
