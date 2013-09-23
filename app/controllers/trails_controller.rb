@@ -152,7 +152,12 @@ class TrailsController < ApplicationController
     
     # Never trust parameters from the scary internet, only allow the white list through.
     def trail_params
-      params.require(:trail).permit(:name, :status, :statustext, :description, :source, :steward, :length, :hike, :equestrian, :xcntryski, :dogs, :roadbike, :mtnbike, :conditions, :map_url, :surface)
+      params.require(:trail).permit(:name, :status, :statustext, :description, :photo, :source, :steward, :length, :hike, :equestrian, :xcntryski, :dogs, :roadbike, :mtnbike, :conditions, :map_url, :surface)
     end
  
+    def check_for_cancel
+      if params[:commit] == "Cancel"
+        redirect_to trailheads_path
+      end
+    end
 end

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130917183000) do
+ActiveRecord::Schema.define(version: 20130923221218) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -53,10 +53,14 @@ ActiveRecord::Schema.define(version: 20130917183000) do
     t.string   "map_url"
     t.string   "dogs"
     t.text     "description"
-    t.integer  "status",      default: 0
+    t.integer  "status",             default: 0
     t.string   "statustext"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "photo_file_name"
+    t.string   "photo_content_type"
+    t.integer  "photo_file_size"
+    t.datetime "photo_updated_at"
   end
 
   create_table "trailsegments", force: true do |t|

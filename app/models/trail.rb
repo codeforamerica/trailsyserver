@@ -1,5 +1,7 @@
 class Trail < ActiveRecord::Base
 
+  has_attached_file :photo, :styles => { medium: "300x300>", thumb: "100x100>" }
+
   def self.parse_csv(file)
     logger.info "parse_csv"
     parsed_trails = []

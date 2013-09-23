@@ -150,4 +150,11 @@ class TrailsegmentsController < ApplicationController
     def trailsegment_params
       params.require(:trailsegment).permit(:length, :source, :steward, :geom, :trail1, :trail2, :trail3)
     end
+
+    def check_for_cancel
+      if params[:commit] == "Cancel"
+        redirect_to trailheads_path
+      end
+    end
+    
   end

@@ -1,4 +1,4 @@
-<%= form_for(@trail) do |f| %>
+<%= form_for @trail, html: { multipart: true } do |f| %>
   <% if @trail.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@trail.errors.count, "error") %> prohibited this trail from being saved:</h2>
@@ -26,6 +26,11 @@
   <div class="field">
     <%= f.label :description, "Trail Description" %><br>
     <%= f.text_area :description, cols: 100, rows: 10 %>
+  </div>
+  <div class="field">
+    <%= f.label :photo %>:
+    <%= image_tag @trail.photo.url(:thumb) %>
+    <%= f.file_field :photo %>
   </div>
   <div class="field">
     <%= f.label :source %>:
