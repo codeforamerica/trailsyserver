@@ -16,7 +16,7 @@ This is still very much in early development. We hope to merge this repo and the
 
 ### Heroku setup
 
-(more instructions to come on DB setup)
+(more instructions to come on DB user setup -- you need a user that can create databases and tables. After setup, you can remove those privileges if you prefer.)
 
 To set up an instance on Heroku, you need a instance of PostGIS available (we're currently using one installed an EC2 server)
 
@@ -32,6 +32,14 @@ To add these to your Heroku app, assuming you have the Heroku toolbelt installed
     heroku config:add GDAL_BINDIR=/app/vendor/gdal/1.10.0/bin
     heroku config:add DATABASE_URL=[your database URL]
 
+To initialize the database:
+
+    heroku run rake db:create && db:migrate && db:seed
+
+To populate the database with sample trails, trailheads, and segments:
+
+    heroku run rake load:all
+    
 ---
 
 ### Local setup
