@@ -1,5 +1,5 @@
 class TrailheadsController < ApplicationController
-  before_action :set_trailhead, only: [:show, :edit, :update, :destroy]
+  before_action :set_trailhead, only: [:show, :edit, :destroy]
   before_action :authenticate_user!, except: [:index]
   before_action :set_show_all_param
 
@@ -58,29 +58,32 @@ class TrailheadsController < ApplicationController
 
   # GET /trailheads/1/edit
   def edit
-  end
-
-  # POST /trailheads
-  # POST /trailheads.json
-  def create
-    @trailhead = Trailhead.new(trailhead_params)
-
-    respond_to do |format|
-      if @trailhead.save
-        format.html { redirect_to trailheads_path, notice: 'Trailhead was successfully created.' }
-        format.json { render action: 'show', status: :created, location: @trailhead }
-      else
-        format.html { render action: 'new' }
-        format.json { render json: @trailhead.errors, status: :unprocessable_entity }
-      end
+    unless authorized?
+      redirect_to trailsegments_path, notice: 'Authorization failure.'
     end
   end
+
+  # # POST /trailheads
+  # # POST /trailheads.json
+  # def create
+  #   @trailhead = Trailhead.new(trailhead_params)
+
+  #   respond_to do |format|
+  #     if @trailhead.save
+  #       format.html { redirect_to trailheads_path, notice: 'Trailhead was successfully created.' }
+  #       format.json { render action: 'show', status: :created, location: @trailhead }
+  #     else
+  #       format.html { render action: 'new' }
+  #       format.json { render json: @trailhead.errors, status: :unprocessable_entity }
+  #     end
+  #   end
+  # end
 
   # PATCH/PUT /trailheads/1
   # PATCH/PUT /trailheads/1.json
   def update
     respond_to do |format|
-      if (@trailhead.source == current_user.organization || current_user.admin?) && @trailhead.update(trailhead_params)
+      if authorized? && @trailhead.update(trailhead_params)
 
         format.html { redirect_to trailheads_path, notice: 'Trailhead was successfully updated.' }
         format.json { head :no_content }
@@ -95,7 +98,7 @@ class TrailheadsController < ApplicationController
   # DELETE /trailheads/1.json
   def destroy
     respond_to do |format|
-      if (@trailhead.source == current_user.organization || current_user.admin?) && @trail.destroy
+      if authorized? && @trail.destroy
         format.html { redirect_to trailheads_url, notice: "Trailhead '" + @trailhead.name + "' was successfully deleted." }
         format.json { render :json => { head: :no_content }, status: :ok }
       else
@@ -150,13 +153,11 @@ class TrailheadsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_trailhead
-      trailhead = Trailhead.find(params[:id])
-      if params[:all] == "true" || trailhead.source == current_user.organization || current_user.admin?
-        @trailhead = trailhead
-      else
-        # this should do something smarter
-        head 403
-      end
+      @trailhead = Trailhead.find(params[:id])
+    end
+
+    def authorized?
+      (current_user.organization == @trailsegment.source || current_user.admin?)
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

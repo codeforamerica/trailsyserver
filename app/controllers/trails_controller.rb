@@ -1,5 +1,5 @@
 class TrailsController < ApplicationController
-  before_action :set_trail, only: [:show, :edit, :update, :destroy]
+  before_action :set_trail, only: [:show, :edit, :destroy]
   before_action :authenticate_user!, except: [:index]
   before_action :set_show_all_param
 
@@ -54,29 +54,32 @@ class TrailsController < ApplicationController
 
   # GET /trails/1/edit
   def edit
-  end
-
-  # POST /trails
-  # POST /trails.json
-  def create
-    @trail = Trail.new(trail_params)
-
-    respond_to do |format|
-      if @trail.save
-        format.html { redirect_to trails_path, notice: 'Trail was successfully created.' }
-        format.json { render action: 'show', status: :created, location: @trail }
-      else
-        format.html { render action: 'new' }
-        format.json { render json: @trail.errors, status: :unprocessable_entity }
-      end
+    unless authorized?
+      redirect_to trailsegments_path, notice: 'Authorization failure.'
     end
   end
+
+  # # POST /trails
+  # # POST /trails.json
+  # def create
+  #   @trail = Trail.new(trail_params)
+
+  #   respond_to do |format|
+  #     if @trail.save
+  #       format.html { redirect_to trails_path, notice: 'Trail was successfully created.' }
+  #       format.json { render action: 'show', status: :created, location: @trail }
+  #     else
+  #       format.html { render action: 'new' }
+  #       format.json { render json: @trail.errors, status: :unprocessable_entity }
+  #     end
+  #   end
+  # end
 
   # PATCH/PUT /trails/1
   # PATCH/PUT /trails/1.json
   def update
     respond_to do |format|
-      if (@trail.source == current_user.organization || current_user.admin?) && @trail.update(trail_params)
+      if authorized? && @trail.update(trail_params)
         format.html { redirect_to trails_path, notice: 'Trail was successfully updated.' }
         format.json { head :no_content }
       else
@@ -89,9 +92,8 @@ class TrailsController < ApplicationController
   # DELETE /trails/1
   # DELETE /trails/1.json
   def destroy
-
     respond_to do |format|
-      if (@trail.source == current_user.organization || current_user.admin?) && @trail.destroy
+      if authorized? && @trail.destroy
         format.html { redirect_to trails_url, notice: "Trail '" + @trail.name + "' was successfully deleted." }
         format.json { render :json => { head: no_content }, status: :ok }
       else
@@ -101,7 +103,7 @@ class TrailsController < ApplicationController
     end
   end
 
-  # POST /trails
+  # POST /trails/upload
   def upload
     redirect_to trails_url, notice: "Please enter a source organization code for uploading trail data." if params[:source].empty?
     parsed_trails = Trail.parse(params[:trails])
@@ -140,7 +142,7 @@ class TrailsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_trail
-      trail = Trail.find(params[:id])
+      @trail = Trail.find(params[:id])
       if @show_all == "true" || trail.source == current_user.organization || current_user.admin?
         @trail = trail
       else
@@ -149,11 +151,13 @@ class TrailsController < ApplicationController
       end
     end
 
+    def authorized?
+      (current_user.organization == @trailsegment.source || current_user.admin?)
+    end
+    
     # Never trust parameters from the scary internet, only allow the white list through.
     def trail_params
       params.require(:trail).permit(:name, :status, :statustext, :description, :source, :steward, :length, :hike, :equestrian, :xcntryski, :dogs, :roadbike, :mtnbike, :conditions, :map_url, :surface)
     end
-
-    
  
 end

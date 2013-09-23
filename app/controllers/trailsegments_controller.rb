@@ -52,30 +52,32 @@ class TrailsegmentsController < ApplicationController
 
   # GET /trailsegments/1/edit
   def edit
-  end
-
-  # POST /trailsegments
-  # POST /trailsegments.json
-  def create
-    @trailsegment = Trailsegment.new(trailsegment_params)
-
-    respond_to do |format|
-      if @trailsegment.save
-        format.html { redirect_to trailsegments_path, notice: 'Trail segment was successfully created.' }
-        format.json { render action: 'show', status: :created, location: @trailsegment }
-      else
-        format.html { render action: 'new' }
-        format.json { render json: @trailsegment.errors, status: :unprocessable_entity }
-      end
+    unless authorized?
+      redirect_to trailsegments_path, notice: 'Authorization failure.'
     end
   end
+
+  # # POST /trailsegments
+  # # POST /trailsegments.json
+  # def create
+  #   @trailsegment = Trailsegment.new(trailsegment_params)
+
+  #   respond_to do |format|
+  #     if @trailsegment.save
+  #       format.html { redirect_to trailsegments_path, notice: 'Trail segment was successfully created.' }
+  #       format.json { render action: 'show', status: :created, location: @trailsegment }
+  #     else
+  #       format.html { render action: 'new' }
+  #       format.json { render json: @trailsegment.errors, status: :unprocessable_entity }
+  #     end
+  #   end
+  # end
 
   # PATCH/PUT /trailsegments/1
   # PATCH/PUT /trailsegments/1.json
   def update
     respond_to do |format|
-      if (@trailsegment.source == current_user.organization ||
-          current_user.admin?) && @trailsegment.update(trailsegment_params)
+      if authorized? && @trailsegment.update(trailsegment_params)
         format.html { redirect_to trailsegments_path, notice: 'Trailsegment was successfully updated.' }
         format.json { head :no_content }
       else
@@ -89,7 +91,7 @@ class TrailsegmentsController < ApplicationController
   # DELETE /trailsegments/1.json
   def destroy
     respond_to do |format|
-      if (@trailsegment.source == current_user.organization || current_user.admin?) && trailsegment.destroy
+      if authorized? && trailsegment.destroy
         format.html { redirect_to trailsegments_url, notice: "Trail segment was successfully deleted." }
         format.json { render :json => { head: :no_content }, status: :ok }
       else
@@ -136,13 +138,11 @@ class TrailsegmentsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_trailsegment
-      trailsegment = Trailsegment.find(params[:id])
-      if params[:all] == "true" || trailsegment.source == current_user.organization || current_user.admin?
-        @trailsegment = trailsegment
-      else
-        # this should do something smarter
-        head 403
-      end
+      @trailsegment = Trailsegment.find(params[:id])
+    end
+
+    def authorized?
+      (current_user.organization == @trailsegment.source || current_user.admin?)
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
