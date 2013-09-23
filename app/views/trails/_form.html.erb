@@ -25,11 +25,11 @@
   </div>
   <div class="field">
     <%= f.label :description, "Trail Description" %><br>
-    <%= f.text_area :description, cols: 100, rows: 10 %>
+    <%= f.text_area :description, cols: 100, rows: 5 %>
   </div>
   <div class="field">
     <%= f.label :photo %>:
-    <%= image_tag @trail.photo.url(:thumb) %>
+    <%= link_to image_tag(@trail.photo.url(:thumb)), @trail.photo.url if @trail.photo? %>
     <%= f.file_field :photo %>
   </div>
   <div class="field">
