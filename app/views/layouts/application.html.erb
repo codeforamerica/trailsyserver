@@ -13,6 +13,11 @@
     <%= render 'devise/menu/registration_items' %>
     <%= render 'devise/menu/login_items' %>
   </ul>
+  <ul class="hmenu">
+    <li class="<%= 'active' if current_page?(trails_path) %>"><%= link_to "Trails", trails_path %></li>
+    <li class="<%= 'active' if current_page?(trailheads_path) %>"><%= link_to "Trailheads", trailheads_path %></li>
+    <li class="<%= 'active' if current_page?(trailsegments_path) %>"><%= link_to "Segments", trailsegments_path %></li>
+  </ul>
 <%= yield %>
 
 </body>

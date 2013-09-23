@@ -1,4 +1,4 @@
-<h1>Listing Trailheads</h1>
+<h1>Trailhead List</h1>
 
 <hr>
 Upload new trailheads (this will replace all of your organization's current data!)
@@ -16,9 +16,9 @@ Upload new trailheads (this will replace all of your organization's current data
 <% if current_user.admin? %>
 Showing all trailheads.
 <% else %>
-<%= link_to "All Trailheads", :action => "index", :all => "true" %>
+<%= link_to "Show all trailheads", :action => "index", :all => "true" %>
 
-<%= link_to "#{current_user.organization} Trailheads", :action => "index", :all => "false" %>
+<%= link_to "Show #{current_user.organization} trailheads only", :action => "index", :all => "false" %>
 <% end %>
 
 <table>

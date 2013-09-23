@@ -16,8 +16,8 @@ Upload data (this will replace all of your organization's current data!)
 <% if current_user.admin? %>
 Showing all trails.
 <% else %> 
-<%= link_to "Show All Trails", :action => "index", :all => "true" %>
-<%= link_to "Show #{current_user.organization} Trails only", :action => "index", :all => "false" %>
+<%= link_to "Show all trails", :action => "index", :all => "true" %>
+<%= link_to "Show #{current_user.organization} trails only", :action => "index", :all => "false" %>
 <% end %>
 <table>
   <thead>
