@@ -1,0 +1,76 @@
+<!-- TODO: consider merging this with other upload views -->
+<h1>Processed Trailsegment Upload</h1>
+<%= link_to "Back to Trailsegment Listing", trailsegments_path %>
+<h3>Source matches</h3>
+
+<table>
+  <tr>
+    <th>
+      Status
+    </th>
+    <th>
+      Trailsegment Name
+    </th>
+    <th>
+      Import errors
+    </th>
+  </tr>
+  <% @added_trailsegments.each do |added_trailsegment| %>
+  <tr>
+    <td>
+      <% if added_trailsegment[:success] %>
+      <b>Added</b>
+      <% else %>
+      <b>Not Added</b> 
+      <% end %>
+    </td>
+    <td>
+      <%= [added_trailsegment[:trailsegment].trail1,
+      added_trailsegment[:trailsegment].trail2,
+      added_trailsegment[:trailsegment].trail3].join("|") %>
+    </td>
+    <td>
+      <%= added_trailsegment[:message] %>
+    </td>
+  </tr>
+  <% end %>
+  <% @removed_trailsegments.each do |removed_trailsegment| %>
+  <tr>
+    <td>  
+      <% if removed_trailsegment[:success] %>
+      <b>Deleted</b> 
+      <% else %>
+      <b>Not Deleted</b>
+      <% end %>
+    </td>
+    <td>
+      <%= [removed_trailsegment[:trailsegment].trail1,
+      removed_trailsegment[:trailsegment].trail2,
+      removed_trailsegment[:trailsegment].trail3].join("|") %>
+    </td>
+    <td>
+      <%= removed_trailsegment[:trailsegment].created_at %>
+    </td>
+  </tr>
+  <% end %>
+</table>
+<h3>Source non-matches (should be "<%= current_user.organization %>")</h3>
+<table>
+  <tr>
+    <th>Trailsegment name</th>
+    <th>Source field in Upload</th>
+  </tr>
+<% @non_source_trailsegments.each do |trailsegment| %>
+  <tr>
+    <td>
+      <%= trailsegment.trail1 %>|
+      <%= trailsegment.trail2 %>|
+      <%= trailsegment.trail3 %>
+    </td>
+    <td>
+      <%= trailsegment.source %>
+    </td>
+  </tr>
+<% end %>
+</table>
+<%= link_to "Back to Trailsegment Listing", trailsegments_path %>

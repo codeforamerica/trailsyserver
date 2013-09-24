@@ -1,5 +1,7 @@
 class Trail < ActiveRecord::Base
 
+  has_attached_file :photo, :styles => { medium: "300x300>", thumb: "100x100>" }
+
   def self.parse_csv(file)
     logger.info "parse_csv"
     parsed_trails = []
@@ -16,13 +18,10 @@ class Trail < ActiveRecord::Base
     parsed_trails
   end
 
-  def self.parse_json(file)
-  end
+ 
 
   def self.parse(file)
-    if (file.original_filename =~ /json$/)
-      return self.parse_json(file)
-    elsif (file.original_filename =~ /csv$/)
+    if (file.original_filename =~ /csv$/)
       return self.parse_csv(file)
     else
       nil

@@ -1,17 +1,32 @@
-<h1>Listing Segments</h1>
+<h1>Segment List</h1>
 
-<%= link_to "All Segments", :action => "index", :all => "true" %>
+<hr>
+Upload new segments (this will replace all of your organization's current data!)
+<br><br>
+<%= form_tag({ action: :upload }, multipart: true) do %>
+  <% if current_user.admin? %>
+  <%= text_field_tag 'source', nil, placeholder: "Organization" %>
+  <% else %>
+  <%= hidden_field_tag 'source', current_user.organization %>
+  <% end %>
+  <%= file_field_tag 'trailsegments' %><br>
+  <%= submit_tag "Submit" %>
+<% end %>
+<hr>
+<% if current_user.admin? %>
+Showing all trail segments.
+<% else %>
+<%= link_to "Show all segments", :action => "index", :all => "true" %>
 
-<%= link_to "#{current_user.organization} Segments", :action => "index" %>
+<%= link_to "Show #{current_user.organization} segments only", :action => "index", :all => "false" %>
+<% end %>
 <table>
   <thead>
     <tr>
       <th>Length</th>
       <th>Source</th>
       <th>Steward</th>
-      <th>Name1</th>
-      <th>Name2</th>
-      <th>Name3</th>
+      <th>Trails</th>
       <th></th>
       <th></th>
       <th></th>
@@ -24,12 +39,20 @@
         <td><%= trailsegment.length %></td>
         <td><%= trailsegment.source %></td>
         <td><%= trailsegment.steward %></td>
-        <td><%= trailsegment.trail1 %></td>
-        <td><%= trailsegment.trail2 %></td>
-        <td><%= trailsegment.trail3 %></td>
+        <td>
+          <ul>
+          <% %w[trail1 trail2 trail3 trail4 trail5 trail6].each do |trail| %>
+            <% if !(trailsegment["#{trail}"].nil?) && trailsegment["#{trail}"].size > 1 %>
+              <li><%= trailsegment["#{trail}"] %></li>
+            <% end %>
+          <% end %>
+          </ul>
+        </td>
+        <% if (current_user && current_user.organization == trailsegment.source) || current_user.admin? %> 
         <td><%= link_to 'Show', trailsegment %></td>
         <td><%= link_to 'Edit', edit_trailsegment_path(trailsegment) %></td>
         <td><%= link_to 'Destroy', trailsegment, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <% end %>
       </tr>
     <% end %>
   </tbody>

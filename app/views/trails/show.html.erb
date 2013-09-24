@@ -20,6 +20,18 @@
 </p>
 
 <p>
+  <strong>Photo</strong>
+  <% if @trail.photo? %>
+    original:
+    <%= image_tag @trail.photo.url %>
+    medium:
+    <%= image_tag @trail.photo.url(:medium) %>
+    thumb:
+    <%= image_tag @trail.photo.url(:thumb) %>
+  <% end %>
+</p>
+
+<p>
   <strong>Source:</strong>
   <%= @trail.source %>
 </p>

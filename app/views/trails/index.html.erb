@@ -16,8 +16,8 @@ Upload data (this will replace all of your organization's current data!)
 <% if current_user.admin? %>
 Showing all trails.
 <% else %> 
-<%= link_to "All Trails", :action => "index", :all => "true" %>
-<%= link_to "#{current_user.organization} Trails", :action => "index" %>
+<%= link_to "Show all trails", :action => "index", :all => "true" %>
+<%= link_to "Show #{current_user.organization} trails only", :action => "index", :all => "false" %>
 <% end %>
 <table>
   <thead>
@@ -27,6 +27,7 @@ Showing all trails.
       <th>Status Text</th>
       <th>Description</th>
       <th>Source</th>
+      <th>Photo</th>
       <th colspan=3>Action</th>
       <th></th>
       <th></th>
@@ -49,10 +50,11 @@ Showing all trails.
         <td><%= truncate(trail.statustext, length: 50) %></td>
         <td><%= truncate(trail.description, length: 50) %></td>
         <td><%= trail.source %></td>
-        <% if current_user %>
-        <td><%= link_to 'Show', trail %></td>
-        <td><%= link_to 'Edit', edit_trail_path(trail) %></td>
-        <td><%= link_to 'Delete', trail, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= image_tag trail.photo.url(:thumb) if trail.photo? %></td>
+        <% if (current_user && current_user.organization == trail.source) || current_user.admin? %>
+          <td><%= link_to 'Show', trail %></td>
+          <td><%= link_to 'Edit', edit_trail_path(trail) %></td>
+          <td><%= link_to 'Delete', trail, method: :delete, data: { confirm: 'Are you sure?' } %></td>
         <% end %>
       </tr>
     <% end %>

@@ -1,7 +1,7 @@
-<h1>Listing Trailheads</h1>
+<h1>Trailhead List</h1>
 
 <hr>
-Upload data (this will replace all of your organization's current data!)
+Upload new trailheads (this will replace all of your organization's current data!)
 <br><br>
 <%= form_tag({ action: :upload }, multipart: true) do %>
   <% if current_user.admin? %>
@@ -16,20 +16,19 @@ Upload data (this will replace all of your organization's current data!)
 <% if current_user.admin? %>
 Showing all trailheads.
 <% else %>
-<%= link_to "All Trailheads", :action => "index", :all => "true" %>
+<%= link_to "Show all trailheads", :action => "index", :all => "true" %>
 
-<%= link_to "#{current_user.organization} Trailheads", :action => "index" %>
+<%= link_to "Show #{current_user.organization} trailheads only", :action => "index", :all => "false" %>
 <% end %>
+
 <table>
   <thead>
     <tr>
       <th>Name</th>
       <th>Source</th>
       <th>Steward</th>
-      <th>Trail1</th>
-      <th>Trail2</th>
-      <th>Trail3</th>
-      <th></th>
+      <th>Trails</th>
+      <th colspan=3>Action</th>
       <th></th>
       <th></th>
     </tr>
@@ -41,12 +40,20 @@ Showing all trailheads.
         <td><%= trailhead.name %></td>
         <td><%= trailhead.source %></td>
         <td><%= trailhead.steward %></td>
-        <td><%= trailhead.trail1 %></td>
-        <td><%= trailhead.trail2 %></td>
-        <td><%= trailhead.trail3 %></td>
+        <td>
+          <ul>
+          <% %w[trail1 trail2 trail3 trail4 trail5 trail6].each do |trail| %>
+            <% if !(trailhead["#{trail}"].nil?) && trailhead["#{trail}"].size > 1 %>
+              <li><%= trailhead["#{trail}"] %></li>
+            <% end %>
+          <% end %>
+          </ul>
+        </td>
+        <% if (current_user && current_user.organization == trailhead.source) || current_user.admin? %>
         <td><%= link_to 'Show', trailhead %></td>
         <td><%= link_to 'Edit', edit_trailhead_path(trailhead) %></td>
         <td><%= link_to 'Destroy', trailhead, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <% end %>
       </tr>
     <% end %>
   </tbody>
