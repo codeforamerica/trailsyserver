@@ -6,8 +6,13 @@ This will eventually provide:
  - an interface for trail stewards to upload and maintain their trail data in the Trailsy database, as well as provide status updates, closure updates, photos, and institutional information for invidivual trails.
  - data structure and API informed by [trail standards draft](https://docs.google.com/document/d/1frt5HkKTdqEaNEnfk2Dq9IYxctvPjVnoU_F33Px2zSQ).
  
+## Requirements
 
-This is still very much in early development. We hope to merge this repo and the [Trailsy](http://www.github.com/danavery/trailsy) repo soon.
+ - Ruby 1.9.3 or newer. (All testing so far has been with Ruby 2.0.0)
+ - An instance of Postgres with the PostGIS extension installed (can be local or remote)
+ - An Amazon S3 bucket for photo storage. (Not needed for development environment, which stores photos in the local filesystem. See "Local setup" below.)
+
+We hope to merge this repo and the [Trailsy](http://www.github.com/danavery/trailsy) repo soon.
 
 ### Sample working resource requests
  - [http://trailsyserver-prod.herokuapp.com/trails.json](http://trailsyserver-prod.herokuapp.com/trails.json)
@@ -60,13 +65,13 @@ You need the GDAL/OGR package installed locally.
 
 There are two "development" Rails environments available: 
 
- - "development" uses a local instance of PostGIS, and local file storage for photos, using the pg gem adapter defaults
+ - "development" uses a local instance of PostGIS, using the pg gem adapter defaults, and local file storage for photos.
+
  - "development-aws" uses a remote instance of PostGIS, and S3 for photos, based on the environmental variables below
 
     - TRAILSY_DB_DEV_USER=[name of database user]
     - TRAILSY_DB_DEV_HOST=[database host]
     - TRAILSY_DB_DEV_PASSWD=[database password]
-    - TRAILSY_DB_DEV_SU_PASSWD=[database password]
     - TRAILSY_DB_DEV_DATABASE=[development database name]
     - TRAILSY_DEV_AWS_BUCKET=[your AWS S3 bucket name]
     - TRAILSY_DEV_AWS_ACCESS_KEY_ID=[your AWS access key id]
@@ -77,7 +82,6 @@ There are two "development" Rails environments available:
     - TRAILSY_DB_USER=[name of database user]
     - TRAILSY_DB_HOST=[database host]
     - TRAILSY_DB_PASSWORD=[database password]
-    - TRAILSY_SU_PASSWORD=[database password]
     - TRAILSY_DB_DATABASE=[production database name]
     - TRAILSY_AWS_BUCKET=[your AWS S3 bucket name]
     - TRAILSY_AWS_ACCESS_KEY_ID=[your AWS access key id]
@@ -103,3 +107,5 @@ These users will have organization field values of "CVNP" and "MPSSC" respective
 All of these initial users will share the password in the following environment variable:
 
  - DEFAULT_ADMIN_PASSWORD
+
+To start the server

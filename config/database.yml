@@ -35,7 +35,7 @@ development_aws:
   username: trailsy_dev
   password: <%= ENV["TRAILSY_DB_DEV_PASSWD"] %>
   su_username: trailsy_dev
-  su_password: <%= ENV["TRAILSY_DB_DEV_SU_PASSWD"] %>
+  su_password: <%= ENV["TRAILSY_DB_DEV_PASSWD"] %>
   # schema_search_path: "public, postgis"
   postgis_extension: true
 
