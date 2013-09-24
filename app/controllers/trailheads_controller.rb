@@ -110,6 +110,9 @@ class TrailheadsController < ApplicationController
   end
 
   def upload
+    if !current_user
+      head 403
+    end
     redirect_to trails_url, notice: "Please enter a source organization code for uploading trail data." if params[:source].empty?
     parsed_trailheads = Trailhead.parse(params[:trailheads])
     if parsed_trailheads.nil?

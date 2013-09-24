@@ -81,7 +81,6 @@ class TrailsController < ApplicationController
   def update
     respond_to do |format|
       if params[:trail][:delete_photo] && params[:trail][:delete_photo] == "1"
-          logger.info "delete"
           @trail.photo = nil
       end
       if authorized? && @trail.update(trail_params)
@@ -110,6 +109,9 @@ class TrailsController < ApplicationController
 
   # POST /trails/upload
   def upload
+    if !current_user
+      head 403
+    end
     redirect_to trails_url, notice: "Please enter a source organization code for uploading trail data." if params[:source].empty?
     parsed_trails = Trail.parse(params[:trails])
     if parsed_trails.nil?

@@ -103,6 +103,9 @@ class TrailsegmentsController < ApplicationController
   end
 
   def upload
+    if !current_user
+      head 403
+    end
     redirect_to trailsegments_url, notice: "Please enter a source organization code for uploading trail segment data." if params[:source].empty?
     parsed_trailsegments = Trailsegment.parse(params[:trailsegments])
     if parsed_trailsegments.nil?
