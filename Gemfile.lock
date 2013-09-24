@@ -29,6 +29,10 @@ GEM
       tzinfo (~> 0.3.37)
     arel (4.0.0)
     atomic (1.1.14)
+    aws-sdk (1.19.0)
+      json (~> 1.4)
+      nokogiri (>= 1.4.4, < 1.6.0)
+      uuidtools (~> 2.1)
     bcrypt-ruby (3.1.2)
     builder (3.1.4)
     climate_control (0.0.3)
@@ -68,6 +72,7 @@ GEM
     mime-types (1.25)
     minitest (4.7.5)
     multi_json (1.8.0)
+    nokogiri (1.5.10)
     oj (2.1.4)
     orm_adapter (0.4.0)
     paperclip (3.5.1)
@@ -146,6 +151,7 @@ GEM
       kgio (~> 2.6)
       rack
       raindrops (~> 0.7)
+    uuidtools (2.1.4)
     warden (1.2.3)
       rack (>= 1.0)
 
@@ -154,6 +160,7 @@ PLATFORMS
 
 DEPENDENCIES
   activerecord-postgis-adapter
+  aws-sdk
   coffee-rails (~> 4.0.0)
   devise
   heroku_rails_deflate

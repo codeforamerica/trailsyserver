@@ -80,6 +80,10 @@ class TrailsController < ApplicationController
   # PATCH/PUT /trails/1.json
   def update
     respond_to do |format|
+      if params[:trail][:delete_photo] && params[:trail][:delete_photo] == "1"
+          logger.info "delete"
+          @trail.photo = nil
+      end
       if authorized? && @trail.update(trail_params)
         format.html { redirect_to trails_path, notice: 'Trail was successfully updated.' }
         format.json { head :no_content }

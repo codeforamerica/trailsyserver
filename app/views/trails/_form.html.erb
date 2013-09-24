@@ -30,7 +30,9 @@
   <div class="field">
     <%= f.label :photo %>:
     <%= link_to image_tag(@trail.photo.url(:thumb)), @trail.photo.url if @trail.photo? %>
-    <%= f.file_field :photo %>
+    <%= f.file_field :photo %><br>
+    <%= f.label "Delete current photo:" %>
+    <%= f.check_box :delete_photo, { checked: 1 } %>
   </div>
   <div class="field">
     <%= f.label :source %>:

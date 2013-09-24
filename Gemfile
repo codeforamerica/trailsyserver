@@ -54,6 +54,7 @@ gem 'unicorn'
 gem 'devise'
 gem 'rubyzip'
 gem 'paperclip', '~> 3.0'
+gem 'aws-sdk'
 
 group :development, :development_aws, :production, :test do
   gem 'rack-cors', :require => 'rack/cors'
