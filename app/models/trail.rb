@@ -1,6 +1,12 @@
 class Trail < ActiveRecord::Base
 
-  has_attached_file :photo, :styles => { medium: "300x300>", thumb: "100x100>" }
+  # has_attached_file :photo, :styles => { medium: "300x300>", thumb: "100x100>" }
+  attr_accessor :delete_photo
+
+  validates :name, uniqueness: { scope: :source, message: "Each trail name should be unique for each source."}
+  has_one :photorecord, dependent: :nullify
+  accepts_nested_attributes_for :photorecord
+
 
   def self.parse_csv(file)
     logger.info "parse_csv"

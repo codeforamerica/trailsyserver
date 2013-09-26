@@ -81,7 +81,7 @@ class TrailsController < ApplicationController
   def update
     respond_to do |format|
       if params[:trail][:delete_photo] && params[:trail][:delete_photo] == "1"
-          @trail.photo = nil
+        @trail.photorecord = nil
       end
       if authorized? && @trail.update(trail_params)
         format.html { redirect_to trails_path, notice: 'Trail was successfully updated.' }
@@ -158,9 +158,12 @@ class TrailsController < ApplicationController
     
     # Never trust parameters from the scary internet, only allow the white list through.
     def trail_params
-      params.require(:trail).permit(:name, :status, :statustext, :description, :photo, :source, :steward, :length, :hike, :equestrian, :xcntryski, :dogs, :roadbike, :mtnbike, :conditions, :map_url, :surface)
+      params.require(:trail).permit(:name, :status, :statustext, :description, 
+        :source, :steward, :length, :hike, :equestrian, :xcntryski, :dogs, 
+        :roadbike, :mtnbike, :conditions, :map_url, :surface, :delete_photo, :photorecord_attributes => [:photo, :source, :name])
     end
  
+
     def check_for_cancel
       if params[:commit] == "Cancel"
         redirect_to trailheads_path
