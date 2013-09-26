@@ -1,7 +1,7 @@
 <h1>Listing Trails</h1>
 
 <hr>
-Upload data (this will replace all of your organization's current data!)
+Upload a CSV of your current trail data to update this list. Note: this will replace all of your organization's existing data!
 <br><br>
 <%= form_tag({ action: :upload }, multipart: true) do %>
   <% if current_user.admin? %>

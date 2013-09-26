@@ -3,7 +3,7 @@ class Trail < ActiveRecord::Base
   # has_attached_file :photo, :styles => { medium: "300x300>", thumb: "100x100>" }
   attr_accessor :delete_photo
 
-  validates :name, uniqueness: { scope: :source, message: "Each trail name should be unique for each source."}
+  validates :name, uniqueness: { scope: :source, message: " has already been taken for this source"}
   has_one :photorecord, dependent: :nullify
   accepts_nested_attributes_for :photorecord
 
@@ -35,6 +35,7 @@ class Trail < ActiveRecord::Base
   end
   
   def self.source_trails(trails, source)
+    logger.info("source_trails: #{trails}, #{source}")
     trails.select { |trail| trail.source == source }
   end
 

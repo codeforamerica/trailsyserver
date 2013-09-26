@@ -130,9 +130,18 @@ class TrailsController < ApplicationController
       end
       @added_trails = []
       source_trails.each do |new_trail|
+        photorecord = Photorecord.where(source: new_trail.source, name: new_trail.name).first     
+        if photorecord
+          new_trail.photorecord = photorecord
+        end
         added_trail = Hash.new
         added_trail[:trail] = new_trail
-        added_trail[:success] = new_trail.save
+        if (new_trail.save)
+          added_trail[:success] = true
+        else
+          added_trail[:success] = false
+          added_trail[:message] = new_trail.errors.full_messages
+        end
         @added_trails.push(added_trail)
       end
     end
