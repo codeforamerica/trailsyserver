@@ -13,10 +13,6 @@
 
 ActiveRecord::Schema.define(version: 20130924220250) do
 
-  # These are extensions that must be enabled in order to support this database
-  enable_extension "plpgsql"
-  enable_extension "postgis"
-
   create_table "photorecords", force: true do |t|
     t.string   "source"
     t.string   "name"
