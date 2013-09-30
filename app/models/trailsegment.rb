@@ -3,7 +3,11 @@ class Trailsegment < ActiveRecord::Base
   validates_uniqueness_of :geom
 
   validates :source, presence: true
+  validates :steward, presence: true
   validates :geom, presence: true
+
+  belongs_to :steward, class_name: 'Organization', foreign_key: "steward_id"
+  belongs_to :source, class_name: 'Organization', foreign_key: "source_id"
 
   def self.parse_geojson(file) 
     feature_collection = RGeo::GeoJSON.decode(File.read(file.path), json_parser: :json)

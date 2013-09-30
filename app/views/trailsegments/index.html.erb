@@ -37,8 +37,8 @@ Showing all trail segments.
     <% @trailsegments.each do |trailsegment| %>
       <tr>
         <td><%= trailsegment.length %></td>
-        <td><%= trailsegment.source %></td>
-        <td><%= trailsegment.steward %></td>
+        <td><%= trailsegment.source.code %></td>
+        <td><%= trailsegment.steward.code %></td>
         <td>
           <ul>
           <% %w[trail1 trail2 trail3 trail4 trail5 trail6].each do |trail| %>
@@ -48,7 +48,7 @@ Showing all trail segments.
           <% end %>
           </ul>
         </td>
-        <% if (current_user && current_user.organization == trailsegment.source) || current_user.admin? %> 
+        <% if (current_user && current_user.organization == trailsegment.source.code) || current_user.admin? %> 
         <td><%= link_to 'Show', trailsegment %></td>
         <td><%= link_to 'Edit', edit_trailsegment_path(trailsegment) %></td>
         <td><%= link_to 'Destroy', trailsegment, method: :delete, data: { confirm: 'Are you sure?' } %></td>

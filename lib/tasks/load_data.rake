@@ -51,14 +51,14 @@ namespace :load do
         # not entirely sure why I need to pull these out. "source"/"steward" is an AR Relation,
         # but doesn't show up with "has_key" 
         # there must be an AR equivalent of has_key to use instead
-        elsif property_key == "source"
-          @trail.source = property_value
-        elsif property_key == "steward"
-          @trail.steward = property_value
-        else 
-          p "#{@trail.name}: warning: '#{property_key}' in input, but not in Trail model."
-        end
+      elsif property_key == "source"
+        @trail.source = property_value
+      elsif property_key == "steward"
+        @trail.steward = property_value
+      else 
+        p "#{@trail.name}: warning: '#{property_key}' in input, but not in Trail model."
       end
+    end
       # @trail.source = row["source"]
       print "."
       @trail.save
@@ -123,6 +123,7 @@ namespace :load do
 
   task :segments => :environment do
     input_file_name = ENV["SEGMENTS_INPUT"] || "lib/summit_trailsegments.geojson"
+    Trailsegment.destroy_all
     File.open(input_file_name) do |geojson|
       feature_collection = RGeo::GeoJSON.decode(geojson, { geo_factory: RGeo::Geographic.spherical_factory(:srid => 4326), json_parser: :json})
       feature_collection.each do |feature|
@@ -132,9 +133,23 @@ namespace :load do
           property_value = property[1]
           if property_key == 'wkt'
             next
+          elsif property_key == "steward" || property_key == "source"
+            property_value = "CVNP" if property_value == "NPS" 
+            organization = Organization.where(code: property_value).first
+            if organization.nil?
+              p "#{property_key} '#{property_value}' not found."
+              property_value = nil
+            else
+              p "#{property_key} #{organization} found."
+              property_value = organization
+            end
           end
           if @segment.attributes.has_key? property_key
             @segment.send "#{property_key.to_sym}=", property_value
+          elsif property_key == "source"
+            @segment.source = property_value
+          elsif property_key == "steward"
+            @segment.steward = property_value
           else
             p "warning: #{property_key} in input, but not in Segment model"
           end

@@ -13,7 +13,7 @@ class TrailsegmentsController < ApplicationController
         if params[:all] == "true" || current_user.admin?
           @trailsegments = Trailsegment.order("trail1").order("trail2").order("trail3")
         else
-          @trailsegments = Trailsegment.where(source: current_user.organization)
+          @trailsegments = Trailsegment.joins(:source).merge(Organization.where(code: current_user.organization)).order("trail1").order("trail2").order("trail3")
         end
       end
       format.json do
@@ -146,7 +146,7 @@ class TrailsegmentsController < ApplicationController
     end
 
     def authorized?
-      (current_user.organization == @trailsegment.source || current_user.admin?)
+      (current_user.organization == @trailsegment.source.code || current_user.admin?)
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

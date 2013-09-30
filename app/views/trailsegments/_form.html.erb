@@ -13,11 +13,11 @@
 
   <div class="field">
     <%= f.label :source %><br>
-    <%= @trailsegment.source %>
+    <%= @trailsegment.source.code %>
   </div>
   <div class="field">
     <%= f.label :steward %><br>
-    <%= f.text_field :steward %>
+    <%= @trailsegment.source.code %>
   </div>
   <div class="field">
     <%= f.label :length %><br>
@@ -34,6 +34,18 @@
   <div class="field">
     <%= f.label :trail3 %><br>
     <%= f.text_field :trail3 %>
+  </div>
+  <div class="field">
+    <%= f.label :trail4 %><br>
+    <%= f.text_field :trail4 %>
+  </div>
+  <div class="field">
+    <%= f.label :trail5 %><br>
+    <%= f.text_field :trail5 %>
+  </div>
+  <div class="field">
+    <%= f.label :trail6 %><br>
+    <%= f.text_field :trail6 %>
   </div>
   <div class="actions">
     <%= f.submit %>

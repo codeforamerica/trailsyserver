@@ -7,12 +7,12 @@
 
 <p>
   <strong>Source:</strong>
-  <%= @trailsegment.source %>
+  <%= @trailsegment.source.code %>
 </p>
 
 <p>
   <strong>Steward:</strong>
-  <%= @trailsegment.steward %>
+  <%= @trailsegment.steward.code %>
 </p>
 
 <p>
@@ -30,5 +30,19 @@
   <%= @trailsegment.trail3 %>
 </p>
 
+<p>
+  <strong>Trail4:</strong>
+  <%= @trailsegment.trail4 %>
+</p>
+
+<p>
+  <strong>Trail5:</strong>
+  <%= @trailsegment.trail5 %>
+</p>
+
+<p>
+  <strong>Trail6:</strong>
+  <%= @trailsegment.trail6 %>
+</p>
 <%= link_to 'Edit', edit_trailsegment_path(@trailsegment) %> |
 <%= link_to 'Back', trailsegments_path %>
