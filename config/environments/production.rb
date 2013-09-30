@@ -85,4 +85,5 @@ Trailsyserver::Application.configure do
       :access_key_id => ENV['TRAILSY_AWS_ACCESS_KEY_ID'],
       :secret_access_key => ENV['TRAILSY_AWS_SECRET_ACCESS_KEY']
     }
+  }
 end
