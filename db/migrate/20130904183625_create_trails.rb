@@ -2,8 +2,8 @@ class CreateTrails < ActiveRecord::Migration
   def change
     create_table :trails do |t|
       t.string :name
-      t.string :source
-      t.string :steward
+      t.integer :source_id
+      t.integer :steward_id
       t.decimal :length
       t.string :accessible
       t.string :roadbike
