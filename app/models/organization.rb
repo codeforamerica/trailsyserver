@@ -4,6 +4,6 @@ class Organization < ActiveRecord::Base
   # has_many :users
 #   has_many :sourcesegments, class_name: "TrailSegment"
 #   has_many :stewardsegments, class_name: "TrailSegment"
-#   has_many :sourcetrailheads, class_name: "Trailhead"
-#   has_many :stewardtrailheads, class_name: "Trailhead"
+   has_many :sourcetrailheads, class_name: "Trailhead", foreign_key: "source_id"
+   has_many :stewardtrailheads, class_name: "Trailhead", foreign_key: "steward_id"
 end

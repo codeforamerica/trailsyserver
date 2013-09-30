@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130930021102) do
+ActiveRecord::Schema.define(version: 20130930204720) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -40,8 +40,6 @@ ActiveRecord::Schema.define(version: 20130930021102) do
 
   create_table "trailheads", force: true do |t|
     t.string   "name"
-    t.string   "steward"
-    t.string   "source"
     t.string   "trail1"
     t.string   "trail2"
     t.string   "trail3"
@@ -56,6 +54,8 @@ ActiveRecord::Schema.define(version: 20130930021102) do
     t.spatial  "geom",       limit: {:srid=>4326, :type=>"point", :geographic=>true}
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "steward_id"
+    t.integer  "source_id"
   end
 
   create_table "trails", force: true do |t|

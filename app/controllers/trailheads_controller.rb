@@ -24,10 +24,16 @@ class TrailheadsController < ApplicationController
         end
         features = []
         @trailheads.each do |trailhead|
+          json_attributes = trailhead.attributes.except("geom", "wkt", "created_at", "updated_at", "source_id", "steward_id")
+          if trailhead.source
+            json_attributes["source"] = trailhead.source.code
+          end
+          if trailhead.steward
+            json_attributes["steward"] = trailhead.steward.code
+          end
           feature = entity_factory.feature(trailhead.geom, 
            trailhead.id, 
-           trailhead.attributes.except("geom", "wkt", "created_at", "updated_at")
-           .merge( {:distance => trailhead.distance} ))
+           json_attributes)
           features.push(feature)
         end
         collection = entity_factory.feature_collection(features)

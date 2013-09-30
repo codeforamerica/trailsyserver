@@ -66,6 +66,7 @@ namespace :load do
   end
 
   task :trailheads => :environment do
+    Trailhead.destroy_all
     input_file_name = ENV["TRAILHEADS_INPUT"] || "lib/summit_trailheads.geojson"
     File.open(input_file_name) do |geojson|
       feature_collection = RGeo::GeoJSON.decode(geojson, { geo_factory: RGeo::Geographic.spherical_factory(:srid => 4326), json_parser: :json})
@@ -76,9 +77,31 @@ namespace :load do
           property_value = property[1]
           if property_key == 'wkt'
             next 
+          elsif property_key == "source"
+            organization = Organization.where(code: property_value).first
+            if organization.nil?
+              p "source '#{property_value} not found."
+              property_value = nil
+            else
+              p "source #{organization} found"
+              property_value = organization
+            end
+          elsif property_key == "steward"
+            organization = Organization.where(code: property_value).first
+            if organization.nil?
+              p "steward '#{property_value} not found."
+              property_value = nil
+            else
+              p "steward #{organization} found"
+              property_value = organization
+            end
           end
           if @trailhead.attributes.has_key? property_key
             @trailhead.send "#{property_key.to_sym}=", property_value
+          elsif property_key == "source"
+            @trailhead.source = property_value
+          elsif property_key == "steward"
+            @trailhead.steward = property_value
           else
             p "warning: #{property_key} in input, but not in Trailhead model"
           end
@@ -87,7 +110,7 @@ namespace :load do
         @trailhead.geom = feature.geometry
         print "."
         if @trailhead.steward.nil?
-          @trailhead.steward == @trailhead.source
+          @trailhead.steward = @trailhead.source
         end
         if !@trailhead.save
           p "Error!: #{@trailhead.errors.full_messages}"
@@ -119,7 +142,7 @@ namespace :load do
         @segment.geom = feature.geometry
         if !@segment.save
           p "Error!: #{@segment.errors.full_messages}"
-          p @segment.inspect
+          # p @segment.inspect
         end
       end
     end

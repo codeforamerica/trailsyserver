@@ -7,12 +7,12 @@
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
 User.create({ 
- email: ENV["DEFAULT_ADMIN_USER"].dup,
+  email: ENV["DEFAULT_ADMIN_USER"].dup,
   admin: true,
   approved: true,
   password: ENV["DEFAULT_ADMIN_PASSWORD"],
   password_confirmation: ENV["DEFAULT_ADMIN_PASSWORD"]
-})
+  })
 User.create({ 
   email: ENV["TEST_CVNP_USER"].dup,
   admin: false,
@@ -20,7 +20,7 @@ User.create({
   organization: "CVNP",
   password: ENV["DEFAULT_ADMIN_PASSWORD"],
   password_confirmation: ENV["DEFAULT_ADMIN_PASSWORD"]
-})
+  })
 User.create({
   email: ENV["TEST_MPSSC_USER"].dup,
   admin: false,
@@ -28,5 +28,23 @@ User.create({
   organization: "MPSSC",
   password: ENV["DEFAULT_ADMIN_PASSWORD"],
   password_confirmation: ENV["DEFAULT_ADMIN_PASSWORD"]
-})
+  })
 
+Organization.create({
+  code: "MPSSC",
+  full_name: "Metro Parks, Serving Summit County",
+  phone: "metro-parks",
+  url: "http://metro.parks.org"
+  })
+Organization.create({
+  code: "CVNP",
+  full_name: "Cuyahoga Valley National Park",
+  phone: "cvn-p",
+  url: "http://cvnp.org"
+  })
+Organization.create({
+  code: "CMP",
+  full_name: "Cleveland Metroparks",
+  phone: "cmp-parks",
+  url: "http://cmp.org"
+  })
