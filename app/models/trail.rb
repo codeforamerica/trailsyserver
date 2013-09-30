@@ -4,6 +4,8 @@ class Trail < ActiveRecord::Base
   attr_accessor :delete_photo
 
   validates :name, uniqueness: { scope: :source, message: " has already been taken for this source"}
+  validates :source, presence: true
+  validates :steward, presence: true
   has_one :photorecord, dependent: :nullify
 
   belongs_to :steward, class_name: 'Organization', foreign_key: "steward_id"

@@ -51,7 +51,7 @@ Showing all trails.
       <td><%= truncate(trail.description, length: 50) %></td>
       <td><%= trail.source.code if trail.source %></td>
       <td>
-        <%= image_tag trail.photorecord.photo.url(:thumb) unless trail.photorecord.nil? %>
+        <%= image_tag trail.photorecord.photo.url(:thumb) unless (trail.photorecord.nil? || trail.photorecord.photo.url =~ /missing.png$/) %>
       </td>
       <% if (current_user && current_user.organization == trail.source.code) || current_user.admin? %>
       <td><%= link_to 'Show', trail %></td>

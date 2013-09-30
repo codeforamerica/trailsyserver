@@ -11,10 +11,10 @@ class TrailsController < ApplicationController
       format.html do
         authenticate_user!
         if @show_all == "true" || current_user.admin?
-          @trails = Trail.all.order("name")  
+          @trails = Trail.all.includes([:photorecord]).order("name")
         else
           # @trails = Trail.where(source: current_user.organization).order("name")
-          @trails = Trail.joins(:source).merge(Organization.where(code: current_user.organization))
+          @trails = Trail.includes([:photorecord]).joins(:source).merge(Organization.where(code: current_user.organization)).order("name")
         end
       end
       format.json do
@@ -89,6 +89,9 @@ class TrailsController < ApplicationController
     respond_to do |format|
       if params[:trail][:delete_photo] && params[:trail][:delete_photo] == "1"
         @trail.photorecord = nil
+      end
+      if params[:trail][:photorecord_attributes][:id] == "" && params[:trail][:photorecord_attributes][:photo].nil?
+        params[:trail].delete :photorecord_attributes
       end
       if authorized? && @trail.update(trail_params)
         format.html { redirect_to trails_path, notice: 'Trail was successfully updated.' }
@@ -176,7 +179,7 @@ class TrailsController < ApplicationController
     def trail_params
       params.require(:trail).permit(:name, :status, :statustext, :description, 
         :source, :steward, :length, :hike, :equestrian, :xcntryski, :dogs, 
-        :roadbike, :mtnbike, :conditions, :map_url, :surface, :delete_photo, :photorecord_attributes => [:photo, :source, :name])
+        :roadbike, :mtnbike, :conditions, :map_url, :surface, :delete_photo, :photorecord_attributes => [:photo, :source, :name, :id])
     end
  
 

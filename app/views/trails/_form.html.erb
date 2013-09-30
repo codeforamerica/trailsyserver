@@ -36,8 +36,9 @@
       <%= link_to image_tag(@trail.photorecord.photo.url(:thumb)), @trail.photorecord.photo.url %>
       <% end %>
       <%= ff.file_field :photo %><br>
-      <%= ff.hidden_field :source, value: @trail.source %>
+      <%= ff.hidden_field :source, value: @trail.source_id %>
       <%= ff.hidden_field :name, value: @trail.name %>
+      <%= ff.hidden_field :id, value: @trail.photorecord.id %>
     <% end %>
   </div>
   <div class="field">
@@ -49,8 +50,8 @@
     <%= @trail.source.code %>
   </div>
   <div class="field">
-    <%= f.label "*** REPLACE THE STEWARD INFO" %>:
-    <%= f.text_field :steward, size: 6 %>
+    <%= f.label :steward %>:
+    <%= @trail.steward.code %>
   </div>
   <div class="field">
     <%= f.label :length, "Length (miles)" %>
