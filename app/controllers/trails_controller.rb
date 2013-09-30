@@ -130,7 +130,7 @@ class TrailsController < ApplicationController
     source_trails = Trail.source_trails(parsed_trails, current_user.organization || params[:source])
     @non_source_trails = Trail.non_source_trails(parsed_trails, current_user.organization || params[:source])
     if source_trails
-      existing_org_trails = Trail.where(source: current_user.organization)
+      existing_org_trails = Trail.joins(:source).merge(Organization.where(code: current_user.organization)).readonly(false)
       @removed_trails = []
       existing_org_trails.each do |old_trail|
         removed_trail = Hash.new

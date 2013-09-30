@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130930213341) do
+ActiveRecord::Schema.define(version: 20130930002906) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -27,7 +27,7 @@ ActiveRecord::Schema.define(version: 20130930213341) do
   end
 
   create_table "photorecords", force: true do |t|
-    t.string   "source"
+    t.integer  "source_id"
     t.string   "name"
     t.integer  "trail_id"
     t.datetime "created_at"
@@ -40,6 +40,8 @@ ActiveRecord::Schema.define(version: 20130930213341) do
 
   create_table "trailheads", force: true do |t|
     t.string   "name"
+    t.integer  "steward_id"
+    t.integer  "source_id"
     t.string   "trail1"
     t.string   "trail2"
     t.string   "trail3"
@@ -54,12 +56,12 @@ ActiveRecord::Schema.define(version: 20130930213341) do
     t.spatial  "geom",       limit: {:srid=>4326, :type=>"point", :geographic=>true}
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "steward_id"
-    t.integer  "source_id"
   end
 
   create_table "trails", force: true do |t|
     t.string   "name"
+    t.integer  "source_id"
+    t.integer  "steward_id"
     t.decimal  "length"
     t.string   "accessible"
     t.string   "roadbike"
@@ -76,11 +78,11 @@ ActiveRecord::Schema.define(version: 20130930213341) do
     t.string   "statustext"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "steward_id"
-    t.integer  "source_id"
   end
 
   create_table "trailsegments", force: true do |t|
+    t.integer  "source_id"
+    t.integer  "steward_id"
     t.decimal  "length"
     t.spatial  "geom",       limit: {:srid=>4326, :type=>"multi_line_string", :geographic=>true}
     t.string   "trail1"
@@ -89,10 +91,17 @@ ActiveRecord::Schema.define(version: 20130930213341) do
     t.string   "trail4"
     t.string   "trail5"
     t.string   "trail6"
+    t.string   "accessible"
+    t.string   "roadbike"
+    t.string   "hike"
+    t.string   "mtnbike"
+    t.string   "equestrian"
+    t.string   "xcntryski"
+    t.string   "conditions"
+    t.string   "trlsurface"
+    t.string   "dogs"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "steward_id"
-    t.integer  "source_id"
   end
 
   create_table "users", force: true do |t|

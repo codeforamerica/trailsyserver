@@ -3,6 +3,7 @@ class Photorecord < ActiveRecord::Base
   belongs_to :trail
   # removing this for now, because it should be run less often than every save
   # after_save :clean_nils
+  belongs_to :source, class_name: 'Organization', foreign_key: "source_id"
 
   def clean_nils
     Photorecord.all.each do |photorecord|

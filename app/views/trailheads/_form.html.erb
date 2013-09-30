@@ -25,6 +25,10 @@
     <%= @trailhead.steward.code %>
   </div>
   <div class="field">
+    <%= f.label :location %>:
+    <%= @trailhead.geom %>
+  </div>
+  <div class="field">
     <%= f.label :trail1 %>:
     <%= f.text_field :trail1, size: 50 %>
   </div>

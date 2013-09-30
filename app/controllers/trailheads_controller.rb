@@ -128,7 +128,7 @@ class TrailheadsController < ApplicationController
     source_trailheads = Trailhead.source_trailheads(parsed_trailheads, current_user.organization || params[:source])
     @non_source_trailheads = Trailhead.non_source_trailheads(parsed_trailheads, current_user.organization || params[:source])
     if source_trailheads.length
-      existing_org_trailheads = Trailhead.where(source: current_user.organization)
+      existing_org_trailheads = Trailhead.joins(:source).merge(Organization.where(code: current_user.organization)).readonly(false)
       @removed_trailheads = []
       existing_org_trailheads.each do |old_trailhead|
         removed_trailhead = Hash.new

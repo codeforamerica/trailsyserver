@@ -17,12 +17,19 @@ class Trailsegment < ActiveRecord::Base
       feature.properties.each do |property|
         key = property[0].downcase
         value = property[1]
-        next if key == "id"
+        next if key == "id" || value == "" || value == " "
         if new_trailsegment.attributes.has_key? key
           new_trailsegment[key] = value
+        elsif key == "source"
+          new_trailsegment.source = Organization.find_by code: value
+        elsif key == "steward"
+          new_trailsegment.steward = Organization.find_by code: value
         end
       end
       new_trailsegment["geom"] = feature.geometry
+      if new_trailsegment.steward.nil?
+        new_trailsegment.steward = new_trailsegment.source
+      end
       parsed_trailsegments.push new_trailsegment
     end
     parsed_trailsegments
@@ -63,10 +70,10 @@ class Trailsegment < ActiveRecord::Base
   end
 
   def self.source_trailsegments(trailsegments, source) 
-    trailsegments.select { |trailsegment| trailsegment.source == source }
+    trailsegments.select { |trailsegment| trailsegment.source.code == source }
   end
 
   def self.non_source_trailsegments(trailsegments, source) 
-    trailsegments.select { |trailsegment| trailsegment.source == source }
+    trailsegments.select { |trailsegment| trailsegment.source.code != source }
   end
 end

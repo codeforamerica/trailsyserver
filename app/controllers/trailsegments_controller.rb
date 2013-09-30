@@ -115,7 +115,7 @@ class TrailsegmentsController < ApplicationController
     source_trailsegments = Trailsegment.source_trailsegments(parsed_trailsegments, current_user.organization || params[:source])
     @non_source_trailsegments = Trailsegment.non_source_trailsegments(parsed_trailsegments, current_user.organization || params[:source])
     if source_trailsegments.length
-      existing_org_trailsegments = Trailsegment.where(source: current_user.organization)
+      existing_org_trailsegments = Trailsegment.joins(:source).merge(Organization.where(code: current_user.organization)).readonly(false)
       @removed_trailsegments = []
       existing_org_trailsegments.each do |old_trailsegment|
         removed_trailsegment = Hash.new

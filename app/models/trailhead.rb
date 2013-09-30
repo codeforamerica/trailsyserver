@@ -23,9 +23,16 @@ class Trailhead < ActiveRecord::Base
         next if key == "id"
         if new_trailhead.attributes.has_key? key
           new_trailhead[key] = value
+        elsif key == "source"
+          new_trailhead.source = Organization.find_by code: value
+        elsif key == "steward"
+          new_trailhead.steward = Organization.find_by code: value
         end
       end
       new_trailhead["geom"] = feature.geometry
+      if new_trailhead.steward.nil?
+        new_trailhead.steward = new_trailhead.source
+      end
       parsed_trailheads.push new_trailhead
     end
     parsed_trailheads
@@ -66,11 +73,11 @@ class Trailhead < ActiveRecord::Base
   end
 
   def self.source_trailheads(trailheads, source) 
-    trailheads.select { |trailhead| trailhead.source == source }
+    trailheads.select { |trailhead| trailhead.source.code == source }
   end
 
   def self.non_source_trailheads(trailheads, source) 
-    trailheads.select { |trailhead| trailhead.source != source }
+    trailheads.select { |trailhead| trailhead.source.code != source }
   end
 
   def distance=(dist)

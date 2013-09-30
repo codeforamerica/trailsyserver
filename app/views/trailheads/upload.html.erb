@@ -1,6 +1,6 @@
 <h1>Processed Trailhead Upload</h1>
 <%= link_to "Back to Trailhead Listing", trailheads_path %>
-<h3>Source matches</h3>
+<h3>Source matches (matching "<%= current_user.organization %>")</h3>
 
 <table>
   <tr>
@@ -61,7 +61,7 @@
       <%= trailhead.name %>
     </td>
     <td>
-      <%= trailhead.source %>
+      <%= trailhead.source.code %>
     </td>
   </tr>
 <% end %>

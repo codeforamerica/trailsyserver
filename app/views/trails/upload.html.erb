@@ -1,6 +1,6 @@
 <h1>Processing Upload</h1>
 
-<h3>Source matches</h3>
+<h3>Source matches (matching "<%= current_user.organization %>")</h3>
 <table>
 
   <% @added_trails.each do |added_trail| %>
@@ -40,5 +40,5 @@
 </table>
 <h3>Source non-matches</h3>
 <% @non_source_trails.each do |trail| %>
-  <%= trail.name %>,<%= trail.source %><br>
+  <%= trail.name %>,<%= trail.source.code %><br>
 <% end %>

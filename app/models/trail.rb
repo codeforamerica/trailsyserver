@@ -21,8 +21,13 @@ class Trail < ActiveRecord::Base
       new_trail = Trail.new
       next if (row.to_s =~ /^source/)
       row.headers.each do |header|
+        next if header == "id"
         if new_trail.attributes.has_key? header
           new_trail[header] = row[header]
+        elsif header == "source"
+          new_trail.source = Organization.find_by code: row[header]
+        elsif header == "steward"
+          new_trail.steward = Organization.find_by code: row[header]
         end
       end
       parsed_trails.push new_trail
@@ -42,10 +47,10 @@ class Trail < ActiveRecord::Base
   
   def self.source_trails(trails, source)
     logger.info("source_trails: #{trails}, #{source}")
-    trails.select { |trail| trail.source == source }
+    trails.select { |trail| trail.source.code == source }
   end
 
   def self.non_source_trails(trails, source) 
-    trails.select { |trail| trail.source != source }
+    trails.select { |trail| trail.source.code != source }
   end
 end
