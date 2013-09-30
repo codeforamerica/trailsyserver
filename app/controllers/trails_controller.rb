@@ -13,7 +13,8 @@ class TrailsController < ApplicationController
         if @show_all == "true" || current_user.admin?
           @trails = Trail.all.order("name")  
         else
-          @trails = Trail.where(source: current_user.organization).order("name")
+          # @trails = Trail.where(source: current_user.organization).order("name")
+          @trails = Trail.joins(:source).merge(Organization.where(code: current_user.organization))
         end
       end
       format.json do
@@ -22,7 +23,13 @@ class TrailsController < ApplicationController
         features = []
         @trails.each do |trail|
           # taking a trip to Null Island, because RGeo::GeoJSON chokes on empty geometry here
-          filtered_attributes = trail.attributes.clone.except!("created_at", "updated_at")
+          filtered_attributes = trail.attributes.clone.except!("created_at", "updated_at", "source_id", "steward_id")
+          if trail.source
+            filtered_attributes["source"] = trail.source.code
+          end
+          if trail.steward 
+            filtered_attributes["steward"] = trail.steward.code
+          end
           feature = entity_factory.feature(RGeo::Geographic.spherical_factory.point(0,0), trail.id, filtered_attributes)
           features.push(feature)
         end
@@ -56,7 +63,7 @@ class TrailsController < ApplicationController
   # GET /trails/1/edit
   def edit
     unless authorized?
-      redirect_to trailsegments_path, notice: 'Authorization failure.'
+      redirect_to trails_path, notice: 'Authorization failure.'
     end
   end
 
@@ -162,7 +169,7 @@ class TrailsController < ApplicationController
     end
 
     def authorized?
-      (current_user.organization == @trail.source) || current_user.admin?
+      (current_user.organization == @trail.source.code) || current_user.admin?
     end
     
     # Never trust parameters from the scary internet, only allow the white list through.

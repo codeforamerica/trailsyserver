@@ -1,4 +1,6 @@
 Trailsyserver::Application.routes.draw do
+  resources :organizations
+
   devise_for :users
   
   scope "/admin" do

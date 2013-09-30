@@ -7,6 +7,7 @@ namespace :load do
   task :all => [:trails, :trailheads, :segments]
   
   task :trails => :environment do
+    Trail.destroy_all
     input_file_name = ENV["TRAIL_INPUT"] || "lib/summit_traildata.csv"
     p input_file_name
     CSV.foreach(input_file_name, headers: true) do |row|
@@ -24,15 +25,41 @@ namespace :load do
           property_key = "roadbike"
         elsif property_key == "print_map_url"
           property_key = "map_url"
+        elsif property_key == "steward"
+          organization = Organization.where(code: property_value).first
+          if organization.nil?
+            p "steward '#{property_value}' not found."
+            property_value = nil
+          else
+            p "steward #{organization} found."
+            property_value = organization
+          end
+        elsif property_key == "source"
+          organization = Organization.where(code: property_value).first
+          if organization.nil?
+            p "source '#{property_value}' not found."
+            property_value = nil
+          else
+            p "source #{organization} found."
+            property_value = organization
+          end
         end
         # send it to the trail object
         if @trail.attributes.has_key? property_key
+          print "#{property_key.to_sym}=", property_value, "\n"
           @trail.send "#{property_key.to_sym}=", property_value
+        # not entirely sure why I need to pull these out. "source"/"steward" is an AR Relation,
+        # but doesn't show up with "has_key" 
+        # there must be an AR equivalent of has_key to use instead
+        elsif property_key == "source"
+          @trail.source = property_value
+        elsif property_key == "steward"
+          @trail.steward = property_value
         else 
           p "#{@trail.name}: warning: '#{property_key}' in input, but not in Trail model."
         end
       end
-      @trail.source = row["source"]
+      # @trail.source = row["source"]
       print "."
       @trail.save
     end

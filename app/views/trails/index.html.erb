@@ -49,11 +49,11 @@ Showing all trails.
       </td>
       <td><%= truncate(trail.statustext, length: 50) %></td>
       <td><%= truncate(trail.description, length: 50) %></td>
-      <td><%= trail.source %></td>
+      <td><%= trail.source.code if trail.source %></td>
       <td>
         <%= image_tag trail.photorecord.photo.url(:thumb) unless trail.photorecord.nil? %>
       </td>
-      <% if (current_user && current_user.organization == trail.source) || current_user.admin? %>
+      <% if (current_user && current_user.organization == trail.source.code) || current_user.admin? %>
       <td><%= link_to 'Show', trail %></td>
       <td><%= link_to 'Edit', edit_trail_path(trail) %></td>
       <td><%= link_to 'Delete', trail, method: :delete, data: { confirm: 'Are you sure?' } %></td>

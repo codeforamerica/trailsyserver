@@ -5,6 +5,10 @@ class Trail < ActiveRecord::Base
 
   validates :name, uniqueness: { scope: :source, message: " has already been taken for this source"}
   has_one :photorecord, dependent: :nullify
+
+  belongs_to :steward, class_name: 'Organization', foreign_key: "steward_id"
+  belongs_to :source, class_name: 'Organization', foreign_key: "source_id"
+
   accepts_nested_attributes_for :photorecord
 
 

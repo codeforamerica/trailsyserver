@@ -11,7 +11,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130924220250) do
+ActiveRecord::Schema.define(version: 20130930021102) do
+
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+  enable_extension "postgis"
+
+  create_table "organizations", force: true do |t|
+    t.string   "code"
+    t.string   "full_name"
+    t.string   "phone"
+    t.string   "url"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "photorecords", force: true do |t|
     t.string   "source"
@@ -47,8 +60,6 @@ ActiveRecord::Schema.define(version: 20130924220250) do
 
   create_table "trails", force: true do |t|
     t.string   "name"
-    t.string   "source"
-    t.string   "steward"
     t.decimal  "length"
     t.string   "accessible"
     t.string   "roadbike"
@@ -65,6 +76,8 @@ ActiveRecord::Schema.define(version: 20130924220250) do
     t.string   "statustext"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "steward_id"
+    t.integer  "source_id"
   end
 
   create_table "trailsegments", force: true do |t|
