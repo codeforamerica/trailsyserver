@@ -13,7 +13,7 @@ class TrailheadsController < ApplicationController
         if params[:all] == "true" || current_user.admin?
           @trailheads = Trailhead.order("name")
         else
-          @trailheads = Trailhead.where(source: current_user.organization).order("name")
+          @trailheads = Trailhead.joins(:source).merge(Organization.where(code: current_user.organization)).order("name")
         end
       end
       format.json do
@@ -167,7 +167,7 @@ class TrailheadsController < ApplicationController
     end
 
     def authorized?
-      (current_user.organization == @trailhead.source || current_user.admin?)
+      (current_user.organization == @trailhead.source.code || current_user.admin?)
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

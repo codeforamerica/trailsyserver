@@ -38,8 +38,8 @@ Showing all trailheads.
     <% @trailheads.each do |trailhead| %>
       <tr>
         <td><%= trailhead.name %></td>
-        <td><%= trailhead.source %></td>
-        <td><%= trailhead.steward %></td>
+        <td><%= trailhead.source.code %></td>
+        <td><%= trailhead.steward.code %></td>
         <td>
           <ul>
           <% %w[trail1 trail2 trail3 trail4 trail5 trail6].each do |trail| %>
@@ -49,7 +49,7 @@ Showing all trailheads.
           <% end %>
           </ul>
         </td>
-        <% if (current_user && current_user.organization == trailhead.source) || current_user.admin? %>
+        <% if (current_user && current_user.organization == trailhead.source.code) || current_user.admin? %>
         <td><%= link_to 'Show', trailhead %></td>
         <td><%= link_to 'Edit', edit_trailhead_path(trailhead) %></td>
         <td><%= link_to 'Destroy', trailhead, method: :delete, data: { confirm: 'Are you sure?' } %></td>

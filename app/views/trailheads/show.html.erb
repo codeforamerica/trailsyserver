@@ -7,7 +7,7 @@
 
 <p>
   <strong>Source:</strong>
-  <%= @trailhead.source %>
+  <%= @trailhead.source.code %>
 </p>
 
 <p>
@@ -24,6 +24,22 @@
   <strong>Trail3:</strong>
   <%= @trailhead.trail3 %>
 </p>
+
+<p>
+  <strong>Trail4:</strong>
+  <%= @trailhead.trail4 %>
+</p>
+
+<p>
+  <strong>Trail5:</strong>
+  <%= @trailhead.trail5 %>
+</p>
+
+<p>
+  <strong>Trail6:</strong>
+  <%= @trailhead.trail6 %>
+</p>
+
 
 <%= link_to 'Edit', edit_trailhead_path(@trailhead) %> |
 <%= link_to 'Back', trailheads_path %>
