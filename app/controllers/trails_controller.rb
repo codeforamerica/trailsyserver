@@ -1,6 +1,6 @@
 class TrailsController < ApplicationController
   before_action :set_trail, only: [:show, :edit, :destroy, :update]
-  before_action :authenticate_user!, except: [:index]
+  before_action :authenticate_user!, except: [:index, :show]
   before_action :set_show_all_param
   before_action :check_for_cancel, only: [:update]
 
@@ -23,14 +23,8 @@ class TrailsController < ApplicationController
         features = []
         @trails.each do |trail|
           # taking a trip to Null Island, because RGeo::GeoJSON chokes on empty geometry here
-          filtered_attributes = trail.attributes.clone.except!("created_at", "updated_at", "source_id", "steward_id")
-          if trail.source
-            filtered_attributes["source"] = trail.source.code
-          end
-          if trail.steward 
-            filtered_attributes["steward"] = trail.steward.code
-          end
-          feature = entity_factory.feature(RGeo::Geographic.spherical_factory.point(0,0), trail.id, filtered_attributes)
+          json_attributes = create_json_attributes(trail)
+          feature = entity_factory.feature(RGeo::Geographic.spherical_factory.point(0,0), trail.id, json_attributes)
           features.push(feature)
         end
         collection = entity_factory.feature_collection(features)
@@ -44,10 +38,11 @@ class TrailsController < ApplicationController
   # GET /trails/1.json
   def show
     respond_to do |format|
-      format.html
+      format.html 
       format.json do
         entity_factory = ::RGeo::GeoJSON::EntityFactory.instance
-        feature = entity_factory.feature(RGeo::Geographic.spherical_factory.point(0,0), @trail.id, @trail.attributes.except("geom", "wkt"))
+        json_attributes = create_json_attributes(@trail)
+        feature = entity_factory.feature(RGeo::Geographic.spherical_factory.point(0,0), @trail.id, json_attributes)
         render json: RGeo::GeoJSON::encode(feature)
       end
     end
@@ -163,6 +158,17 @@ class TrailsController < ApplicationController
 
   def set_show_all_param
     @show_all = params[:all] if params[:all]
+  end
+
+  def create_json_attributes(trail)
+    json_attributes = trail.attributes.clone.except!("created_at", "updated_at", "source_id", "steward_id")
+    if trail.source
+      json_attributes["source"] = trail.source.code
+    end
+    if trail.steward 
+      json_attributes["steward"] = trail.steward.code
+    end
+    json_attributes
   end
 
   private

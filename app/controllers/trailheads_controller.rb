@@ -1,6 +1,6 @@
 class TrailheadsController < ApplicationController
   before_action :set_trailhead, only: [:show, :edit, :destroy, :update]
-  before_action :authenticate_user!, except: [:index]
+  before_action :authenticate_user!, except: [:index, :show]
   before_action :set_show_all_param
   before_action :check_for_cancel, only: [:update]
 
@@ -24,13 +24,7 @@ class TrailheadsController < ApplicationController
         end
         features = []
         @trailheads.each do |trailhead|
-          json_attributes = trailhead.attributes.except("geom", "wkt", "created_at", "updated_at", "source_id", "steward_id")
-          if trailhead.source
-            json_attributes["source"] = trailhead.source.code
-          end
-          if trailhead.steward
-            json_attributes["steward"] = trailhead.steward.code
-          end
+          json_attributes = create_json_attributes(trailhead)
           feature = entity_factory.feature(trailhead.geom, 
            trailhead.id, 
            json_attributes)
@@ -50,7 +44,8 @@ class TrailheadsController < ApplicationController
       format.html
       format.json do
         entity_factory = ::RGeo::GeoJSON::EntityFactory.instance
-        feature = entity_factory.feature(@trailhead.geom, @trailhead.id, @trailhead.attributes.except("geom", "wkt") )
+        json_attributes = create_json_attributes(@trailhead)
+        feature = entity_factory.feature(@trailhead.geom, @trailhead.id, json_attributes)
         render json: RGeo::GeoJSON::encode(feature) 
       end
     end
@@ -159,6 +154,19 @@ class TrailheadsController < ApplicationController
   def set_show_all_param
     @show_all = params[:all] if params[:all]
   end
+
+  def create_json_attributes(trailhead)
+    json_attributes = trailhead.attributes.except("geom", "wkt", "created_at", "updated_at", "source_id", "steward_id")
+    if trailhead.source
+      json_attributes["source"] = trailhead.source.code
+    end
+    if trailhead.steward
+      json_attributes["steward"] = trailhead.steward.code
+    end
+    json_attributes["distance"] = trailhead.distance
+    json_attributes
+  end
+
 
   private
     # Use callbacks to share common setup or constraints between actions.
