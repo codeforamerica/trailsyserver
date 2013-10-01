@@ -21,9 +21,16 @@ class TrailsegmentsController < ApplicationController
         @entity_factory = ::RGeo::GeoJSON::EntityFactory.instance
         features = []
         @trailsegments.each do |trailsegment|
+          json_attributes = trailsegment.attributes.except("geom", "wkt", "created_at", "updated_at", "source_id", "steward_id")
+          if trailsegment.source
+            json_attributes["source"] = trailsegment.source.code
+          end
+          if trailsegment.steward
+            json_attributes["steward"] = trailsegment.steward.code
+          end
           feature = @entity_factory.feature(trailsegment.geom, 
             trailsegment.id, 
-            trailsegment.attributes.except("geom", "wkt", "created_at", "updated_at"))
+            json_attributes)
           features.push(feature)
         end
         collection = @entity_factory.feature_collection(features)
