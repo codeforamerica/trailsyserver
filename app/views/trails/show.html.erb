@@ -20,25 +20,27 @@
 </p>
 
 <p>
-  <strong>Photo</strong>
-  <% if @trail.photorecord.photo? %>
+  <strong>Photo:</strong>
+  <% if @trail.photorecord && @trail.photorecord.photo? %>
     original:
     <%= image_tag @trail.photorecord.photo.url %>
     medium:
     <%= image_tag @trail.photorecord.photo.url(:medium) %>
     thumb:
     <%= image_tag @trail.photorecord.photo.url(:thumb) %>
+  <% else %>
+    [None]
   <% end %>
 </p>
 
 <p>
   <strong>Source:</strong>
-  <%= @trail.source %>
+  <%= @trail.source.code %>
 </p>
 
 <p>
   <strong>Steward:</strong>
-  <%= @trail.steward %>
+  <%= @trail.steward.code %>
 </p>
 
 <p>

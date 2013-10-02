@@ -1,6 +1,6 @@
 class TrailsegmentsController < ApplicationController
   before_action :set_trailsegment, only: [:show, :edit, :update, :destroy]
-  before_action :authenticate_user!, except: [:index]
+  before_action :authenticate_user!, except: [:index, :show]
   before_action :check_for_cancel, only: [:update]
   
   # GET /trailsegments
@@ -21,13 +21,7 @@ class TrailsegmentsController < ApplicationController
         @entity_factory = ::RGeo::GeoJSON::EntityFactory.instance
         features = []
         @trailsegments.each do |trailsegment|
-          json_attributes = trailsegment.attributes.except("geom", "wkt", "created_at", "updated_at", "source_id", "steward_id")
-          if trailsegment.source
-            json_attributes["source"] = trailsegment.source.code
-          end
-          if trailsegment.steward
-            json_attributes["steward"] = trailsegment.steward.code
-          end
+          json_attributes = create_json_attributes(trailsegment)
           feature = @entity_factory.feature(trailsegment.geom, 
             trailsegment.id, 
             json_attributes)
@@ -47,7 +41,8 @@ class TrailsegmentsController < ApplicationController
       format.html
       format.json do
         @entity_factory = ::RGeo::GeoJSON::EntityFactory.instance
-        feature = @entity_factory.feature(@trailsegment.geom, @trailsegment.id, @trailsegment.attributes.except("geom", "wkt") )
+        json_attributes = create_json_attributes(@trailsegment)
+        feature = @entity_factory.feature(@trailsegment.geom, @trailsegment.id, json_attributes )
         render json: RGeo::GeoJSON::encode(feature)
       end
     end
@@ -144,6 +139,17 @@ class TrailsegmentsController < ApplicationController
         @added_trailsegments.push(added_trailsegment)
       end
     end
+  end
+
+  def create_json_attributes(trailsegment)
+    json_attributes = trailsegment.attributes.except("geom", "wkt", "created_at", "updated_at")
+    if trailsegment.source
+      json_attributes["source"] = trailsegment.source.code
+    end
+    if trailsegment.steward
+      json_attributes["steward"] = trailsegment.steward.code
+    end
+    json_attributes
   end
 
   private

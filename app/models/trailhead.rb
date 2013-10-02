@@ -54,9 +54,14 @@ class Trailhead < ActiveRecord::Base
 
     shp_path = "#{shapefile_directory}/#{shp_name}"
     json_path = "#{shapefile_directory}/#{json_name}"
+    File.delete(json_path) if FileTest.exist?(json_path)
+    prj_path = shp_path.sub(/.shp$/, ".prj")
+    # hack here because MPSSC shapefiles don't include projections
+    s_srs_string = FileTest.exist?(prj_path) ? "" : "-s_srs EPSG:3734"
 
     cmd = %Q(#{ENV['GDAL_BINDIR']}/ogr2ogr -f "GeoJSON" \
              -t_srs EPSG:4326 \
+             #{s_srs_string} \
              #{json_path} \
              #{shp_path})
     logger.info cmd
