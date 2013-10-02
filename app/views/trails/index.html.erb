@@ -10,7 +10,7 @@ Upload a CSV of your current trail data to update this list. Note: this will rep
   <%= hidden_field_tag 'source', current_user.organization %>
   <% end %>
   <%= file_field_tag 'trails' %><br>
-  <%= submit_tag "Submit" %>
+  <%= submit_tag "Submit", data: { confirm: 'Are you sure? This will replace all of your existing trail data.' } %>
 <% end %>
 <hr>
 <% if current_user.admin? %>
