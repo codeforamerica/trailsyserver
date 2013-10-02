@@ -20,7 +20,7 @@ class TrailheadsController < ApplicationController
         @trailheads = Trailhead.order("name")
         entity_factory = ::RGeo::GeoJSON::EntityFactory.instance
         if (params[:loc])
-          @trailheads = sort_by_distance(@trailheads)   
+          @trailheads = sort_by_distance(@trailheads)
         end
         features = []
         @trailheads.each do |trailhead|
