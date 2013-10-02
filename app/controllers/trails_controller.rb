@@ -18,7 +18,7 @@ class TrailsController < ApplicationController
         end
       end
       format.json do
-        @trails = Trail.order("name")
+        @trails = Trail.includes([:photorecord]).order("name")
         entity_factory = ::RGeo::GeoJSON::EntityFactory.instance
         features = []
         @trails.each do |trail|
@@ -167,6 +167,11 @@ class TrailsController < ApplicationController
     end
     if trail.steward 
       json_attributes["steward"] = trail.steward.code
+    end
+    if trail.photorecord
+      json_attributes["orig_photo_url"] = trail.photorecord.photo.url
+      json_attributes["small_photo_url"] = trail.photorecord.photo.url(:small)
+      json_attributes["thumb_photo_url"] = trail.photorecord.photo.url(:thumb)
     end
     json_attributes
   end
