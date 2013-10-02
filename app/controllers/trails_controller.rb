@@ -170,7 +170,7 @@ class TrailsController < ApplicationController
     end
     if trail.photorecord
       json_attributes["orig_photo_url"] = trail.photorecord.photo.url
-      json_attributes["small_photo_url"] = trail.photorecord.photo.url(:small)
+      json_attributes["medium_photo_url"] = trail.photorecord.photo.url(:medium)
       json_attributes["thumb_photo_url"] = trail.photorecord.photo.url(:thumb)
     end
     json_attributes
