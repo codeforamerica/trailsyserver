@@ -17,7 +17,12 @@ class Trail < ActiveRecord::Base
   def self.parse_csv(file)
     logger.info "parse_csv"
     parsed_trails = []
-    CSV.foreach(file.path, headers: true) do |row|
+    if file.class == ActionDispatch::Http::UploadedFile
+      file_ident = file.path
+    else
+      file_ident = file
+    end
+    CSV.foreach(file_ident, headers: true) do |row|
       new_trail = Trail.new
       next if (row.to_s =~ /^source/)
       row.headers.each do |header|
@@ -35,11 +40,37 @@ class Trail < ActiveRecord::Base
     parsed_trails
   end
 
- 
+  def self.parse_json(file)
+    logger.info "parse_json"
+    parsed_trails = []
+    logger.info file.class
+    if file.class == ActionDispatch::Http::UploadedFile
+      trails_input = JSON.parse(file.read)
+    else
+      trails_input = JSON.parse(File.new(file).readlines.join("\n"))
+    end
+    trails_input["features"].each do |feature|
+      new_trail = Trail.new
+      properties = feature["properties"]
+      properties.each do |fieldname, fieldvalue|
+        if new_trail.attributes.has_key? fieldname
+          new_trail[fieldname] = fieldvalue
+        elsif fieldname == 'source'
+          new_trail.source = Organization.find_by code: fieldvalue
+        elsif fieldname == 'steward'
+          new_trail.steward = Organization.find_by code: fieldvalue
+        end
+      end
+      parsed_trails.push new_trail
+    end
+    parsed_trails
+  end
 
   def self.parse(file)
     if (file.original_filename =~ /csv$/)
       return self.parse_csv(file)
+    elsif (file.original_filename =~ /json$/)
+      return self.parse_json(file)
     else
       nil
     end

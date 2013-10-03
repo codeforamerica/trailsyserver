@@ -12,8 +12,12 @@ class Trailhead < ActiveRecord::Base
   # checking to make sure this isn't a trail segment file
   validates :length, absence: true
 
-  def self.parse_geojson(file) 
-    feature_collection = RGeo::GeoJSON.decode(File.read(file.path), json_parser: :json)
+  def self.parse_geojson(file)
+    if file.class == ActionDispatch::Http::UploadedFile
+      feature_collection = RGeo::GeoJSON.decode(File.read(file.path), json_parser: :json)
+    elsif file.class == String
+      feature_collection = RGeo::GeoJSON.decode(File.new(file), json_parser: :json)
+    end
     parsed_trailheads = []
     feature_collection.each do |feature|
       new_trailhead = Trailhead.new
