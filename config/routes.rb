@@ -25,6 +25,7 @@ Trailsyserver::Application.routes.draw do
     end
   end
 
+  get '.well-known/status' => 'status#check'
 
   root :to => "trails#index"
   
