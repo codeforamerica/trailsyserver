@@ -145,9 +145,15 @@ class TrailsegmentsController < ApplicationController
     json_attributes = trailsegment.attributes.except("geom", "wkt", "created_at", "updated_at")
     if trailsegment.source
       json_attributes["source"] = trailsegment.source.code
+      json_attributes["source_fullname"] = trailsegment.source.full_name
+      json_attributes["source_phone"] = trailsegment.source.phone
+      json_attributes["source_url"] = trailsegment.source.url
     end
     if trailsegment.steward
       json_attributes["steward"] = trailsegment.steward.code
+      json_attributes["steward_fullname"] = trailsegment.steward.full_name
+      json_attributes["steward_phone"] = trailsegment.steward.phone
+      json_attributes["steward_url"] = trailsegment.steward.url
     end
     json_attributes
   end

@@ -159,9 +159,15 @@ class TrailheadsController < ApplicationController
     json_attributes = trailhead.attributes.except("geom", "wkt", "created_at", "updated_at", "source_id", "steward_id")
     if trailhead.source
       json_attributes["source"] = trailhead.source.code
+      json_attributes["source_fullname"] = trailhead.source.full_name
+      json_attributes["source_phone"] = trailhead.source.phone
+      json_attributes["source_url"] = trailhead.source.url
     end
     if trailhead.steward
       json_attributes["steward"] = trailhead.steward.code
+      json_attributes["steward_fullname"] = trailhead.steward.full_name
+      json_attributes["steward_phone"] = trailhead.steward.phone
+      json_attributes["steward_url"] = trailhead.steward.url
     end
     json_attributes["distance"] = trailhead.distance
     json_attributes
