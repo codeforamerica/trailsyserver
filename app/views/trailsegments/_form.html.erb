@@ -24,6 +24,34 @@
     <%= f.text_field :length %>
   </div>
   <div class="field">
+    <%= f.label :accessible, "Accessible" %>:
+    <%= f.select :accessible, ["y", "n"], {include_blank: true} %>
+  </div>
+  <div class="field">
+    <%= f.label :hike, "Hiking" %>:
+    <%= f.select :hike, ["y", "n"], {include_blank: true} %>
+  </div>
+  <div class="field">
+    <%= f.label :equestrian %>:
+    <%= f.select :equestrian, ["y", "n"], {include_blank: true} %>
+  </div>
+  <div class="field">
+    <%= f.label :xcntryski, "Cross-Country Ski" %>:
+    <%= f.select :xcntryski, ["y", "n"], {include_blank: true} %>
+  </div>
+  <div class="field">
+    <%= f.label :dogs %>:
+    <%= f.select :dogs, ["y", "n"], {include_blank: true} %>
+  </div>
+  <div class="field">
+    <%= f.label :roadbike, "Road Bikes" %>:
+    <%= f.select :roadbike, ["y", "n"], {include_blank: true} %>
+  </div>
+  <div class="field">
+    <%= f.label :mtnbike, "Mountain Bikes" %>:
+    <%= f.select :mtnbike, ["y", "n"], {include_blank: true} %>
+  </div>
+  <div class="field">
     <%= f.label :trail1 %><br>
     <%= f.text_field :trail1 %>
   </div>

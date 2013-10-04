@@ -31,19 +31,19 @@
   parking drinkwater restrooms kiosk
   <div class="field">
     <%= f.label :parking %>
-    <%= f.select :parking, ["y", "n"] %>
+    <%= f.select :parking, ["y", "n"], {include_blank: true} %>
   </div>
   <div class="field">
     <%= f.label :drinkwater %>
-    <%= f.select :drinkwater, ["y", "n"] %>
+    <%= f.select :drinkwater, ["y", "n"], {include_blank: true} %>
   </div>
   <div class="field">
     <%= f.label :restrooms %>
-    <%= f.select :restrooms, ["y", "n"] %>
+    <%= f.select :restrooms, ["y", "n"], {include_blank: true} %>
   </div>
   <div class="field">
     <%= f.label :kiosk %>
-    <%= f.select :kiosk, ["y", "n"] %>
+    <%= f.select :kiosk, ["y", "n"], {include_blank: true} %>
   </div>
   <div class="field">
     <%= f.label :trail1 %>:
