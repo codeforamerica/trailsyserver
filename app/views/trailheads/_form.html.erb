@@ -28,6 +28,23 @@
     <%= f.label :location %>:
     <%= @trailhead.geom %>
   </div>
+  parking drinkwater restrooms kiosk
+  <div class="field">
+    <%= f.label :parking %>
+    <%= f.select :parking, ["y", "n"] %>
+  </div>
+  <div class="field">
+    <%= f.label :drinkwater %>
+    <%= f.select :drinkwater, ["y", "n"] %>
+  </div>
+  <div class="field">
+    <%= f.label :restrooms %>
+    <%= f.select :restrooms, ["y", "n"] %>
+  </div>
+  <div class="field">
+    <%= f.label :kiosk %>
+    <%= f.select :kiosk, ["y", "n"] %>
+  </div>
   <div class="field">
     <%= f.label :trail1 %>:
     <%= f.text_field :trail1, size: 50 %>
