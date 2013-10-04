@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Trailsy Admin</title>
+  <title>To The Trails Administration</title>
   <%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
   <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
   <%= csrf_meta_tags %>
@@ -17,6 +17,11 @@
     <li class="<%= 'active' if current_page?(trails_path) %>"><%= link_to "Trails", trails_path %></li>
     <li class="<%= 'active' if current_page?(trailheads_path) %>"><%= link_to "Trailheads", trailheads_path %></li>
     <li class="<%= 'active' if current_page?(trailsegments_path) %>"><%= link_to "Segments", trailsegments_path %></li>
+    <li class="<%= 'active' if current_page?(organizations_path) %>"><%= link_to "Organizations", organizations_path %></li>
+    <% if current_user && current_user.admin? %>
+      <li class="<%= 'active' if current_page?(users_path) %>"><%= link_to "Users", users_path %></li>
+    <% end %>
+    
   </ul>
 <%= yield %>
 

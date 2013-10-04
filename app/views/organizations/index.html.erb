@@ -8,8 +8,6 @@
       <th>Phone</th>
       <th>Url</th>
       <th></th>
-      <th></th>
-      <th></th>
     </tr>
   </thead>
 
@@ -20,9 +18,12 @@
         <td><%= organization.full_name %></td>
         <td><%= organization.phone %></td>
         <td><%= organization.url %></td>
-        <td><%= link_to 'Show', organization %></td>
-        <td><%= link_to 'Edit', edit_organization_path(organization) %></td>
-        <td><%= link_to 'Destroy', organization, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <% if current_user.admin? || (current_user.organization == organization.code) %>
+          <td><%= link_to 'Edit', edit_organization_path(organization) %></td>
+          <% if current_user.admin? %>
+            <td><%= link_to 'Destroy', organization, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+          <% end %>
+        <% end %>
       </tr>
     <% end %>
   </tbody>

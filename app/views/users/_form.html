@@ -24,7 +24,12 @@
   </div>
   <div class="field">
     <%= f.label :admin %><br>
-    <%= f.check_box :admin %>
+    <% if (@user.admin) && (@admin_count == 1) %>
+      <%= f.check_box :admin, disabled: true %><br>
+      (Can't deselect the only admin account.)
+    <% else %>
+      <%= f.check_box :admin %>
+    <% end %>
   </div>
   <div class="actions">
     <%= f.submit %>

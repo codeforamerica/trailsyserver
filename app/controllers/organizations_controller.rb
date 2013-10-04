@@ -1,6 +1,7 @@
 class OrganizationsController < ApplicationController
-  before_action :set_organization, only: [:show, :edit, :update, :destroy]
-  before_action :authenticate_user!, except: [:index]
+  before_action :set_organization, only: [:show, :edit, :update, :destroy, :index]
+  before_action :authenticate_user!
+  before_action :authorize
 
   # GET /organizations
   # GET /organizations.json
@@ -65,7 +66,18 @@ class OrganizationsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_organization
-      @organization = Organization.find(params[:id])
+      if params[:id]
+        @organization = Organization.find(params[:id])
+      else
+        @organization = Organization.find_by(code: current_user.organization)
+        logger.info @organization
+      end
+    end
+
+    def authorize
+      unless current_user.admin? || (current_user.organization == @organization.code)
+        redirect_to organizations_url, notice: 'Permission denied.'
+      end
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
