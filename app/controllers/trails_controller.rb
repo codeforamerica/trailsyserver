@@ -178,6 +178,7 @@ class TrailsController < ApplicationController
       json_attributes["orig_photo_url"] = trail.photorecord.photo.url
       json_attributes["medium_photo_url"] = trail.photorecord.photo.url(:medium)
       json_attributes["thumb_photo_url"] = trail.photorecord.photo.url(:thumb)
+      json_attributes["photo_credit"] = trail.photorecord.credit
     end
     json_attributes
   end
@@ -196,7 +197,7 @@ class TrailsController < ApplicationController
     def trail_params
       params.require(:trail).permit(:name, :status, :statustext, :description, 
         :source, :steward, :length, :hike, :equestrian, :xcntryski, :dogs, 
-        :roadbike, :mtnbike, :conditions, :map_url, :surface, :delete_photo, :photorecord_attributes => [:photo, :source, :name, :id])
+        :roadbike, :mtnbike, :conditions, :map_url, :surface, :delete_photo, :photorecord_attributes => [:photo, :source, :name, :id, :credit])
     end
  
 

@@ -11,7 +11,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130930002906) do
+ActiveRecord::Schema.define(version: 20131004002522) do
+
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+  enable_extension "postgis"
 
   create_table "organizations", force: true do |t|
     t.string   "code"
@@ -32,6 +36,7 @@ ActiveRecord::Schema.define(version: 20130930002906) do
     t.string   "photo_content_type"
     t.integer  "photo_file_size"
     t.datetime "photo_updated_at"
+    t.string   "credit"
   end
 
   create_table "trailheads", force: true do |t|
