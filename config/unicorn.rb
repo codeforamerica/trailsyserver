@@ -15,12 +15,20 @@ before_fork do |server, worker|
     ActiveRecord::Base.connection.disconnect!
 end  
 
-after_fork do |server, worker|
-
-  Signal.trap 'TERM' do
-    puts 'Unicorn worker intercepting TERM and doing nothing. Wait for master to sent QUIT'
-  end
-
-  defined?(ActiveRecord::Base) and
-    ActiveRecord::Base.establish_connection
+after_fork do |server, worker| 
+  if defined?(ActiveRecord::Base) 
+    config = Rails.application.config.database_configuration[Rails.env] 
+    config['adapter'] = 'postgis' 
+    ActiveRecord::Base.establish_connection(config)
+  end 
 end
+
+# after_fork do |server, worker|
+
+#   Signal.trap 'TERM' do
+#     puts 'Unicorn worker intercepting TERM and doing nothing. Wait for master to sent QUIT'
+#   end
+
+#   defined?(ActiveRecord::Base) and
+#     ActiveRecord::Base.establish_connection
+# end
