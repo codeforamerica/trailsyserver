@@ -18,7 +18,6 @@ class TrailheadsController < ApplicationController
       end
       format.json do
         @trailheads = Trailhead.order("name")
-        logger.info @trailheads[0]
         entity_factory = ::RGeo::GeoJSON::EntityFactory.instance
         if (params[:loc])
           @trailheads = sort_by_distance(@trailheads)
@@ -194,11 +193,9 @@ class TrailheadsController < ApplicationController
       factory = RGeo::Geographic.spherical_factory(:srid => 4326)
       lat, lng = params[:loc].split(',')
       loc = factory.point(lng,lat) 
-      logger.info("loc in sort_by_distance")
       logger.info(loc)
       trailheads.each do |trailhead|
         logger.info trailhead.inspect
-        logger.info trailhead.geom
         logger.info trailhead.geom.inspect
         logger.info loc.inspect
         trailhead.distance =  trailhead.geom.distance(loc)
