@@ -20,5 +20,12 @@
   <%= @organization.url %>
 </p>
 
+<p>
+  <strong>Logo:</strong>
+  <% if @organization.logo %>
+    <%= image_tag @organization.logo.url %>
+  <% else %>
+    [None]
+  <% end %>
 <%= link_to 'Edit', edit_organization_path(@organization) %> |
 <%= link_to 'Back', organizations_path %>

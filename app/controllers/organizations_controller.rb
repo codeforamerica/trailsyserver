@@ -12,6 +12,15 @@ class OrganizationsController < ApplicationController
   # GET /organizations/1
   # GET /organizations/1.json
   def show
+    logger.info @organization.logo.url
+    logger.info @organization.inspect
+    @organization.logo_url = @organization.logo
+    logger.info @organization.logo
+    logger.info @organization.inspect
+    respond_to do |format|
+      format.html
+      format.json { render json: @organization, methods: [:logo_url] }
+    end
   end
 
   # GET /organizations/new
@@ -82,6 +91,6 @@ class OrganizationsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def organization_params
-      params.require(:organization).permit(:code, :full_name, :phone, :url)
+      params.require(:organization).permit(:code, :full_name, :phone, :url, :logo)
     end
 end

@@ -27,6 +27,16 @@
     <%= f.label :url %><br>
     <%= f.text_field :url, size: 60 %>
   </div>
+  <div class="field">
+    <%= f.label :logo %>:
+    <% if @organization.logo.url =~ /missing.png/ %>
+      [None]
+    <% else %>
+    <%= link_to image_tag(@organization.logo.url(:medium)) %>
+    <% end %>
+    <%= f.file_field :logo %>
+  </div>
+  </div>
   <div class="actions">
     <%= f.submit %>
   </div>
