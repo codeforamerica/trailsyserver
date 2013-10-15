@@ -33,18 +33,18 @@ User.create({
 Organization.create({
   code: "MPSSC",
   full_name: "Metro Parks, Serving Summit County",
-  phone: "metro-parks",
-  url: "http://metro.parks.org"
+  phone: "330-867-5511",
+  url: "http://www.summitmetroparks.org/"
   })
 Organization.create({
   code: "CVNP",
   full_name: "Cuyahoga Valley National Park",
-  phone: "cvn-p",
-  url: "http://cvnp.org"
+  phone: "216-524-1497",
+  url: "http://www.nps.gov/cuva/‎"
   })
 Organization.create({
   code: "CMP",
   full_name: "Cleveland Metroparks",
-  phone: "cmp-parks",
-  url: "http://cmp.org"
+  phone: "216-635-3286",
+  url: "http://clevelandmetroparks.com"
   })
