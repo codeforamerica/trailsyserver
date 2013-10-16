@@ -23,7 +23,6 @@
 <p>
   <strong>Logo:</strong>
   <% if @organization.logo %>
-  <%= @organization.logo.url %>
     <%= image_tag @organization.logo.url %>
   <% else %>
     [None]
