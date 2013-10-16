@@ -32,6 +32,7 @@
     <% if @organization.logo.url =~ /missing.png/ %>
       [None]
     <% else %>
+    <%= @organization.logo.url(:medium) %>
     <%= link_to image_tag(@organization.logo.url(:medium)) %>
     <% end %>
     <%= f.file_field :logo %>
