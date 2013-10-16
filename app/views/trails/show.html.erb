@@ -35,7 +35,7 @@
 
 <p>
   <strong>Photo credit:</strong>
-  <%= if @trail.photorecord && @trail.photorecord.credit? %>
+  <% if @trail.photorecord && @trail.photorecord.credit? %>
     <%= @trail.photorecord.credit %>
   <% else %>
     [None]
