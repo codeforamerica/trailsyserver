@@ -20,7 +20,8 @@
   </div>
   <div class="field">
     <%= f.label :organization %><br>
-    <%= f.text_field :organization %>
+    <!-- <%= f.text_field :organization %> -->
+    <%= f.select :organization_id, Organization.all.collect{ |org| [org.code, org.id]} %>
   </div>
   <div class="field">
     <%= f.label :admin %><br>

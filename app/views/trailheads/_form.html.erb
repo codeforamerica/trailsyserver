@@ -21,14 +21,13 @@
     <%= @trailhead.source.code %>
   </div>
   <div class="field">
-    <%= f.label :steward %>:
-    <%= @trailhead.steward.code %>
+    <%= f.label :steward %> (the organization trailhead users should contact for more information):
+    <%= f.select :steward_id, Organization.all.collect{ |org| [org.code, org.id]} %>
   </div>
   <div class="field">
     <%= f.label :location %>:
     <%= @trailhead.geom %>
   </div>
-  parking drinkwater restrooms kiosk
   <div class="field">
     <%= f.label :parking %>
     <%= f.select :parking, ["y", "n"], {include_blank: true} %>

@@ -5,9 +5,9 @@ Upload a CSV of your current trail data to update this list. Note: this will rep
 <br><br>
 <%= form_tag({ action: :upload }, multipart: true) do %>
   <% if current_user.admin? %>
-  <%= text_field_tag 'source', nil, placeholder: "Organization" %>
+    <%= select_tag "source_id", options_from_collection_for_select(Organization.all, :id, :code) %>
   <% else %>
-  <%= hidden_field_tag 'source', current_user.organization %>
+  <%= hidden_field_tag 'source_id', current_user.organization_id %>
   <% end %>
   <%= file_field_tag 'trails' %><br>
   <%= submit_tag "Submit", data: { confirm: 'Are you sure? This will replace all of your existing trail data.' } %>
@@ -17,7 +17,7 @@ Upload a CSV of your current trail data to update this list. Note: this will rep
 Showing all trails.
 <% else %> 
 <%= link_to "Show all trails", :action => "index", :all => "true" %>
-<%= link_to "Show #{current_user.organization} trails only", :action => "index", :all => "false" %>
+<%= link_to "Show #{current_user.organization.code} trails only", :action => "index", :all => "false" %>
 <% end %>
 <table>
   <thead>
@@ -27,6 +27,7 @@ Showing all trails.
       <th>Status Text</th>
       <th>Description</th>
       <th>Source</th>
+      <th>Steward</th>
       <th>Photo</th>
       <th colspan=3>Action</th>
       <th></th>
@@ -50,10 +51,11 @@ Showing all trails.
       <td><%= truncate(trail.statustext, length: 50) %></td>
       <td><%= truncate(trail.description, length: 50) %></td>
       <td><%= trail.source.code if trail.source %></td>
+      <td><%= trail.steward.code if trail.steward %></td>
       <td>
         <%= image_tag trail.photorecord.photo.url(:thumb) unless (trail.photorecord.nil? || trail.photorecord.photo.url =~ /missing.png$/) %>
       </td>
-      <% if (current_user && current_user.organization == trail.source.code) || current_user.admin? %>
+      <% if (current_user.admin? || current_user.organization == trail.source) %>
       <td><%= link_to 'Show', trail %></td>
       <td><%= link_to 'Edit', edit_trail_path(trail) %></td>
       <td><%= link_to 'Delete', trail, method: :delete, data: { confirm: 'Are you sure?' } %></td>
@@ -65,4 +67,3 @@ Showing all trails.
 
 <br>
 
-<!-- <%= link_to 'New Trail', new_trail_path %> -->

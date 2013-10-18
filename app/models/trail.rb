@@ -27,6 +27,7 @@ class Trail < ActiveRecord::Base
       next if (row.to_s =~ /^source/)
       row.headers.each do |header|
         next if header == "id"
+        # next if header == "source"
         if new_trail.attributes.has_key? header
           new_trail[header] = row[header]
         elsif header == "source"
@@ -53,10 +54,12 @@ class Trail < ActiveRecord::Base
       new_trail = Trail.new
       properties = feature["properties"]
       properties.each do |fieldname, fieldvalue|
+        next if fieldname == "id"
+        # next if fieldname == "source"
         if new_trail.attributes.has_key? fieldname
           new_trail[fieldname] = fieldvalue
         elsif fieldname == 'source'
-          new_trail.source = Organization.find_by code: fieldvalue
+         new_trail.source = Organization.find_by code: fieldvalue
         elsif fieldname == 'steward'
           new_trail.steward = Organization.find_by code: fieldvalue
         end
@@ -76,12 +79,4 @@ class Trail < ActiveRecord::Base
     end
   end
   
-  def self.source_trails(trails, source)
-    logger.info("source_trails: #{trails}, #{source}")
-    trails.select { |trail| trail.source.code == source }
-  end
-
-  def self.non_source_trails(trails, source) 
-    trails.select { |trail| trail.source.code != source }
-  end
 end

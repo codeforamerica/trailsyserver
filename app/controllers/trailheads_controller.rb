@@ -13,7 +13,7 @@ class TrailheadsController < ApplicationController
         if params[:all] == "true" || current_user.admin?
           @trailheads = Trailhead.order("name")
         else
-          @trailheads = Trailhead.joins(:source).merge(Organization.where(code: current_user.organization)).order("name")
+          @trailheads = Trailhead.joins(:source).merge(Organization.where(id: current_user.organization)).order("name")
         end
       end
       format.json do
@@ -114,36 +114,37 @@ class TrailheadsController < ApplicationController
     if !current_user
       head 403
     end
-    redirect_to trails_url, notice: "Please enter a source organization code for uploading trail data." if params[:source].empty?
+    redirect_to trails_url, notice: "Please enter a source organization code for uploading trailhead data." if params[:source_id].empty?
+    source_id = params[:source_id]
+    @source = Organization.find(source_id)
     parsed_trailheads = Trailhead.parse(params[:trailheads])
     if parsed_trailheads.nil?
       redirect_to trailheads_url, notice: "Unable to parse file #{params[:trailheads].original_filename}. Make sure it is a valid GeoJSON file or zipped shapefile."
       return
     end
-    source_trailheads = Trailhead.source_trailheads(parsed_trailheads, current_user.organization || params[:source])
-    @non_source_trailheads = Trailhead.non_source_trailheads(parsed_trailheads, current_user.organization || params[:source])
-    if source_trailheads.length
-      existing_org_trailheads = Trailhead.joins(:source).merge(Organization.where(code: current_user.organization)).readonly(false)
-      @removed_trailheads = []
-      existing_org_trailheads.each do |old_trailhead|
-        removed_trailhead = Hash.new
-        removed_trailhead[:trailhead] = old_trailhead
-        removed_trailhead[:success] = old_trailhead.destroy
-        @removed_trailheads.push(removed_trailhead)
+    source_trailheads = Trailhead.where(source: @source)
+    @non_source_trailheads = Trailhead.where.not(source: @source)
+    # source_trailheads = Trailhead.source_trailheads(parsed_trailheads, current_user.organization || params[:source])
+    # @non_source_trailheads = Trailhead.non_source_trailheads(parsed_trailheads, current_user.organization || params[:source])
+    @removed_trailheads = []
+    source_trailheads.each do |old_trailhead|
+      removed_trailhead = Hash.new
+      removed_trailhead[:trailhead] = old_trailhead
+      removed_trailhead[:success] = old_trailhead.destroy
+      @removed_trailheads.push(removed_trailhead)
+    end
+    @added_trailheads = []
+    parsed_trailheads.each do |new_trailhead|
+      added_trailhead = Hash.new
+      added_trailhead[:trailhead] = new_trailhead
+      new_trailhead.source = @source
+      if (new_trailhead.save)
+        added_trailhead[:success] = true
+      else
+        added_trailhead[:success] = false
+        added_trailhead[:message] = new_trailhead.errors.full_messages
       end
-      @added_trailheads = []
-      source_trailheads.each do |new_trailhead|
-        added_trailhead = Hash.new
-        added_trailhead[:trailhead] = new_trailhead
-        if (new_trailhead.save)
-          added_trailhead[:success] = true
-        else
-          logger.info "fail"
-          added_trailhead[:success] = false
-          added_trailhead[:message] = new_trailhead.errors.full_messages
-        end
-        @added_trailheads.push(added_trailhead)
-      end
+      @added_trailheads.push(added_trailhead)
     end
   end
 
@@ -181,12 +182,14 @@ class TrailheadsController < ApplicationController
     end
 
     def authorized?
-      (current_user.organization == @trailhead.source.code || current_user.admin?)
+      (current_user.organization == @trailhead.source || current_user.admin?)
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def trailhead_params
-      params.require(:trailhead).permit(:name, :source, :trail1, :trail2, :trail3, :geom, :distance)
+      params.require(:trailhead).permit(:name, :source_id, :trail1, :trail2, 
+        :trail3, :geom, :distance, :steward_id, :parking, :drinkwater, :restrooms, 
+        :kiosk, :trail4, :trail5, :trail6)
     end
 
     def sort_by_distance(trailheads)
@@ -212,4 +215,4 @@ class TrailheadsController < ApplicationController
         redirect_to trailheads_path
       end
     end
-  end
+end

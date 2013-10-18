@@ -81,13 +81,13 @@ class Trailhead < ActiveRecord::Base
     end
   end
 
-  def self.source_trailheads(trailheads, source) 
-    trailheads.select { |trailhead| trailhead.source.code == source }
-  end
+  # def self.source_trailheads(trailheads, source) 
+  #   trailheads.select { |trailhead| trailhead.source.code == source }
+  # end
 
-  def self.non_source_trailheads(trailheads, source) 
-    trailheads.select { |trailhead| trailhead.source.code != source }
-  end
+  # def self.non_source_trailheads(trailheads, source) 
+  #   trailheads.select { |trailhead| trailhead.source.code != source }
+  # end
 
   def distance=(dist)
     @distance = dist

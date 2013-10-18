@@ -1,7 +1,10 @@
 <h1>Processed Trailhead Upload</h1>
 <%= link_to "Back to Trailhead Listing", trailheads_path %>
-<h3>Source matches (matching "<%= current_user.organization %>")</h3>
-
+<% if current_user.admin? %>
+<h3>Source matches (matching "<%= @source.code %>")
+<% else %>
+<h3>Source matches (matching "<%= current_user.organization.code %>")</h3>
+<% end %>
 <table>
   <tr>
     <th>
@@ -49,7 +52,7 @@
   </tr>
   <% end %>
 </table>
-<h3>Source non-matches (should be "<%= current_user.organization %>")</h3>
+<h3>Source non-matches (should be "<%= @source.code %>")</h3>
 <table>
   <tr>
     <th>Trailhead name</th>

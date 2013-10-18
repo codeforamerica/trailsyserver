@@ -52,8 +52,8 @@
     <%= @trail.source.code %>
   </div>
   <div class="field">
-    <%= f.label :steward %>:
-    <%= @trail.steward.code %>
+    <%= f.label :steward %> (the organization trail users should contact for more information):
+    <%= f.select :steward_id, Organization.all.collect{ |org| [org.code, org.id]} %>
   </div>
   <div class="field">
     <%= f.label :length, "Length (miles)" %>

@@ -14,7 +14,8 @@ class TrailsController < ApplicationController
           @trails = Trail.all.includes([:photorecord]).order("name")
         else
           # @trails = Trail.where(source: current_user.organization).order("name")
-          @trails = Trail.includes([:photorecord]).joins(:source).merge(Organization.where(code: current_user.organization)).order("name")
+          logger.info current_user.inspect
+          @trails = Trail.includes([:photorecord]).joins(:source).merge(Organization.where(id: current_user.organization)).order("name")
         end
       end
       format.json do
@@ -117,38 +118,41 @@ class TrailsController < ApplicationController
     if !current_user
       head 403
     end
-    redirect_to trails_url, notice: "Please enter a source organization code for uploading trail data." if params[:source].empty?
+    redirect_to trails_url, notice: "Please enter a source organization code for uploading trail data." if params[:source_id].empty?
+    source_id = params[:source_id]
+    @source = Organization.find(source_id)
     parsed_trails = Trail.parse(params[:trails])
     if parsed_trails.nil?
       redirect_to trails_url, notice: "Unable to parse file #{params[:trails].original_filename}. Make sure it is a valid CSV file."
+      return
     end
-    source_trails = Trail.source_trails(parsed_trails, current_user.organization || params[:source])
-    @non_source_trails = Trail.non_source_trails(parsed_trails, current_user.organization || params[:source])
-    if source_trails
-      existing_org_trails = Trail.joins(:source).merge(Organization.where(code: current_user.organization)).readonly(false)
-      @removed_trails = []
-      existing_org_trails.each do |old_trail|
-        removed_trail = Hash.new
-        removed_trail[:trail] = old_trail
-        removed_trail[:success] = old_trail.destroy
-        @removed_trails.push(removed_trail)
+    source_trails = Trail.where(source: @source)
+    @non_source_trails = Trail.where.not(source: @source)
+    # remove all trails from the current source
+    @removed_trails = []
+    source_trails.each do |old_trail|
+      removed_trail = Hash.new
+      removed_trail[:trail] = old_trail
+      removed_trail[:success] = old_trail.destroy
+      @removed_trails.push(removed_trail)
+    end
+    # add all of the new trails
+    @added_trails = []
+    parsed_trails.each do |new_trail|
+      photorecord = Photorecord.where(source_id: new_trail.source, name: new_trail.name).first     
+      if photorecord
+        new_trail.photorecord = photorecord
       end
-      @added_trails = []
-      source_trails.each do |new_trail|
-        photorecord = Photorecord.where(source: new_trail.source, name: new_trail.name).first     
-        if photorecord
-          new_trail.photorecord = photorecord
-        end
-        added_trail = Hash.new
-        added_trail[:trail] = new_trail
-        if (new_trail.save)
-          added_trail[:success] = true
-        else
-          added_trail[:success] = false
-          added_trail[:message] = new_trail.errors.full_messages
-        end
-        @added_trails.push(added_trail)
+      added_trail = Hash.new
+      added_trail[:trail] = new_trail
+      new_trail.source = @source
+      if (new_trail.save)
+        added_trail[:success] = true
+      else
+        added_trail[:success] = false
+        added_trail[:message] = new_trail.errors.full_messages
       end
+      @added_trails.push(added_trail)
     end
   end
 
@@ -192,20 +196,20 @@ class TrailsController < ApplicationController
     end
 
     def authorized?
-      (current_user.organization == @trail.source.code) || current_user.admin?
+      (current_user.organization == @trail.source) || current_user.admin?
     end
     
     # Never trust parameters from the scary internet, only allow the white list through.
     def trail_params
       params.require(:trail).permit(:name, :status, :statustext, :description, 
-        :source, :steward, :length, :accessible, :hike, :equestrian, :xcntryski, :dogs, 
-        :roadbike, :mtnbike, :conditions, :map_url, :surface, :delete_photo, :photorecord_attributes => [:photo, :source, :name, :id, :credit])
+        :source, :source_id, :steward, :steward_id, :length, :accessible, :hike, :equestrian, :xcntryski, :dogs, 
+        :roadbike, :mtnbike, :conditions, :map_url, :trlsurface, :delete_photo, :photorecord_attributes => [:photo, :source, :name, :id, :credit])
     end
- 
+
 
     def check_for_cancel
       if params[:commit] == "Cancel"
         redirect_to trailheads_path
       end
     end
-end
+  end
