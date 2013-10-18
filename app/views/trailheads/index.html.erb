@@ -7,7 +7,7 @@ Upload new trailheads (this will replace all of your organization's current data
   <% if current_user.admin? %>
   <%= select_tag "source_id", options_from_collection_for_select(Organization.all, :id, :code) %>
   <% else %>
-  <%= hidden_field_tag 'source_id', current_user.organization_id %>
+  <%= hidden_field_tag 'source_id', current_user.organization.id %>
   <% end %>
   <%= file_field_tag 'trailheads' %><br>
   <%= submit_tag "Submit", data: { confirm: 'Are you sure? This will replace all of your existing trailhead data.' } %>
