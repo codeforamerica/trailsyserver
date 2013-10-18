@@ -80,11 +80,11 @@ class Trailsegment < ActiveRecord::Base
     end
   end
 
-  def self.source_trailsegments(trailsegments, source) 
-    trailsegments.select { |trailsegment| trailsegment.source.code == source }
-  end
+  # def self.source_trailsegments(trailsegments, source) 
+  #   trailsegments.select { |trailsegment| trailsegment.source.code == source }
+  # end
 
-  def self.non_source_trailsegments(trailsegments, source) 
-    trailsegments.select { |trailsegment| trailsegment.source.code != source }
-  end
+  # def self.non_source_trailsegments(trailsegments, source) 
+  #   trailsegments.select { |trailsegment| trailsegment.source.code != source }
+  # end
 end

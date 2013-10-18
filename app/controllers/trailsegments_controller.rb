@@ -133,7 +133,7 @@ class TrailsegmentsController < ApplicationController
       added_trailsegment = Hash.new
       added_trailsegment[:trailsegment] = new_trailsegment
       new_trailsegment.source = @source
-      if (new_trailsegment.save!)
+      if (new_trailsegment.save)
         added_trailsegment[:success] = true
       else
         added_trailsegment[:success] = false

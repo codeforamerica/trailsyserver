@@ -1,6 +1,5 @@
 class Trail < ActiveRecord::Base
 
-  # has_attached_file :photo, :styles => { medium: "300x300>", thumb: "100x100>" }
   attr_accessor :delete_photo
 
   validates :name, uniqueness: { scope: :source, message: " has already been taken for this source"}
@@ -42,7 +41,6 @@ class Trail < ActiveRecord::Base
   end
 
   def self.parse_json(file)
-    logger.info "parse_json"
     parsed_trails = []
     logger.info file.class
     if file.class == ActionDispatch::Http::UploadedFile

@@ -12,11 +12,7 @@ class OrganizationsController < ApplicationController
   # GET /organizations/1
   # GET /organizations/1.json
   def show
-    logger.info @organization.logo.url
-    logger.info @organization.inspect
     @organization.logo_url = @organization.logo
-    logger.info @organization.logo
-    logger.info @organization.inspect
     respond_to do |format|
       format.html
       format.json { render json: @organization, methods: [:logo_url] }
