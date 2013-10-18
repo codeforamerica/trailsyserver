@@ -7,9 +7,9 @@ class UsersController < ApplicationController
 
   def index
     if params[:approved] == "false"
-      @users = User.find_all_by_approved(false)
+      @users = User.find_all_by_approved(false).order(:email)
     else
-      @users = User.all
+      @users = User.all.order(:email)
     end
   end
 
@@ -39,11 +39,13 @@ class UsersController < ApplicationController
     end
 
     def user_params
-      params.require(:user).permit(:approved, :organization, :admin)
+      params.require(:user).permit(:approved, :organization_id, :admin)
     end
 
     def check_admin
       # TODO: make error message
+      logger.info "xxxxxx"
+      logger.info current_user.inspect
       redirect_to controller: "trails", action: "index", notice: "Admin account required to access users page." unless current_user.admin?
     end
 

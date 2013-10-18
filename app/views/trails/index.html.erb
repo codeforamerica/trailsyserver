@@ -17,7 +17,9 @@ Upload a CSV of your current trail data to update this list. Note: this will rep
 Showing all trails.
 <% else %> 
 <%= link_to "Show all trails", :action => "index", :all => "true" %>
+<% if current_user.organization %>
 <%= link_to "Show #{current_user.organization.code} trails only", :action => "index", :all => "false" %>
+<% end %>
 <% end %>
 <table>
   <thead>

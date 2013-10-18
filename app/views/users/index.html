@@ -17,7 +17,7 @@
       <td><%= user.email %></td>
       <td><%= user.approved %></td>
       <td><%= user.admin? %></td>
-      <td><%= user.organization %></td>
+      <td><%= user.organization.code if user.organization %></td>
       <td><%= link_to "Edit", edit_user_path(user) %></td>
     </tr>
   <% end %>

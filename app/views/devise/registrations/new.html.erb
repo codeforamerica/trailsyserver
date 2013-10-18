@@ -7,8 +7,9 @@
   <%= f.email_field :email, :autofocus => true %></div>
 
   <div><%= f.label :organization %><br>
-  <%= f.text_field :organization %><br>
-  This must match the "source" field in the trail data files you will supply. (e.g. MPSSC, CVNP, etc.)</div>
+  <%= f.select :organization_id, Organization.all.collect{ |org| [org.code, org.id]} %><br>
+  If your organization is not listed here, contact an administrator.<br>
+  This "source" field in the trail data files you will supply must contain this code.</div>
   <br>
 
   <div><%= f.label :password %><br />

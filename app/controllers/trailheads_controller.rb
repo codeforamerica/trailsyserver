@@ -196,11 +196,7 @@ class TrailheadsController < ApplicationController
       factory = RGeo::Geographic.spherical_factory(:srid => 4326)
       lat, lng = params[:loc].split(',')
       loc = factory.point(lng,lat) 
-      logger.info(loc)
       trailheads.each do |trailhead|
-        logger.info trailhead.inspect
-        logger.info trailhead.geom.inspect
-        logger.info loc.inspect
         trailhead.distance =  trailhead.geom.distance(loc)
         logger.info(trailhead.distance)
       end

@@ -17,7 +17,6 @@ Upload new segments (this will replace all of your organization's current data!)
 Showing all trail segments.
 <% else %>
 <%= link_to "Show all segments", :action => "index", :all => "true" %>
-
 <%= link_to "Show #{current_user.organization.code} segments only", :action => "index", :all => "false" %>
 <% end %>
 <table>
