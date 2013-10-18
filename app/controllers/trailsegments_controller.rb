@@ -1,6 +1,7 @@
 class TrailsegmentsController < ApplicationController
   before_action :set_trailsegment, only: [:show, :edit, :update, :destroy]
   before_action :authenticate_user!, except: [:index, :show]
+  before_action :set_show_all_param
   before_action :check_for_cancel, only: [:update]
   
   # GET /trailsegments
@@ -13,7 +14,7 @@ class TrailsegmentsController < ApplicationController
         if params[:all] == "true" || current_user.admin?
           @trailsegments = Trailsegment.order("trail1").order("trail2").order("trail3")
         else
-          @trailsegments = Trailsegment.joins(:source).merge(Organization.where(code: current_user.organization)).order("trail1").order("trail2").order("trail3")
+          @trailsegments = Trailsegment.joins(:source).merge(Organization.where(id: current_user.organization)).order("trail1").order("trail2").order("trail3")
         end
       end
       format.json do
@@ -108,37 +109,46 @@ class TrailsegmentsController < ApplicationController
     if !current_user
       head 403
     end
-    redirect_to trailsegments_url, notice: "Please enter a source organization code for uploading trail segment data." if params[:source].empty?
+    redirect_to trailsegments_url, notice: "Please enter a source organization code for uploading trail segment data." if params[:source_id].empty?
+    source_id = params[:source_id]
+    @source = Organization.find(source_id)
     parsed_trailsegments = Trailsegment.parse(params[:trailsegments])
     if parsed_trailsegments.nil?
       redirect_to trailsegments_url, notice: "Unable to parse file #{params[:trailsegments].orginial_filename}. Make sure it is a valid GeoJSON file or zipped shapefile."
       return
     end
-    source_trailsegments = Trailsegment.source_trailsegments(parsed_trailsegments, current_user.organization || params[:source])
-    @non_source_trailsegments = Trailsegment.non_source_trailsegments(parsed_trailsegments, current_user.organization || params[:source])
-    if source_trailsegments.length
-      existing_org_trailsegments = Trailsegment.joins(:source).merge(Organization.where(code: current_user.organization)).readonly(false)
-      @removed_trailsegments = []
-      existing_org_trailsegments.each do |old_trailsegment|
-        removed_trailsegment = Hash.new
-        removed_trailsegment[:trailsegment] = old_trailsegment
-        removed_trailsegment[:success] = old_trailsegment.destroy
-        @removed_trailsegments.push(removed_trailsegment)
-      end
-      @added_trailsegments = []
-      source_trailsegments.each do |new_trailsegment|
-        added_trailsegment = Hash.new
-        added_trailsegment[:trailsegment] = new_trailsegment
-        if (new_trailsegment.save!)
-          added_trailsegment[:success] = true
-        else
-          logger.info "trailsegment add failure"
-          added_trailsegment[:success] = false
-          added_trailsegment[:message] = new_trailsegment.errors.full_messages
-        end
-        @added_trailsegments.push(added_trailsegment)
-      end
+    source_trailsegments = Trailhead.where(source: @source)
+    non_source_trailheads = Trailhead.where.not(source: @source)
+    # source_trailsegments = Trailsegment.source_trailsegments(parsed_trailsegments, current_user.organization || params[:source])
+    # @non_source_trailsegments = Trailsegment.non_source_trailsegments(parsed_trailsegments, current_user.organization || params[:source])
+    @removed_trailsegments = []
+    source_trailsegments.each do |old_trailsegment|
+      removed_trailsegment = Hash.new
+      removed_trailsegment[:trailsegment] = old_trailsegment
+      removed_trailsegment[:success] = old_trailsegment.destroy
+      @removed_trailsegments.push(removed_trailsegment)
     end
+    @added_trailsegments = []
+    parsed_trailsegments.each do |new_trailsegment|
+      added_trailsegment = Hash.new
+      added_trailsegment[:trailsegment] = new_trailsegment
+      new_trailsegment.source = @source
+      if (new_trailsegment.save!)
+        added_trailsegment[:success] = true
+      else
+        added_trailsegment[:success] = false
+        added_trailsegment[:message] = new_trailsegment.errors.full_messages
+      end
+      @added_trailsegments.push(added_trailsegment)
+    end
+  end
+
+  def default_url_options
+    { all: @show_all }.merge(super)
+  end
+
+  def set_show_all_param
+    @show_all = params[:all] if params[:all]
   end
 
   def create_json_attributes(trailsegment)
@@ -165,18 +175,19 @@ class TrailsegmentsController < ApplicationController
     end
 
     def authorized?
-      (current_user.organization == @trailsegment.source.code || current_user.admin?)
+      (current_user.organization == @trailsegment.source || current_user.admin?)
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def trailsegment_params
-      params.require(:trailsegment).permit(:length, :source, :steward, :geom, :trail1, :trail2, :trail3)
+      params.require(:trailsegment).permit(:length, :source_id, :steward, :geom, 
+        :trail1, :trail2, :trail3, :steward_id, :accessible, :hike, :equestrian, 
+        :xcntryski, :dogs, :roadbike, :mtnbike, :trail4, :trail5, :trail6)
     end
 
     def check_for_cancel
       if params[:commit] == "Cancel"
         redirect_to trailheads_path
       end
-    end
-    
-  end
+    end    
+end

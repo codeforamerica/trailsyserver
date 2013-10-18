@@ -5,9 +5,9 @@ Upload new segments (this will replace all of your organization's current data!)
 <br><br>
 <%= form_tag({ action: :upload }, multipart: true) do %>
   <% if current_user.admin? %>
-  <%= text_field_tag 'source', nil, placeholder: "Organization" %>
+  <%= select_tag "source_id", options_from_collection_for_select(Organization.all, :id, :code) %>
   <% else %>
-  <%= hidden_field_tag 'source', current_user.organization %>
+  <%= hidden_field_tag 'source_id', current_user.organization %>
   <% end %>
   <%= file_field_tag 'trailsegments' %><br>
   <%= submit_tag "Submit", data: { confirm: 'Are you sure? This will replace all of your existing segment data.' } %>
@@ -18,7 +18,7 @@ Showing all trail segments.
 <% else %>
 <%= link_to "Show all segments", :action => "index", :all => "true" %>
 
-<%= link_to "Show #{current_user.organization} segments only", :action => "index", :all => "false" %>
+<%= link_to "Show #{current_user.organization.code} segments only", :action => "index", :all => "false" %>
 <% end %>
 <table>
   <thead>
@@ -35,25 +35,25 @@ Showing all trail segments.
 
   <tbody>
     <% @trailsegments.each do |trailsegment| %>
-      <tr>
-        <td><%= trailsegment.length %></td>
-        <td><%= trailsegment.source.code %></td>
-        <td><%= trailsegment.steward.code %></td>
-        <td>
-          <ul>
+    <tr>
+      <td><%= trailsegment.length %></td>
+      <td><%= trailsegment.source.code if trailsegment.source %></td>
+      <td><%= trailsegment.steward.code if trailsegment.steward %></td>
+      <td>
+        <ul>
           <% %w[trail1 trail2 trail3 trail4 trail5 trail6].each do |trail| %>
-            <% if !(trailsegment["#{trail}"].nil?) && trailsegment["#{trail}"].size > 1 %>
-              <li><%= trailsegment["#{trail}"] %></li>
-            <% end %>
+          <% if !(trailsegment["#{trail}"].nil?) && trailsegment["#{trail}"].size > 1 %>
+          <li><%= trailsegment["#{trail}"] %></li>
           <% end %>
-          </ul>
-        </td>
-        <% if (current_user && current_user.organization == trailsegment.source.code) || current_user.admin? %> 
-        <td><%= link_to 'Show', trailsegment %></td>
-        <td><%= link_to 'Edit', edit_trailsegment_path(trailsegment) %></td>
-        <td><%= link_to 'Destroy', trailsegment, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-        <% end %>
-      </tr>
+          <% end %>
+        </ul>
+      </td>
+      <% if (current_user.admin? || current_user.organization == trail.source) %>
+      <td><%= link_to 'Show', trailsegment %></td>
+      <td><%= link_to 'Edit', edit_trailsegment_path(trailsegment) %></td>
+      <td><%= link_to 'Destroy', trailsegment, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      <% end %>
+    </tr>
     <% end %>
   </tbody>
 </table>

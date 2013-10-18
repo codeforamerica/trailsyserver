@@ -1,7 +1,7 @@
 <!-- TODO: consider merging this with other upload views -->
 <h1>Processed Trailsegment Upload</h1>
 <%= link_to "Back to Trailsegment Listing", trailsegments_path %>
-<h3>Source matches</h3>
+<h3>Source matches (matching "<%= @source.code %>")</h3>
 
 <table>
   <tr>
@@ -27,7 +27,10 @@
     <td>
       <%= [added_trailsegment[:trailsegment].trail1,
       added_trailsegment[:trailsegment].trail2,
-      added_trailsegment[:trailsegment].trail3].join("|") %>
+      added_trailsegment[:trailsegment].trail3,
+      added_trailsegment[:trailsegment].trail4,
+      added_trailsegment[:trailsegment].trail5,
+      added_trailsegment[:trailsegment].trail6,].join("|") %>
     </td>
     <td>
       <%= added_trailsegment[:message] %>
@@ -46,7 +49,10 @@
     <td>
       <%= [removed_trailsegment[:trailsegment].trail1,
       removed_trailsegment[:trailsegment].trail2,
-      removed_trailsegment[:trailsegment].trail3].join("|") %>
+      removed_trailsegment[:trailsegment].trail3,
+      removed_trailsegment[:trailsegment].trail4,
+      removed_trailsegment[:trailsegment].trail5,
+      removed_trailsegment[:trailsegment].trail6].join("|") %>
     </td>
     <td>
       <%= removed_trailsegment[:trailsegment].created_at %>
@@ -54,7 +60,7 @@
   </tr>
   <% end %>
 </table>
-<h3>Source non-matches (should be "<%= current_user.organization %>")</h3>
+<h3>Source non-matches (should be "<%= @source.code %>")</h3>
 <table>
   <tr>
     <th>Trailsegment name</th>
@@ -65,7 +71,10 @@
     <td>
       <%= trailsegment.trail1 %>|
       <%= trailsegment.trail2 %>|
-      <%= trailsegment.trail3 %>
+      <%= trailsegment.trail3 %>|
+      <%= trailsegment.trail4 %>|
+      <%= trailsegment.trail5 %>|
+      <%= trailsegment.trail6 %>
     </td>
     <td>
       <%= trailsegment.source.code %>

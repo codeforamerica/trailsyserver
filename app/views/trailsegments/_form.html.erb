@@ -17,7 +17,7 @@
   </div>
   <div class="field">
     <%= f.label :steward %><br>
-    <%= @trailsegment.source.code %>
+    <%= f.select :steward_id, Organization.all.collect{ |org| [org.code, org.id]} %>
   </div>
   <div class="field">
     <%= f.label :length %><br>
@@ -53,27 +53,27 @@
   </div>
   <div class="field">
     <%= f.label :trail1 %><br>
-    <%= f.text_field :trail1 %>
+    <%= f.text_field :trail1, size: 80 %>
   </div>
   <div class="field">
     <%= f.label :trail2 %><br>
-    <%= f.text_field :trail2 %>
+    <%= f.text_field :trail2, size: 80 %>
   </div>
   <div class="field">
     <%= f.label :trail3 %><br>
-    <%= f.text_field :trail3 %>
+    <%= f.text_field :trail3, size: 80 %>
   </div>
   <div class="field">
     <%= f.label :trail4 %><br>
-    <%= f.text_field :trail4 %>
+    <%= f.text_field :trail4, size: 80 %>
   </div>
   <div class="field">
     <%= f.label :trail5 %><br>
-    <%= f.text_field :trail5 %>
+    <%= f.text_field :trail5, size: 80 %>
   </div>
   <div class="field">
     <%= f.label :trail6 %><br>
-    <%= f.text_field :trail6 %>
+    <%= f.text_field :trail6, size: 80 %>
   </div>
   <div class="actions">
     <%= f.submit %>
