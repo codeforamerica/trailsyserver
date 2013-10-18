@@ -145,8 +145,14 @@ class TrailsController < ApplicationController
       end
       added_trail = Hash.new
       added_trail[:trail] = new_trail
-      new_trail.source = @source
-      if (new_trail.save)
+      if new_trail.source != @source
+        added_trail[:success] = false
+        if !new_trail.source.nil?
+          added_trail[:message] = "Trail source organization #{new_trail.source.code} doesn't match user organization #{@source.code}."
+        else
+          added_trail[:message] = "No trail source found."
+        end
+      elsif (new_trail.save)
         added_trail[:success] = true
       else
         added_trail[:success] = false

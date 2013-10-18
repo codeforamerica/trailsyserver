@@ -132,8 +132,14 @@ class TrailsegmentsController < ApplicationController
     parsed_trailsegments.each do |new_trailsegment|
       added_trailsegment = Hash.new
       added_trailsegment[:trailsegment] = new_trailsegment
-      new_trailsegment.source = @source
-      if (new_trailsegment.save)
+      if new_trailsegment.source != @source
+        added_trailsegment[:success] = false
+        if !new_trail.source.nil?
+          added_trailsegment[:message] = "Trail segment organization #{new_trailsegment.source.code} doesn't match user organization #{@source.code}."
+        else
+          added_trailsegment[:message] = "No trail segment source found."
+        end
+      elsif (new_trailsegment.save)
         added_trailsegment[:success] = true
       else
         added_trailsegment[:success] = false

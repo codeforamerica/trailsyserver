@@ -124,8 +124,6 @@ class TrailheadsController < ApplicationController
     end
     source_trailheads = Trailhead.where(source: @source)
     @non_source_trailheads = Trailhead.where.not(source: @source)
-    # source_trailheads = Trailhead.source_trailheads(parsed_trailheads, current_user.organization || params[:source])
-    # @non_source_trailheads = Trailhead.non_source_trailheads(parsed_trailheads, current_user.organization || params[:source])
     @removed_trailheads = []
     source_trailheads.each do |old_trailhead|
       removed_trailhead = Hash.new
@@ -137,8 +135,14 @@ class TrailheadsController < ApplicationController
     parsed_trailheads.each do |new_trailhead|
       added_trailhead = Hash.new
       added_trailhead[:trailhead] = new_trailhead
-      new_trailhead.source = @source
-      if (new_trailhead.save)
+      if new_trailhead.source != @source
+        added_trailhead[:success] = false
+        if !new_trailhead.source.nil?
+          added_trailhead[:message] = "Trailhead organization #{new_trailhead.source.code} doesn't match user organization #{@source.code}"
+        else
+          added_trailhead[:message] = "No trailhead source found."
+        end
+      elsif (new_trailhead.save)
         added_trailhead[:success] = true
       else
         added_trailhead[:success] = false
