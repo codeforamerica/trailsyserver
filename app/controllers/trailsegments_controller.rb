@@ -117,8 +117,8 @@ class TrailsegmentsController < ApplicationController
       redirect_to trailsegments_url, notice: "Unable to parse file #{params[:trailsegments].orginial_filename}. Make sure it is a valid GeoJSON file or zipped shapefile."
       return
     end
-    source_trailsegments = Trailhead.where(source: @source)
-    non_source_trailheads = Trailhead.where.not(source: @source)
+    source_trailsegments = Trailsegment.where(source: @source)
+    @non_source_trailsegments = Trailsegment.where.not(source: @source)
     # source_trailsegments = Trailsegment.source_trailsegments(parsed_trailsegments, current_user.organization || params[:source])
     # @non_source_trailsegments = Trailsegment.non_source_trailsegments(parsed_trailsegments, current_user.organization || params[:source])
     @removed_trailsegments = []
