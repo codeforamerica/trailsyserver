@@ -80,6 +80,13 @@ class Trailsegment < ActiveRecord::Base
     end
   end
 
+  def merged_geom=(geom)
+    @merged_geom = geom
+  end
+
+  def merged_geom
+    @merged_geom
+  end
   # def self.source_trailsegments(trailsegments, source) 
   #   trailsegments.select { |trailsegment| trailsegment.source.code == source }
   # end

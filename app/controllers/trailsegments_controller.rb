@@ -18,26 +18,43 @@ class TrailsegmentsController < ApplicationController
         end
       end
       format.json do
-        @trailsegments = Trailsegment.all
-        # @trailsegments = Trailsegment.find_by_sql(["select *, ST_LineMerge(geom::geometry) as geom from trailsegments"]);
+        simplify_factor = params[:simplify].to_i
+        if simplify_factor > 0
+          @trailsegments = Trailsegment.find_by_sql(["select *, st_linemerge(geom::geometry) as merged_geom from trailsegments"]);
+        else
+          @trailsegments = Trailsegment.all
+        end
         @entity_factory = ::RGeo::GeoJSON::EntityFactory.instance
         line_factory = ::RGeo::Geographic.spherical_factory(:srid => 4326)
         features = []
-        simplify_factor = params[:simplify].to_i
+
         @trailsegments.each do |trailsegment|
+          merged_geom = trailsegment.attributes["merged_geom"]
           if simplify_factor > 0
-            new_trailsegment_linestrings = []
-            trailsegment.geom.each_with_index do |linestring, ls_index|
+            if merged_geom.geometry_type.type_name == "MultiLineString"
+              new_trailsegment_linestrings = []
+              merged_geom.each_with_index do |linestring, ls_index|
+                new_linestring_points = []
+                linestring.points.each_with_index do |point, p_index|
+                  if p_index % simplify_factor == 0 || p_index == linestring.num_points - 1
+                    new_linestring_points.push(point)
+                  end
+                end
+                new_trailsegment_linestrings.push(line_factory.line_string(new_linestring_points))
+              end
+              simplified_trailsegment_geom = line_factory.multi_line_string(new_trailsegment_linestrings)
+              trailsegment.geom = simplified_trailsegment_geom
+
+            elsif merged_geom.geometry_type.type_name == "LineString" 
               new_linestring_points = []
-              linestring.points.each_with_index do |point, p_index|
-                if p_index % simplify_factor == 0 || p_index == linestring.num_points - 1
+              merged_geom.points.each_with_index do |point, p_index|
+                if p_index % simplify_factor == 0 || p_index == merged_geom.num_points() - 1
                   new_linestring_points.push(point)
                 end
               end
-              new_trailsegment_linestrings.push(line_factory.line_string(new_linestring_points))
+              simplified_trailsegment_geom = line_factory.line_string(new_linestring_points)
+              trailsegment.geom = simplified_trailsegment_geom
             end
-            simplified_trailsegment_geom = line_factory.multi_line_string(new_trailsegment_linestrings)
-            trailsegment.geom = simplified_trailsegment_geom
           end
           json_attributes = create_json_attributes(trailsegment)
           feature = @entity_factory.feature(trailsegment.geom, 
@@ -51,7 +68,7 @@ class TrailsegmentsController < ApplicationController
       end
     end
   end
-  
+
   # GET /trailsegments/1
   # GET /trailsegments/1.json
   def show
@@ -213,4 +230,4 @@ class TrailsegmentsController < ApplicationController
         redirect_to trailheads_path
       end
     end    
-end
+  end
