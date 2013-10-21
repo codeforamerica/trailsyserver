@@ -6,6 +6,11 @@ class TrailsegmentsController < ApplicationController
   
   # GET /trailsegments
   # GET /trailsegments.json
+  # if "simplify" number parameter is supplied, get the ST_LineMerge version of the segment geometries, then
+  # simplify all of the resulting LineStrings to include the first point, the last point, 
+  # and every "simplify"th point in between. 
+  # An attempt to simplify the data enough for Leaflet to work on iOS 7 MobileSafari.
+
   def index
 
     respond_to do |format|
@@ -31,11 +36,11 @@ class TrailsegmentsController < ApplicationController
         @trailsegments.each do |trailsegment|
           merged_geom = trailsegment.attributes["merged_geom"]
           if simplify_factor > 0
-            if merged_geom.geometry_type.type_name == "MultiLineString"
+            if merged_geom.geometry_type.type_name == "MultiLineString" # for multilinestrings we need to loop through contained linestrings
               new_trailsegment_linestrings = []
               merged_geom.each_with_index do |linestring, ls_index|
                 new_linestring_points = []
-                linestring.points.each_with_index do |point, p_index|
+                linestring.points.each_with_index do |point, p_index| # and then loop through the points in each linestring
                   if p_index % simplify_factor == 0 || p_index == linestring.num_points - 1
                     new_linestring_points.push(point)
                   end
@@ -45,7 +50,7 @@ class TrailsegmentsController < ApplicationController
               simplified_trailsegment_geom = line_factory.multi_line_string(new_trailsegment_linestrings)
               trailsegment.geom = simplified_trailsegment_geom
 
-            elsif merged_geom.geometry_type.type_name == "LineString" 
+            elsif merged_geom.geometry_type.type_name == "LineString" # for linestrings we can just loop through the points
               new_linestring_points = []
               merged_geom.points.each_with_index do |point, p_index|
                 if p_index % simplify_factor == 0 || p_index == merged_geom.num_points() - 1
