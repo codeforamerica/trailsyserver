@@ -18,7 +18,7 @@
         <td><%= organization.full_name %></td>
         <td><%= organization.phone %></td>
         <td><%= organization.url %></td>
-        <% if current_user.admin? || (current_user.organization == organization.code) %>
+        <% if current_user.admin? || (current_user.organization.code == organization.code) %>
           <td><%= link_to 'Edit', edit_organization_path(organization) %></td>
           <% if current_user.admin? %>
             <td><%= link_to 'Destroy', organization, method: :delete, data: { confirm: 'Are you sure?' } %></td>
@@ -30,5 +30,6 @@
 </table>
 
 <br>
-
+<% if current_user.admin? %>
 <%= link_to 'New Organization', new_organization_path %>
+<% end %>

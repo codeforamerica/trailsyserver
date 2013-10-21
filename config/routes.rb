@@ -27,10 +27,10 @@ Trailsyserver::Application.routes.draw do
 
   get '.well-known/status' => 'status#check'
 
-  root :to => "trails#index"
-
-  get 'admin' => 'trails#index'
+  get '/admin' => 'trails#index'
   
+  root 'trails#index'
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

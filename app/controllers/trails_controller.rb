@@ -10,6 +10,9 @@ class TrailsController < ApplicationController
     respond_to do |format|
       format.html do
         authenticate_user!
+        if !user_signed_in? || (!current_user.admin && current_user.organization.nil?)
+          redirect_to destroy_user_session_path
+        end
         if @show_all == "true" || current_user.admin?
           @trails = Trail.all.includes([:photorecord]).order("name")
         else

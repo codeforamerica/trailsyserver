@@ -1,5 +1,7 @@
 class Organization < ActiveRecord::Base
   has_attached_file :logo, :styles => { medium: "80x80>"}
+
+  validates :code, uniqueness: true
   has_many :sourcetrails, class_name: "Trail", foreign_key: "source_id"
   has_many :stewardtrails, class_name: "Trail", foreign_key: "steward_id"
   has_many :users

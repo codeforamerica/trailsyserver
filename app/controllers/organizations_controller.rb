@@ -1,7 +1,7 @@
 class OrganizationsController < ApplicationController
-  before_action :set_organization, only: [:show, :edit, :update, :destroy, :index]
   before_action :authenticate_user!
-  before_action :authorize
+  before_action :set_organization, only: [:show, :edit, :update, :destroy, :index]
+  before_action :authorize, only: [:edit, :update, :destroy]
 
   # GET /organizations
   # GET /organizations.json
@@ -74,13 +74,13 @@ class OrganizationsController < ApplicationController
       if params[:id]
         @organization = Organization.find(params[:id])
       else
-        @organization = Organization.find_by(code: current_user.organization)
-        logger.info @organization
+        @organization = Organization.find_by(code: current_user.organization.code)
+        logger.info @organization.code
       end
     end
 
     def authorize
-      unless current_user.admin? || (current_user.organization == @organization.code)
+      unless current_user.admin? || (current_user.organization.code == @organization.code)
         redirect_to organizations_url, notice: 'Permission denied.'
       end
     end
