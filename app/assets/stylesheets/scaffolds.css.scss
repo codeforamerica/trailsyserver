@@ -163,9 +163,13 @@ div {
     border-bottom: 1px solid gray;
     */
   }
-  &:active {
+  .active {
     color: #00adef;
   }
+}
+li.active a {
+  color:white;
+  background-color: #00adef;
 }
 
 
@@ -244,7 +248,7 @@ table {
 }
 
 
-/* styles for forms ------------------------------ */
+/* styles for 'show' & 'edit' pages ------------------------------ */
 .formContent {
   margin-left: 200px;
 }
@@ -293,3 +297,17 @@ h3 {
   }
 }
 
+.h3-Edit {
+  color: #bbbdbf;
+  text-transform: uppercase;
+  font-size:13px;
+  line-height: 20px;
+  margin-top: 15px;
+  margin-bottom: 15px; 
+  margin-right:5px;
+}
+
+.finePrint {
+  font-size: 11 !important;
+  color: #58595b;
+}

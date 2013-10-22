@@ -11,61 +11,64 @@
     </div>
   <% end %>
 
-  <div>NOTE: Take care editing trail names. These names in the trailhead data must match the trail names in the trail data EXACTLY.</div>
+  <div class='formAnswer'>NOTE: Trail names in the trailhead data MUST match the trail names in the trail data EXACTLY.</div>
+  <br>
   <div class="field">
-    <%= f.label :name %>:
+    <span class='h3-Edit'><%= f.label :name %></span>
     <%= f.text_field :name, size: 50 %>
   </div>
   <div class="field">
-    <%= f.label :source %>:
-    <%= @trailhead.source.code %>
+    <span class='h3-Edit'><%= f.label :source %></span>
+    <span class='formAnswer'><%= @trailhead.source.code %></span>
   </div>
   <div class="field">
-    <%= f.label :steward %> (the organization trailhead users should contact for more information):
+    <span class='h3-Edit'><%= f.label :steward %></span>
     <%= f.select :steward_id, Organization.all.collect{ |org| [org.code, org.id]} %>
+    <br>
+    <span class='finePrint'>This is organization trailhead users should contact for more information.</span>
   </div>
   <div class="field">
-    <%= f.label :location %>:
-    <%= @trailhead.geom %>
+    <span class='h3-Edit'><%= f.label :location %></span>
+    <span class='formAnswer'><%= @trailhead.geom %></span>
   </div>
   <div class="field">
-    <%= f.label :parking %>
+    <span class='h3-Edit'><%= f.label :parking %></span>
     <%= f.select :parking, ["y", "n"], {include_blank: true} %>
   </div>
   <div class="field">
-    <%= f.label :drinkwater %>
+    <span class='h3-Edit'><%= f.label :drinkwater %></span>
     <%= f.select :drinkwater, ["y", "n"], {include_blank: true} %>
   </div>
   <div class="field">
-    <%= f.label :restrooms %>
+    <span class='h3-Edit'><%= f.label :restrooms %></span>
     <%= f.select :restrooms, ["y", "n"], {include_blank: true} %>
   </div>
   <div class="field">
-    <%= f.label :kiosk %>
+    <span class='h3-Edit'><%= f.label :kiosk %></span>
     <%= f.select :kiosk, ["y", "n"], {include_blank: true} %>
   </div>
   <div class="field">
-    <%= f.label :trail1 %>:
+    <span class='h3-Edit'><%= f.label :trail1 %></span>
     <%= f.text_field :trail1, size: 50 %>
   </div>
   <div class="field">
-    <%= f.label :trail2 %>:
+    <span class='h3-Edit'><%= f.label :trail2 %></span>
     <%= f.text_field :trail2, size: 50 %>
   </div>
   <div class="field">
-    <%= f.label :trail3 %>:
+    <span class='h3-Edit'><%= f.label :trail3 %></span>
     <%= f.text_field :trail3, size: 50 %>
   </div>
   <div class="field">
-    <%= f.label :trail4 %>:
+    <span class='h3-Edit'><%= f.label :trail4 %></span>
     <%= f.text_field :trail4, size: 50 %>
   </div>
   <div class="field">
-    <%= f.label :trail5 %>:
+    <span class='h3-Edit'><%= f.label :trail5 %></span>
     <%= f.text_field :trail5, size: 50 %>
   </div>
   <div class="field">
-    <%= f.label :trail6 %>:
+    <span class='h3-Edit'><%= f.label :trail6 %></span>
     <%= f.text_field :trail6, size: 50 %>
   </div>
   <div class="actions">
