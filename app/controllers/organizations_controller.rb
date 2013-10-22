@@ -74,8 +74,7 @@ class OrganizationsController < ApplicationController
       if params[:id]
         @organization = Organization.find(params[:id])
       else
-        @organization = Organization.find_by(code: current_user.organization.code)
-        logger.info @organization.code
+        @organization = Organization.find_by(code: current_user.organization.code) unless current_user.admin?
       end
     end
 
