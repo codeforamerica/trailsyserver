@@ -41,7 +41,7 @@ Showing all trail segments.
       <td>
         <ul>
           <% %w[trail1 trail2 trail3 trail4 trail5 trail6].each do |trail| %>
-          <% if !(trailsegment["#{trail}"].nil?) && trailsegment["#{trail}"].size > 1 %>
+          <% if !(trailsegment["#{trail}"].nil?) && trailsegment["#{trail}"].size > 0 %>
           <li><%= trailsegment["#{trail}"] %></li>
           <% end %>
           <% end %>
@@ -59,4 +59,3 @@ Showing all trail segments.
 
 <br>
 
-<%= link_to 'New Trailsegment', new_trailsegment_path %>

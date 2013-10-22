@@ -30,7 +30,7 @@
       added_trailsegment[:trailsegment].trail3,
       added_trailsegment[:trailsegment].trail4,
       added_trailsegment[:trailsegment].trail5,
-      added_trailsegment[:trailsegment].trail6,].join("|") %>
+      added_trailsegment[:trailsegment].trail6].reject!(&:blank?).join("|") %>
     </td>
     <td>
       <%= added_trailsegment[:message] %>
@@ -47,12 +47,13 @@
       <% end %>
     </td>
     <td>
-      <%= [removed_trailsegment[:trailsegment].trail1,
+      <% segment_list = [removed_trailsegment[:trailsegment].trail1,
       removed_trailsegment[:trailsegment].trail2,
       removed_trailsegment[:trailsegment].trail3,
       removed_trailsegment[:trailsegment].trail4,
       removed_trailsegment[:trailsegment].trail5,
-      removed_trailsegment[:trailsegment].trail6].join("|") %>
+      removed_trailsegment[:trailsegment].trail6] %>
+      <%= segment_list.reject!(&:blank?).join("|") %>
     </td>
     <td>
       <%= removed_trailsegment[:trailsegment].created_at %>
@@ -60,6 +61,7 @@
   </tr>
   <% end %>
 </table>
+<!-- 
 <h3>Source non-matches (should be "<%= @source.code %>")</h3>
 <table>
   <tr>
@@ -82,4 +84,5 @@
   </tr>
 <% end %>
 </table>
+-->
 <%= link_to "Back to Trailsegment Listing", trailsegments_path %>

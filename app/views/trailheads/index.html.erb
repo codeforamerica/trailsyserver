@@ -43,7 +43,7 @@ Showing all trailheads.
         <td>
           <ul>
           <% %w[trail1 trail2 trail3 trail4 trail5 trail6].each do |trail| %>
-            <% if !(trailhead["#{trail}"].nil?) && trailhead["#{trail}"].size > 1 %>
+            <% if !(trailhead["#{trail}"].nil?) && trailhead["#{trail}"].size > 0 && trailhead["#{trail}"] != " " %>
               <li><%= trailhead["#{trail}"] %></li>
             <% end %>
           <% end %>
