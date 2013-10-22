@@ -25,9 +25,20 @@ body {
   background-color: #fff;
   color: #333;
   font-family: 'mission_gothiclight' sans-serif;
-  font-size: 13px;
+  font-size: 16px;
   line-height: 18px;
+}
 
+h1 {
+  font-family: 'mission_gothicregular';
+  color: #00adef;
+  font-size: 20px;
+  margin-left: 60px;
+}
+h4 {
+  font-family: 'mission_gothicregular';
+  color: #00adef;
+  font-size: 20px;
 }
 
 p, ol, ul, td {
@@ -36,10 +47,14 @@ p, ol, ul, td {
   line-height: 18px;
 }
 
+p {
+  color: #58595b;
+  margin-left: 60px;
+}
 pre {
   background-color: #eee;
   padding: 10px;
-  font-size: 11px;
+  font-size: 16px;
   color: red;
 }
 
@@ -88,7 +103,7 @@ div {
     color: #fff;
   }
   ul li {
-    font-size: 12px;
+    font-size: 16px;
     list-style: square;
   }
 }
@@ -104,7 +119,6 @@ th {
   font-family: 'mission_gothicregular';
   font-size: 16px;
   color: #ffffff;
-  text-transform: uppercase;
   padding: 10px;
   border:1px solid #E3E3E1;
   background-color: #00adef;
@@ -116,4 +130,32 @@ tr:nth-child(even) {
 }
 tr:nth-child(odd) {
   background: white;
+}
+
+.topheader {
+  background-color: #523d32;
+  width: 100%;
+  padding-top: 30px;
+  padding-left: 60px;
+  padding-bottom: 10px;
+  color: white;
+  margin-bottom: -32px;
+}
+
+.menubox {
+  background-color: gray;
+  padding-left: 60px;
+  padding-top: 20px;
+}
+
+li.hmenu {
+  color: red;
+}
+table {
+  margin-left: 60px;
+  margin-right: 60px;
+}
+
+#logInText-email {
+  color: red !important;
 }

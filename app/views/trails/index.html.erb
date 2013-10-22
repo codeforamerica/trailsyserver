@@ -1,7 +1,7 @@
 <h1>Listing Trails</h1>
-
-<hr>
+<p>
 Upload a CSV of your current trail data to update this list. Note: this will replace all of your organization's existing data!
+</p>
 <br><br>
 <%= form_tag({ action: :upload }, multipart: true) do %>
   <% if current_user.admin? %>
@@ -12,7 +12,6 @@ Upload a CSV of your current trail data to update this list. Note: this will rep
   <%= file_field_tag 'trails' %><br>
   <%= submit_tag "Submit", data: { confirm: 'Are you sure? This will replace all of your existing trail data.' } %>
 <% end %>
-<hr>
 <% if current_user.admin? %>
 Showing all trails.
 <% else %> 
@@ -56,9 +55,9 @@ Showing all trails.
         <%= image_tag trail.photorecord.photo.url(:thumb) unless (trail.photorecord.nil? || trail.photorecord.photo.url =~ /missing.png$/) %>
       </td>
       <% if (current_user.admin? || current_user.organization == trail.source) %>
-      <td><%= link_to 'Show', trail %></td>
-      <td><%= link_to 'Edit', edit_trail_path(trail) %></td>
-      <td><%= link_to 'Delete', trail, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      <td class="actions"><%= link_to 'Show', trail %></td>
+      <td class="actions"><%= link_to 'Edit', edit_trail_path(trail) %></td>
+      <td class="actions"><%= link_to 'Delete', trail, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       <% end %>
     </tr>
     <% end %>
