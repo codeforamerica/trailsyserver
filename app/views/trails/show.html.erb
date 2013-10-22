@@ -1,100 +1,109 @@
+
 <p id="notice"><%= notice %></p>
 
-<p>
-  <strong>Name:</strong>
-  <%= @trail.name %>
-</p>
+<div class='formContent-Show'>
+  <h3>
+    Name:
+    <span class='formAnswer'><%= @trail.name %></span>
+  </h3>
 
-<p>
-  <strong>Status:</strong>
-  <%= @trail.status %>
-</p>
+  <h3>
+    Status:
+    <span class='formAnswer'><%= @trail.status %></span>
+  </h3>
 
-<p>
-  <strong>Status Text:</strong>
-  <%= @trail.statustext %>
+  <h3>
+    Status Text:
+    <span class='formAnswer'><%= @trail.statustext %></span>
 
-<p>
-  <strong>Description:</strong>
-  <%= @trail.description %>
-</p>
+  <h3>
+    Description:
+    <span class='formAnswer'><%= @trail.description %></span>
+  </h3>
 
-<p>
-  <strong>Photo:</strong>
-  <% if @trail.photorecord && @trail.photorecord.photo? %>
-    original:
-    <%= image_tag @trail.photorecord.photo.url %>
-    medium:
-    <%= image_tag @trail.photorecord.photo.url(:medium) %>
-    thumb:
-    <%= image_tag @trail.photorecord.photo.url(:thumb) %>
-  <% else %>
-    [None]
-  <% end %>
-</p>
+  <h3>
+    Photo:
+    <span class='formAnswer'><% if @trail.photorecord && @trail.photorecord.photo? %>
+      original:
+      <%= image_tag @trail.photorecord.photo.url %>
+      medium:
+      <%= image_tag @trail.photorecord.photo.url(:medium) %>
+      thumb:
+      <%= image_tag @trail.photorecord.photo.url(:thumb) %>
+    <% else %>
+      [None]
+    <% end %></span>
+  </h3>
 
-<p>
-  <strong>Photo credit:</strong>
-  <% if @trail.photorecord && @trail.photorecord.credit? %>
-    <%= @trail.photorecord.credit %>
-  <% else %>
-    [None]
-  <% end %>
-<p>
-  <strong>Source:</strong>
-  <%= @trail.source.code %>
-</p>
+  <h3>
+    Photo credit:
+    <span class='formAnswer'><% if @trail.photorecord && @trail.photorecord.credit? %>
+      <%= @trail.photorecord.credit %>
+    <% else %>
+      [None]
+    <% end %></span>
+  <h3>
+    Source:
+    <span class='formAnswer'><%= @trail.source.code %></span>
+  </h3>
 
-<p>
-  <strong>Steward:</strong>
-  <%= @trail.steward.code %>
-</p>
+  <h3>
+    Steward:
+    <span class='formAnswer'><%= @trail.steward.code %></span>
+  </h3>
 
-<p>
-  <strong>Length:</strong>
-  <%= @trail.length %>
-</p>
+  <h3>
+    Length:
+    <span class='formAnswer'><%= @trail.length %></span>
+  </h3>
 
-<p>
-  <strong>Hiking:</strong>
-  <%= @trail.hike %>
-</p>
+  <h3>
+    Hiking:
+    <span class='formAnswer'><%= @trail.hike %></span>
+  </h3>
 
-<p>
-  <strong>Equestrian:</strong>
-  <%= @trail.equestrian %>
-</p>
+  <h3>
+    Equestrian:
+    <span class='formAnswer'><%= @trail.equestrian %></span>
+  </h3>
 
-<p>
-  <strong>Cross-Country Ski:</strong>
-  <%= @trail.xcntryski %>
-</p>
+  <h3>
+    Cross-Country Ski:
+    <span class='formAnswer'><%= @trail.xcntryski %></span>
+  </h3>
 
-<p>
-  <strong>Dogs:</strong>
-  <%= @trail.dogs %>
-</p>
+  <h3>
+    Dogs:
+    <span class='formAnswer'><%= @trail.dogs %></span>
+  </h3>
 
-<p>
-  <strong>Road Bikes:</strong>
-  <%= @trail.roadbike %>
-</p>
+  <h3>
+    Road Bikes:
+    <span class='formAnswer'><%= @trail.roadbike %></span>
+  </h3>
 
-<p>
-  <strong>Mountain Bikes:</strong>
-  <%= @trail.mtnbike %>
-</p>
+  <h3>
+    Mountain Bikes:
+    <span class='formAnswer'><%= @trail.mtnbike %></span>
+  </h3>
 
-<p>
-  <strong>Map url:</strong>
-  <%= @trail.map_url %>
-</p>
+  <h3>
+    Map url:
+    <span class='formAnswer'><%= @trail.map_url %></span>
+  </h3>
 
-<p>
-  <strong>Surface:</strong>
-  <%= @trail.trlsurface %>
-</p>
+  <h3>
+    Surface:
+    <span class='formAnswer'><%= @trail.trlsurface %></span>
+  </h3>
+  </div>
 
-<%= link_to 'Edit', edit_trail_path(@trail) %> |
-<%= link_to 'Back', trails_path %>
+  <div class='formButtons'>
+    <span class='addNewButton'>
+      <%= link_to 'Edit', edit_trail_path(@trail) %>
+    </span>
+      <%= link_to 'Back', trails_path, :class => "backButton"%>
+  </div>
+
+
 

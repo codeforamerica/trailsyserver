@@ -1,65 +1,70 @@
 <p id="notice"><%= notice %></p>
 
-<p>
-  <strong>Name:</strong>
-  <%= @trailhead.name %>
-</p>
+<div class='formContent-Show'>
+  <h3>
+    Name:
+    <span class='formAnswer'><%= @trailhead.name %></span>
+  </h3>
 
-<p>
-  <strong>Source:</strong>
-  <%= @trailhead.source.code %>
-</p>
+  <h3>
+    Source:
+    <span class='formAnswer'><%= @trailhead.source.code %></span>
+  </h3>
 
-<p>
-  <strong>Location:</strong>
-  <%= @trailhead.geom %>
-</p>
-<p>
-  <strong>Parking:</strong>
-  <%= @trailhead.parking %>
-</p>
-<p>
-  <strong>Drinking Water:</strong>
-  <%= @trailhead.drinkwater %>
-</p>
-<p>
-  <strong>Restrooms:</strong>
-  <%= @trailhead.restrooms %>
-</p>
-<p>
-  <strong>Kiosk:</strong>
-  <%= @trailhead.kiosk %>
-</p>
-<p>
-  <strong>Trail1:</strong>
-  <%= @trailhead.trail1 %>
-</p>
+  <h3>
+    Location:
+    <span class='formAnswer'><%= @trailhead.geom %></span>
+  </h3>
+  <h3>
+    Parking:
+    <span class='formAnswer'><%= @trailhead.parking %></span>
+  </h3>
+  <h3>
+    Drinking Water:
+    <span class='formAnswer'><%= @trailhead.drinkwater %></span>
+  </h3>
+  <h3>
+    Restrooms:
+    <span class='formAnswer'><%= @trailhead.restrooms %></span>
+  </h3>
+  <h3>
+    Kiosk:
+    <span class='formAnswer'><%= @trailhead.kiosk %></span>
+  </h3>
+  <h3>
+    Trail1:
+    <span class='formAnswer'><%= @trailhead.trail1 %></span>
+  </h3>
 
-<p>
-  <strong>Trail2:</strong>
-  <%= @trailhead.trail2 %>
-</p>
+  <h3>
+    Trail2:
+    <span class='formAnswer'><%= @trailhead.trail2 %></span>
+  </h3>
 
-<p>
-  <strong>Trail3:</strong>
-  <%= @trailhead.trail3 %>
-</p>
+  <h3>
+    Trail3:
+    <span class='formAnswer'><%= @trailhead.trail3 %></span>
+  </h3>
 
-<p>
-  <strong>Trail4:</strong>
-  <%= @trailhead.trail4 %>
-</p>
+  <h3>
+    Trail4:
+    <span class='formAnswer'><%= @trailhead.trail4 %></span>
+  </h3>
 
-<p>
-  <strong>Trail5:</strong>
-  <%= @trailhead.trail5 %>
-</p>
+  <h3>
+    Trail5:
+    <span class='formAnswer'><%= @trailhead.trail5 %></span>
+  </h3>
 
-<p>
-  <strong>Trail6:</strong>
-  <%= @trailhead.trail6 %>
-</p>
+  <h3>
+    Trail6:
+    <span class='formAnswer'><%= @trailhead.trail6 %></span>
+  </h3>
+</div>
 
-
-<%= link_to 'Edit', edit_trailhead_path(@trailhead) %> |
-<%= link_to 'Back', trailheads_path %>
+<div class='formButtons'>
+  <span class='addNewButton'>
+    <%= link_to 'Edit', edit_trailhead_path(@trailhead) %>
+  </span>
+  <%= link_to 'Back', trailheads_path, :class => "backButton" %>
+</div>
