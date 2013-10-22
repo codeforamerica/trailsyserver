@@ -219,3 +219,21 @@ table {
     background-color: #d9f0fc;
   }
 }
+
+.tableLink {
+  color: #2aabe2;
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+.tableLink-delete {
+  color: #ba4a4a;
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+.formContent {
+  margin-left: 200px;
+}

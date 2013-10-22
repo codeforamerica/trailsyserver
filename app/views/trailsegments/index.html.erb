@@ -46,9 +46,9 @@ Showing all trail segments.
         </ul>
       </td>
       <% if (current_user.admin? || current_user.organization == trailsegment.source) %>
-      <td><%= link_to 'Show', trailsegment %></td>
-      <td><%= link_to 'Edit', edit_trailsegment_path(trailsegment) %></td>
-      <td><%= link_to 'Destroy', trailsegment, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      <td><%= link_to 'Show', trailsegment, :class => "tableLink" %></td>
+      <td><%= link_to 'Edit', edit_trailsegment_path(trailsegment), :class => "tableLink" %></td>
+      <td><%= link_to 'Destroy', trailsegment, :class => "tableLink-delete", method: :delete, data: { confirm: 'Are you sure?' } %></td>
       <% end %>
     </tr>
     <% end %>

@@ -21,9 +21,9 @@
         <td><%= organization.phone %></td>
         <td><%= organization.url %></td>
         <% if current_user.admin? || (current_user.organization.code == organization.code) %>
-          <td><%= link_to 'Edit', edit_organization_path(organization) %></td>
+          <td><%= link_to 'Edit', edit_organization_path(organization), :class => "tableLink" %></td>
           <% if current_user.admin? %>
-            <td><%= link_to 'Destroy', organization, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+            <td><%= link_to 'Destroy', organization, :class => "tableLink-delete", method: :delete, data: { confirm: 'Are you sure?' } %></td>
           <% end %>
         <% end %>
       </tr>
