@@ -173,7 +173,7 @@ class TrailsegmentsController < ApplicationController
       added_trailsegment[:trailsegment] = new_trailsegment
       if new_trailsegment.source != @source
         added_trailsegment[:success] = false
-        if !new_trail.source.nil?
+        if !new_trailsegment.source.nil?
           added_trailsegment[:message] = "Trail segment organization #{new_trailsegment.source.code} doesn't match user organization #{@source.code}."
         else
           added_trailsegment[:message] = "No trail segment source found."
