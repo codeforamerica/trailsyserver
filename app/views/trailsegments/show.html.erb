@@ -1,54 +1,62 @@
 <p id="notice"><%= notice %></p>
 
-<p>
-  <strong>Length:</strong>
-  <%= @trailsegment.length %>
-</p>
+<div class='formContent-Show'>
+  <h3>
+    Length:
+    <span class='formAnswer'><%= @trailsegment.length %></span>
+  </h3>
 
-<p>
-  <strong>Source:</strong>
-  <%= @trailsegment.source.code %>
-</p>
+  <h3>
+    Source:
+    <span class='formAnswer'><%= @trailsegment.source.code %></span>
+  </h3>
 
-<p>
-  <strong>Steward:</strong>
-  <%= @trailsegment.steward.code %>
-</p>
+  <h3>
+    Steward:
+    <span class='formAnswer'><%= @trailsegment.steward.code %></span>
+  </h3>
 
-<p>
-  <strong>Trail1:</strong>
-  <%= @trailsegment.trail1 %>
-</p>
+  <h3>
+    Trail1:
+    <span class='formAnswer'><%= @trailsegment.trail1 %></span>
+  </h3>
 
-<p>
-  <strong>Trail2:</strong>
-  <%= @trailsegment.trail2 %>
-</p>
+  <h3>
+    Trail2:
+    <span class='formAnswer'><%= @trailsegment.trail2 %></span>
+  </h3>
 
-<p>
-  <strong>Trail3:</strong>
-  <%= @trailsegment.trail3 %>
-</p>
+  <h3>
+    Trail3:
+    <span class='formAnswer'><%= @trailsegment.trail3 %></span>
+  </h3>
 
-<p>
-  <strong>Trail4:</strong>
-  <%= @trailsegment.trail4 %>
-</p>
+  <h3>
+    Trail4:
+    <span class='formAnswer'><%= @trailsegment.trail4 %></span>
+  </h3>
 
-<p>
-  <strong>Trail5:</strong>
-  <%= @trailsegment.trail5 %>
-</p>
+  <h3>
+    Trail5:
+    <span class='formAnswer'><%= @trailsegment.trail5 %></span>
+  </h3>
 
-<p>
-  <strong>Trail6:</strong>
-  <%= @trailsegment.trail6 %>
-</p>
+  <h3>
+    Trail6:
+    <span class='formAnswer'><%= @trailsegment.trail6 %></span>
+  </h3>
 
-<p>
-  <strong>Geometry:</strong> 
-  <%= @trailsegment.geom %>
-</p>
+  <h3>
+    Geometry: 
+    <span class='formAnswer'><%= @trailsegment.geom %></span>
+  </h3>
+</div>
 
-<%= link_to 'Edit', edit_trailsegment_path(@trailsegment) %> |
-<%= link_to 'Back', trailsegments_path %>
+<div class='formButtons'>
+  <span class='backButton'>
+    <%= link_to 'Back', trailsegments_path %>
+  </span>
+  <span class='addNewButton'>
+    <%= link_to 'Edit', edit_trailsegment_path(@trailsegment) %>
+  </span>
+</div>

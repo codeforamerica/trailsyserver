@@ -99,10 +99,12 @@
   </div>
 
   <div class='formButtons'>
+    <span class='backButton'>
+      <%= link_to 'Back', trails_path %>
+    </span>
     <span class='addNewButton'>
       <%= link_to 'Edit', edit_trail_path(@trail) %>
     </span>
-      <%= link_to 'Back', trails_path, :class => "backButton"%>
   </div>
 
 

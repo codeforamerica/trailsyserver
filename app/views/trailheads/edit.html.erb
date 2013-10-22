@@ -1,8 +1,14 @@
-<h1>Editing trailhead</h1>
+<h1>Editing Trailhead</h1>
 
 <div class='formContent'>
 	<%= render 'form' %>
+</div>
 
-	<%= link_to 'Show', @trailhead %> |
-	<%= link_to 'Back', trailheads_path %>
+<div class='formButtons'>
+	<span class='backButton'>
+		<%= link_to 'Back', trailheads_path %>	
+	</span>
+	<span class='addNewButton'>	
+		<%= link_to 'Show', @trailhead %>
+	</span>
 </div>

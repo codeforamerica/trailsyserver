@@ -1,8 +1,14 @@
-<h1>Editing trailsegment</h1>
+<h1>Edit Trail Segment</h1>
 
 <div class='formContent'>
 	<%= render 'form' %>
-
-	<%= link_to 'Show', @trailsegment %> |
-	<%= link_to 'Back', trailsegments_path %>
 </div>
+
+<div class='formButtons'>
+	<span class='backButton'>	
+		<%= link_to 'Back', trailsegments_path %>
+	</span>
+	<span class='addNewButton'>	
+		<%= link_to 'Show', @trailsegment %>
+	</span>	
+ </div>

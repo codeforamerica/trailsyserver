@@ -1,31 +1,41 @@
 <p id="notice"><%= notice %></p>
 
-<p>
-  <strong>Code:</strong>
-  <%= @organization.code %>
-</p>
+<div class='formContent-Show'>
+  <h3>
+    Code:
+    <span class='formAnswer'><%= @organization.code %></span>
+  </h3>
 
-<p>
-  <strong>Full name:</strong>
-  <%= @organization.full_name %>
-</p>
+  <h3>
+    Full name:
+    <span class='formAnswer'><%= @organization.full_name %></span>
+  </h3>
 
-<p>
-  <strong>Phone:</strong>
-  <%= @organization.phone %>
-</p>
+  <h3>
+    Phone:
+    <span class='formAnswer'><%= @organization.phone %></span>
+  </h3>
 
-<p>
-  <strong>Url:</strong>
-  <%= @organization.url %>
-</p>
+  <h3>
+    Url:
+    <span class='formAnswer'><%= @organization.url %></span>
+  </h3>
 
-<p>
-  <strong>Logo:</strong>
-  <% if @organization.logo %>
-    <%= image_tag @organization.logo.url %>
-  <% else %>
-    [None]
-  <% end %>
-<%= link_to 'Edit', edit_organization_path(@organization) %> |
-<%= link_to 'Back', organizations_path %>
+  <h3>
+    Logo:
+    <% if @organization.logo %>
+      <span class='formAnswer'><%= image_tag @organization.logo.url %></span>
+    <% else %>
+      [None]
+    <% end %>
+  </h3>
+</div>
+
+<div class='formButtons'>
+  <span class='backButton'>  
+    <%= link_to 'Back', organizations_path %>
+  </span>
+  <span class='addNewButton'>
+    <%= link_to 'Edit', edit_organization_path(@organization) %>
+  </span>    
+</div>
