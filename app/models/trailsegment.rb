@@ -67,8 +67,7 @@ class Trailsegment < ActiveRecord::Base
              #{json_path} \
              #{shp_path} \
              -nlt PROMOTE_TO_MULTI)
-    logger.info cmd
-    logger.info `#{cmd}`
+
     return self.parse_geojson(File.new("#{json_path}", "r")) 
   end
 

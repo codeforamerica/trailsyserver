@@ -68,8 +68,7 @@ class Trailhead < ActiveRecord::Base
              #{s_srs_string} \
              #{json_path} \
              #{shp_path})
-    logger.info cmd
-    logger.info `#{cmd}`
+
     return self.parse_geojson(File.new("#{json_path}", "r"))
   end
 

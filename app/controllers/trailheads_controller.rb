@@ -202,7 +202,6 @@ class TrailheadsController < ApplicationController
       loc = factory.point(lng,lat) 
       trailheads.each do |trailhead|
         trailhead.distance =  trailhead.geom.distance(loc)
-        logger.info(trailhead.distance)
       end
       trailheads_sort = @trailheads.sort do |a,b|
         a.distance <=> b.distance

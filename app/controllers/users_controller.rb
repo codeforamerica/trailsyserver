@@ -18,10 +18,6 @@ class UsersController < ApplicationController
 
   def update
     count_admins
-    logger.info @admin_count
-    logger.info @user.admin?
-    logger.info params[:admin]
-    logger.info params
     if @admin_count == 1 && @user.admin? && !params[:admin]
       render action: 'edit'
       return
@@ -44,8 +40,6 @@ class UsersController < ApplicationController
 
     def check_admin
       # TODO: make error message
-      logger.info "xxxxxx"
-      logger.info current_user.inspect
       redirect_to controller: "trails", action: "index", notice: "Admin account required to access users page." unless current_user.admin?
     end
 

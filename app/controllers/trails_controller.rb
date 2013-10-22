@@ -17,7 +17,6 @@ class TrailsController < ApplicationController
           @trails = Trail.all.includes([:photorecord]).order("name")
         else
           # @trails = Trail.where(source: current_user.organization).order("name")
-          logger.info current_user.inspect
           @trails = Trail.includes([:photorecord]).joins(:source).merge(Organization.where(id: current_user.organization)).order("name")
         end
       end
@@ -221,4 +220,4 @@ class TrailsController < ApplicationController
         redirect_to trailheads_path
       end
     end
-  end
+end

@@ -14,7 +14,6 @@ class Trail < ActiveRecord::Base
 
 
   def self.parse_csv(file)
-    logger.info "parse_csv"
     parsed_trails = []
     if file.class == ActionDispatch::Http::UploadedFile
       file_ident = file.path
@@ -42,7 +41,6 @@ class Trail < ActiveRecord::Base
 
   def self.parse_json(file)
     parsed_trails = []
-    logger.info file.class
     if file.class == ActionDispatch::Http::UploadedFile
       trails_input = JSON.parse(file.read)
     else
