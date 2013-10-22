@@ -134,7 +134,7 @@ class TrailsegmentsController < ApplicationController
   # DELETE /trailsegments/1.json
   def destroy
     respond_to do |format|
-      if authorized? && trailsegment.destroy
+      if authorized? && @trailsegment.destroy
         format.html { redirect_to trailsegments_url, notice: "Trail segment was successfully deleted." }
         format.json { render :json => { head: :no_content }, status: :ok }
       else

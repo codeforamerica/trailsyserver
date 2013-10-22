@@ -100,7 +100,7 @@ class TrailheadsController < ApplicationController
   # DELETE /trailheads/1.json
   def destroy
     respond_to do |format|
-      if authorized? && @trail.destroy
+      if authorized? && @trailhead.destroy
         format.html { redirect_to trailheads_url, notice: "Trailhead '" + @trailhead.name + "' was successfully deleted." }
         format.json { render :json => { head: :no_content }, status: :ok }
       else
