@@ -7,7 +7,7 @@ class UsersController < ApplicationController
 
   def index
     if params[:approved] == "false"
-      @users = User.find_all_by_approved(false).order(:email)
+      @users = User.where(approved: false).order(:email)
     else
       @users = User.all.order(:email)
     end
