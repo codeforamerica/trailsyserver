@@ -1,8 +1,7 @@
 <h1>Segment List</h1>
-
-<hr>
+<p class='uploadDescription'>
 Upload new segments (this will replace all of your organization's current data!)
-<br><br>
+</p>
 <%= form_tag({ action: :upload }, multipart: true) do %>
   <% if current_user.admin? %>
   <%= select_tag "source_id", options_from_collection_for_select(Organization.all, :id, :code) %>
@@ -12,9 +11,10 @@ Upload new segments (this will replace all of your organization's current data!)
   <%= file_field_tag 'trailsegments' %><br>
   <%= submit_tag "Submit", data: { confirm: 'Are you sure? This will replace all of your existing segment data.' } %>
 <% end %>
-<hr>
 <% if current_user.admin? %>
+<p class='tableCaption'>
 Showing all trail segments.
+</p>
 <% else %>
 <%= link_to "Show all segments", :action => "index", :all => "true" %>
 <%= link_to "Show #{current_user.organization.code} segments only", :action => "index", :all => "false" %>

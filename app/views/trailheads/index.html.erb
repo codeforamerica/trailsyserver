@@ -1,8 +1,7 @@
 <h1>Trailhead List</h1>
-
-<hr>
-Upload new trailheads (this will replace all of your organization's current data!)
-<br><br>
+<p class='uploadDescription'>
+  Upload new trailheads (this will replace all of your organization's current data!)
+</p>
 <%= form_tag({ action: :upload }, multipart: true) do %>
   <% if current_user.admin? %>
   <%= select_tag "source_id", options_from_collection_for_select(Organization.all, :id, :code) %>
@@ -12,9 +11,10 @@ Upload new trailheads (this will replace all of your organization's current data
   <%= file_field_tag 'trailheads' %><br>
   <%= submit_tag "Submit", data: { confirm: 'Are you sure? This will replace all of your existing trailhead data.' } %>
 <% end %>
-<hr>
 <% if current_user.admin? %>
-Showing all trailheads.
+<p class='tableCaption'>
+  Showing all trailheads.
+</p>
 <% else %>
 <%= link_to "Show all trailheads", :action => "index", :all => "true" %>
 

@@ -1,8 +1,7 @@
 <h1>Listing Trails</h1>
-<p>
+<p class='uploadDescription'>
 Upload a CSV of your current trail data to update this list. Note: this will replace all of your organization's existing data!
 </p>
-<br><br>
 <%= form_tag({ action: :upload }, multipart: true) do %>
   <% if current_user.admin? %>
     <%= select_tag "source_id", options_from_collection_for_select(Organization.all, :id, :code) %>
@@ -13,7 +12,9 @@ Upload a CSV of your current trail data to update this list. Note: this will rep
   <%= submit_tag "Submit", data: { confirm: 'Are you sure? This will replace all of your existing trail data.' } %>
 <% end %>
 <% if current_user.admin? %>
-Showing all trails.
+<p class="tableCaption">
+  Showing all trails.
+</p>
 <% else %> 
 <%= link_to "Show all trails", :action => "index", :all => "true" %>
 <% if current_user.organization %>

@@ -1,10 +1,9 @@
 
 <h1>Users</h1>
 
-<%= link_to "All Users", :action => "index" %>
-
-<%= link_to "Users awaiting approval", :action => "index", :approved => "false" %>
-
+<p class='tableCaption'>
+  Summary of account privileges.
+</p>
 <table border=1>
   <tr>
   <th>Email</th>
@@ -23,3 +22,8 @@
     </tr>
   <% end %>
 </table>
+
+
+<%= link_to "All Users", :action => "index" %>
+
+<%= link_to "Users awaiting approval", :action => "index", :approved => "false" %>

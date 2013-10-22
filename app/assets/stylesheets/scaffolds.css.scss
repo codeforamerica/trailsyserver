@@ -31,9 +31,12 @@ body {
 
 h1 {
   font-family: 'mission_gothicregular';
+  text-transform: uppercase;
   color: #00adef;
   font-size: 20px;
-  margin-left: 60px;
+  margin-left: 200px;
+  margin-top:30px;
+  margin-bottom: 5px;
 }
 h4 {
   font-family: 'mission_gothicregular';
@@ -57,7 +60,7 @@ pre {
   font-size: 16px;
   color: red;
 }
-
+/* trying other things
 a {
   color: #000;
   &:visited {
@@ -68,6 +71,7 @@ a {
     background-color: #000;
   }
 }
+*/
 
 div {
   &.field, &.actions {
@@ -136,26 +140,82 @@ tr:nth-child(odd) {
   background-color: #523d32;
   width: 100%;
   padding-top: 30px;
-  padding-left: 60px;
-  padding-bottom: 10px;
+  padding-left: 30px;
+  padding-bottom: 1px;
   color: white;
-  margin-bottom: -32px;
+  margin-bottom: 0px;
 }
 
-.menubox {
-  background-color: gray;
-  padding-left: 60px;
-  padding-top: 20px;
+#MenuBar {
+  background-color: white;
+  width:150px;
+  float:left;
+  margin-right:50px;
+  padding-bottom:-30px;
+
 }
 
-li.hmenu {
-  color: red;
+.MenuItem {
+  font-family: 'mission_gothiclight';
+  color:#58595b;
+  text-transform: uppercase;
+  text-align: left;
+  padding-left:30px;
+  padding-right:10px;
+  padding-top:30px;
+  padding-bottom: 30px;
+  display:block;
+  &:hover {
+    color:#58595b;
+    background-color: #f1f2f2;
+/* other possibilities
+    border-top-left-radius:30px;
+    border-bottom-left-radius:30px;
+    -moz-border-radius-topleft:30px;
+    -moz-border-radius-bottomleft:30px;
+    border-bottom: 1px solid gray;
+    */
+  }
+  &:active {
+    color: #00adef;
+  }
 }
+
 table {
-  margin-left: 60px;
+  margin-left: 200px;
   margin-right: 60px;
 }
 
 #logInText-email {
-  color: red !important;
+  color: white;
+  text-align: right;
+}
+
+.tableCaption {
+  font-family: 'mission_gothiclight';
+  color: #bbbdbf;
+  margin-bottom:5px;
+  margin-top: 20px;
+}
+
+.uploadDescription {
+  margin-bottom: 20px;
+}
+
+.addNewButton {
+  color: #2aabe2;
+  background-color: #d9f0fc;
+  text-align: center;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-right: 20px;
+  padding-left: 20px;
+  &:hover {
+    color:#2aabe2;
+    background-color: #96daf8;
+  }
+  &:visited {
+    color:#2aabe2;
+    background-color: #d9f0fc;
+  }
 }
