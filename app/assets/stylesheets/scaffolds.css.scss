@@ -127,45 +127,72 @@ div {
   width: 100%;
   padding-top: 20px;
   padding-left: 30px;
-  padding-bottom: 20px;
-  color: white;
+  padding-bottom: 1px;
   margin-bottom: 0px;
 }
-
-#logInText-email {
-  color: white;
-  float:right;
-  margin-right:35px;
-  display:inline;
-}
-
-/*edit account */
-span.editAccount a {
-  color:#91C73D;
-  display: inline;
-  float:right;
-  margin-right:35px;
-
-}
-
-/*logout */
-ul.hmenu a {
-  color:#91C73D;
-  display: inline;
-  float:right;
-  margin-right:35px;
-  &:hover {
-    text-decoration: underline;
-  }
-}
-
 
 .admin-logo {
   width:329px; 
   height:37px;
   margin-left:-30px;
-  display:inline-block;
+  display:inline;
+  margin-bottom:-15px;
 }
+
+#logInText-email {
+  color: white;
+  float:right;
+  margin-right:60px;
+  margin-top:-3px;
+  display:inline;
+}
+
+.logIn a {
+  color:#91C73D;
+  display: inline;
+  float:right;
+  margin-right:15px;
+  text-decoration: none;
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+.SignUp a {
+  color:#91C73D;
+  display: inline;
+  float:right;
+  margin-right:60px;
+  text-decoration: none;
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+.logOut a {
+  color:#91C73D;
+  display: inline;
+  float:right;
+  margin-right:15px;
+  margin-top:-9px;
+  text-decoration: none;
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+.editAccount a {
+  color:#91C73D;
+  display: inline;
+  float:right;
+  margin-right:60px;
+  margin-top: -9px;
+  text-decoration: none;
+  &:hover {
+    text-decoration: underline;
+  }
+} 
+
 
 /* menu ------------------------------ */
 #MenuBar {
@@ -246,6 +273,7 @@ table {
 
 .uploadDescription {
   margin-bottom: 20px;
+  margin-right:60px;
 }
 
 .tableLink {
