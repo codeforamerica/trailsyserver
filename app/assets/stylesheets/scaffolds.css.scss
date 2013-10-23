@@ -27,8 +27,19 @@ body {
   font-family: 'mission_gothiclight' sans-serif;
   font-size: 16px;
   line-height: 18px;
-}
 
+}
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, font, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center, dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend, table, 
+caption, tbody, tfoot, thead, tr, th, td  
+                  {margin: 0;padding: 0;border: 0;outline: 0;
+                  font-size: 100%;vertical-align: baseline;
+                  background: transparent;}
 
 /* basic text styles ------------------------------ */
 h1 {
@@ -39,11 +50,6 @@ h1 {
   margin-left: 200px;
   margin-top:30px;
   margin-bottom: 5px;
-}
-h4 {
-  font-family: 'mission_gothicregular';
-  color: #00adef;
-  font-size: 20px;
 }
 
 p, ol, ul, td {
@@ -119,25 +125,54 @@ div {
 .topheader {
   background-color: #523d32;
   width: 100%;
-  padding-top: 30px;
+  padding-top: 20px;
   padding-left: 30px;
-  padding-bottom: 1px;
+  padding-bottom: 20px;
   color: white;
   margin-bottom: 0px;
 }
 
 #logInText-email {
   color: white;
-  text-align: right;
+  float:right;
+  margin-right:35px;
+  display:inline;
 }
 
+/*edit account */
+span.editAccount a {
+  color:#91C73D;
+  display: inline;
+  float:right;
+  margin-right:35px;
+
+}
+
+/*logout */
+ul.hmenu a {
+  color:#91C73D;
+  display: inline;
+  float:right;
+  margin-right:35px;
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+
+.admin-logo {
+  width:329px; 
+  height:37px;
+  margin-left:-30px;
+  display:inline-block;
+}
 
 /* menu ------------------------------ */
 #MenuBar {
   background-color: white;
-  width:150px;
+  width:160px;
   float:left;
-  margin-right:50px;
+  margin-right:40px;
   padding-bottom:-30px;
 
 }
@@ -149,12 +184,13 @@ div {
   text-align: left;
   padding-left:30px;
   padding-right:10px;
-  padding-top:30px;
-  padding-bottom: 30px;
+  padding-top:20px;
+  padding-bottom: 20px;
   display:block;
+  text-decoration: none;
   &:hover {
-    color:#00adef;
-    background-color: #f1f2f2;
+    color:white;
+    background-color: #00adef;
 /* other possibilities
     border-top-left-radius:30px;
     border-bottom-left-radius:30px;
@@ -162,9 +198,6 @@ div {
     -moz-border-radius-bottomleft:30px;
     border-bottom: 1px solid gray;
     */
-  }
-  .active {
-    color: #00adef;
   }
 }
 li.active a {
@@ -199,7 +232,9 @@ tr:nth-child(odd) {
 
 table {
   margin-left: 200px;
-  margin-right: 60px;
+  margin-right: 40px;
+  border-collapse: collapse;
+  border-spacing: 0;
 }
 
 .tableCaption {
@@ -215,6 +250,7 @@ table {
 
 .tableLink {
   color: #2aabe2;
+  text-decoration: none;
   &:hover {
     text-decoration: underline;
   }
@@ -222,6 +258,7 @@ table {
 
 .tableLink-delete {
   color: #ba4a4a;
+  text-decoration: none;
   &:hover {
     text-decoration: underline;
   }
@@ -229,7 +266,7 @@ table {
 
 
 /* for buttons below tables ------------------------------ */
-.addNewButton {
+.addNewButton a {
   color: #2aabe2;
   background-color: #d9f0fc;
   text-align: center;
@@ -237,6 +274,7 @@ table {
   padding-bottom: 10px;
   padding-right: 20px;
   padding-left: 20px;
+  text-decoration: none;
   &:hover {
     color:#2aabe2;
     background-color: #96daf8;
@@ -276,23 +314,25 @@ h3 {
   margin-left: 200px;
   margin-top: 30px;
   margin-bottom: 50px;
+  text-decoration: none;
 }
 
-.backButton {
-  color: #2aabe2;
+.backButton a {
+  color: #00adef;
   background-color: #d9f0fc;
   text-align: center;
   padding-top: 10px;
   padding-bottom: 10px;
-  padding-right: 15px;
+  padding-right: 20px;
   padding-left: 20px;
-  margin-right: 20px;
+  margin-right: 15px;
+  text-decoration: none;
   &:hover {
-    color:#2aabe2;
+    color:#00adef;
     background-color: #96daf8;
   }
   &:visited {
-    color:#2aabe2;
+    color:#00adef;
     background-color: #d9f0fc;
   }
 }
@@ -300,14 +340,71 @@ h3 {
 .h3-Edit {
   color: #bbbdbf;
   text-transform: uppercase;
-  font-size:13px;
+  font-size:14px;
   line-height: 20px;
   margin-top: 15px;
-  margin-bottom: 15px; 
   margin-right:5px;
+  display:block;
+  font-weight:bold;
 }
 
 .finePrint {
   font-size: 11 !important;
-  color: #58595b;
+  color: #808285;
+  font-style: italic;
+  display:block;
+}
+
+/* log in ------------------------------ */
+.formHeader-LogIn {
+  color:#bbbdbf;
+  text-transform: uppercase;
+}
+
+.linkButton-SignUp a {
+  color: #00adef;
+  background-color: #d9f0fc;
+  text-align: center;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-right: 20px;
+  padding-left: 20px;
+  text-decoration: none;
+  &:hover {
+    color:#00adef;
+    background-color: #96daf8;
+  }
+  &:visited {
+    color:#00adef;
+    background-color: #d9f0fc;
+  }
+}
+
+.linkButton-SignIn a {
+  color: #00adef;
+  background-color: #d9f0fc;
+  text-align: center;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-right: 20px;
+  padding-left: 20px;
+  text-decoration: none;
+  margin-right:15px;
+  &:hover {
+    color:#00adef;
+    background-color: #96daf8;
+  }
+  &:visited {
+    color:#00adef;
+    background-color: #d9f0fc;
+  }
+}
+
+span.linkButton-Forgot a {
+  color: #00adef;
+  text-decoration: none;
+  padding-left:15px;
+  &:hover {
+    text-decoration: underline;
+  }
 }

@@ -13,32 +13,32 @@
   <% end %>
 
   <div class="field">
-    <span class='h3-Edit'><%= f.label :name %>:</span>
+    <span class='h3-Edit'><%= f.label :name %></span>
     <span class='formAnswer'><%= @trail.name %></span>
   </div>
   <div class="field">
-    <span class='h3-Edit'><%= f.label :status %>:</span>
+    <span class='h3-Edit'><%= f.label :status %></span>
     <%= f.select :status, [["Open", 0], ["Notice", 1], ["Closed", 2]] %>
   </div>
   <div class="field">
-    <span class='h3-Edit'><%= f.label :statustext, "Status Text" %></span><br>
+    <span class='h3-Edit'><%= f.label :statustext, "Status Text" %></span>
     <%= f.text_field :statustext, size: 120 %>
     <br>
     <span class='finePrint'>Note: Text doesn't display if Status is 'Open'</span>
   </div>
   <div class="field">
-     <span class='h3-Edit'><%= f.label :description, "Trail Description" %></span><br>
+     <span class='h3-Edit'><%= f.label :description, "Trail Description" %></span>
     <%= f.text_area :description, cols: 100, rows: 5 %>
   </div>
   <div class="field">
     <%= f.fields_for :photorecord do |ff| %>
-       <span class='h3-Edit'><%= ff.label :photo %>:</span>
+       <span class='h3-Edit'><%= ff.label :photo %></span>
       <% @trail.photorecord.photo.url %>
       <% unless @trail.photorecord.photo.url =~ /missing.png/ %>
       <%= link_to image_tag(@trail.photorecord.photo.url(:thumb)), @trail.photorecord.photo.url %>
       <% end %>
-      <%= ff.file_field :photo %><br><br>
-       <span class='h3-Edit'><%= ff.label :credit %>:</span>
+      <%= ff.file_field :photo %><br>
+       <span class='h3-Edit'><%= ff.label :credit %></span>
       <%= ff.text_field :credit %><br>
       <%= ff.hidden_field :source_id, value: @trail.source_id %>
       <%= ff.hidden_field :name, value: @trail.name %>
@@ -51,17 +51,17 @@
     <%= f.check_box :delete_photo, { checked: 1 } %>
   </div>
   <div class="field">
-    <span class='h3-Edit'><%= f.label :source %>:</span>
+    <span class='h3-Edit'><%= f.label :source %></span>
     <span class='formAnswer'><%= @trail.source.code %></span>
   </div>
   <div class="field">
-    <span class='h3-Edit'><%= f.label :steward %>:</span>
+    <span class='h3-Edit'><%= f.label :steward %></span>
     <%= f.select :steward_id, Organization.all.collect{ |org| [org.code, org.id]} %>
     <br>
     <span class='finePrint'>This is the organization trail users should contact for more information.</span>
   </div>
   <div class="field">
-    <span class='h3-Edit'><%= f.label :length, "Length" %>:</span>
+    <span class='h3-Edit'><%= f.label :length, "Length" %></span>
     <%= f.text_field :length, size: 3 %>
     <span class='formAnswer'>miles</span>
   </div>
@@ -70,41 +70,39 @@
     <%= f.select :accessible, ["y", "n"], {include_blank: true} %>
   </div>
   <div class="field">
-    <span class='h3-Edit'><%= f.label :hike, "Hiking" %>:</span>
+    <span class='h3-Edit'><%= f.label :hike, "Hiking" %></span>
     <%= f.select :hike, ["y", "n"], {include_blank: true} %>
   </div>
   <div class="field">
-    <span class='h3-Edit'><%= f.label :equestrian %>:</span>
+    <span class='h3-Edit'><%= f.label :equestrian %></span>
     <%= f.select :equestrian, ["y", "n"], {include_blank: true} %>
   </div>
   <div class="field">
-    <span class='h3-Edit'><%= f.label :xcntryski, "Cross-Country Ski" %>:</span>
+    <span class='h3-Edit'><%= f.label :xcntryski, "Cross-Country Ski" %></span>
     <%= f.select :xcntryski, ["y", "n"], {include_blank: true} %>
   </div>
   <div class="field">
-    <span class='h3-Edit'><%= f.label :dogs %>:</span>
+    <span class='h3-Edit'><%= f.label :dogs %></span>
     <%= f.select :dogs, ["y", "n"], {include_blank: true} %>
   </div>
   <div class="field">
-    <span class='h3-Edit'><%= f.label :roadbike, "Road Bikes" %>:</span>
+    <span class='h3-Edit'><%= f.label :roadbike, "Road Bikes" %></span>
     <%= f.select :roadbike, ["y", "n"], {include_blank: true} %>
   </div>
   <div class="field">
-    <span class='h3-Edit'><%= f.label :mtnbike, "Mountain Bikes" %>:</span>
+    <span class='h3-Edit'><%= f.label :mtnbike, "Mountain Bikes" %></span>
     <%= f.select :mtnbike, ["y", "n"], {include_blank: true} %>
   </div>
   <div class="field">
-    <span class='h3-Edit'><%= f.label :conditions, "Special Notes on Accessibility or Use" %>:</span>
-    <br>
+    <span class='h3-Edit'><%= f.label :conditions, "Special Notes on Accessibility or Use" %></span>
     <%= f.text_area :conditions, cols: 100, rows: 5 %>
   </div>
   <div class="field">
-    <span class='h3-Edit'><%= f.label :map_url, "Map URL" %>:</span>
-      <br>
+    <span class='h3-Edit'><%= f.label :map_url, "Map URL" %></span>
     <%= f.text_field :map_url, size: 120 %>
   </div>
   <div class="field">
-    <span class='h3-Edit'><%= f.label :trlsurface, "Trail Surface" %>:</span><br>
+    <span class='h3-Edit'><%= f.label :trlsurface, "Trail Surface" %></span>
     <%= f.text_field :trlsurface %>
   </div>
   <div class="actions">

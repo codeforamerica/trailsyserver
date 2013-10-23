@@ -10,15 +10,15 @@
   <p class="notice"><%= notice %></p>
   <p class="alert"><%= alert %></p>
   <div class="topheader">
-    <h4>To The Trails Admin</h4>
-    <ul class="hmenu" id="logInText-email"> 
-      <%= render 'devise/menu/registration_items' %>
+    <img src="/images/LogoBigger.png" class="admin-logo" alt="Product1">
+    <ul class="hmenu"> 
+      <%= render 'devise/menu/registration_items'%>
       <%= render 'devise/menu/login_items' %>
     </ul>
   </div>
   <div id="MenuBar">
 
-    <ul class="hmenu">
+    <ul >
       <li class="<%= 'active' if current_page?(trails_path) %>"><%= link_to "Trails", trails_path, :class => "MenuItem" %></li>
       <li class="<%= 'active' if current_page?(trailheads_path) %>"><%= link_to "Trailheads", trailheads_path, :class => "MenuItem" %></li>
       <li class="<%= 'active' if current_page?(trailsegments_path) %>"><%= link_to "Segments", trailsegments_path, :class => "MenuItem" %></li>
