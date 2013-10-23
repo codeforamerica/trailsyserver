@@ -17,7 +17,8 @@ end
 
 after_fork do |server, worker| 
   if defined?(ActiveRecord::Base) 
-    config = Rails.application.config.database_configuration[Rails.env] 
+    config = Rails.application.config.database_configuration[Rails.env]
+    config['reaping_frequency'] = ENV['DB_REAP_FREQ'] || 10
     config['adapter'] = 'postgis' 
     ActiveRecord::Base.establish_connection(config)
   end 
