@@ -280,7 +280,7 @@ ul {
 
 .uploadDescription {
   margin-bottom: 20px;
-  margin-right:60px;
+  margin-right:200px;
 }
 
 .tableLink {
@@ -455,6 +455,23 @@ h3 {
   text-transform: uppercase;
 }
 
+.linkButton-SignIn a {
+  color: #00adef;
+  text-decoration: none;
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+.linkButton-SignUp a {
+  color: #00adef;
+  text-decoration: none;
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+/*blue buttons
 .linkButton-SignUp a {
   color: #00adef;
   background-color: #d9f0fc;
@@ -474,6 +491,7 @@ h3 {
   }
 }
 
+
 .linkButton-SignIn a {
   color: #00adef;
   background-color: #d9f0fc;
@@ -492,7 +510,7 @@ h3 {
     color:#00adef;
     background-color: #d9f0fc;
   }
-}
+} */
 
 span.linkButton-Forgot a {
   color: #00adef;
@@ -501,4 +519,24 @@ span.linkButton-Forgot a {
   &:hover {
     text-decoration: underline;
   }
+}
+
+/*default buttons ------------------------------ */
+input[type=submit] {
+  color:white;
+  background-color: #00adef;
+  border:none;
+  font-family: 'mission_gothiclight';
+  font-size: 16px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-right: 20px;
+  padding-left: 20px;
+  margin-top:15px;
+  &:hover {
+      color:white;
+      background-color: #00C2EF;
+      cursor:pointer;
+
+    }
 }

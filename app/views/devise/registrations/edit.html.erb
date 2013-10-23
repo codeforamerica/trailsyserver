@@ -30,13 +30,12 @@
         <span class='finePrint'>We need your current password to confirm your changes.</span>
       <%= f.password_field :current_password %>
     </div>
-    <br>
     <div><%= f.submit "Update" %></div>
   <% end %>
-
+  <br>
+  <br>
   <span class='h3-Edit'>Cancel my account</span>
   <span class='finePrint'>What are the results from canceling an account? Will it delete the all of the info they uploaded? These questions should probably be answered here. </span>
-  <br>
   <%= button_to "Cancel my account", registration_path(resource_name), :data => { :confirm => "Are you sure?" }, :method => :delete %>
 
 </div>
