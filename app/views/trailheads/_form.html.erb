@@ -23,9 +23,9 @@
   </div>
   <div class="field">
     <span class='h3-Edit'><%= f.label :steward %></span>
+    <span class='finePrint'>This is organization trailhead users should contact for more information.</span>
     <%= f.select :steward_id, Organization.all.collect{ |org| [org.code, org.id]} %>
     <br>
-    <span class='finePrint'>This is organization trailhead users should contact for more information.</span>
   </div>
   <div class="field">
     <span class='h3-Edit'><%= f.label :location %></span>

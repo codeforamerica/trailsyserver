@@ -13,22 +13,19 @@
 
   <div class="field">
     <span class='h3-Edit'><%= f.label :source %></span>
-    <span class='formAnswer'><%= @trailsegment.source.code %></span>
-    <br>
     <span class='finePrint'> This is the organization who uploaded the info.</span>
+    <span class='formAnswer'><%= @trailsegment.source.code %></span>
   </div>
   <div class="field">
     <span class='h3-Edit'><%= f.label :steward %></span>
-    <span class='formAnswer'><%= f.select :steward_id, Organization.all.collect{ |org| [org.code, org.id]} %></span>
-    <br>
     <span class='finePrint'>This is the organization the park visitor should contanct for more information. </span>
+    <span class='formAnswer'><%= f.select :steward_id, Organization.all.collect{ |org| [org.code, org.id]} %></span>
   </div>
   <div class="field">
     <span class='h3-Edit'><%= f.label :length %></span>
+    <span class='finePrint'>Note: This number is automatically rounded to the first decimal point in the user-facing application.</span>
     <%= f.text_field :length %>
     <span class='formAnswer'>miles</span>
-    <br>
-    <span class='finePrint'>Note: This number is automatically rounded to the first decimal point in the user-facing application.</span>
   </div>
   <div class="field">
     <span class='h3-Edit'><%= f.label :accessible, "Accessible" %></span>
@@ -60,32 +57,26 @@
   </div>
   <div class="field">
     <span class='h3-Edit'><%= f.label :trail1 %></span>
-    <br>
     <%= f.text_field :trail1, size: 80 %>
   </div>
   <div class="field">
     <span class='h3-Edit'><%= f.label :trail2 %></span>
-    <br>
     <%= f.text_field :trail2, size: 80 %>
   </div>
   <div class="field">
     <span class='h3-Edit'><%= f.label :trail3 %></span>
-    <br>
     <%= f.text_field :trail3, size: 80 %>
   </div>
   <div class="field">
     <span class='h3-Edit'><%= f.label :trail4 %></span>
-    <br>
     <%= f.text_field :trail4, size: 80 %>
   </div>
   <div class="field">
     <span class='h3-Edit'><%= f.label :trail5 %></span>
-    <br>
     <%= f.text_field :trail5, size: 80 %>
   </div>
   <div class="field">
     <span class='h3-Edit'><%= f.label :trail6 %></span>
-    <br>
     <%= f.text_field :trail6, size: 80 %>
   </div>
   <div class="actions">

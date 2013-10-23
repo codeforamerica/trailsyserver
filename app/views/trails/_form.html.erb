@@ -21,10 +21,9 @@
     <%= f.select :status, [["Open", 0], ["Notice", 1], ["Closed", 2]] %>
   </div>
   <div class="field">
-    <span class='h3-Edit'><%= f.label :statustext, "Status Text" %></span>
-    <%= f.text_field :statustext, size: 120 %>
-    <br>
+    <span class='h3-Edit'><%= f.label :statustext, "Status Text" %></span>   
     <span class='finePrint'>Note: Text doesn't display if Status is 'Open'</span>
+    <%= f.text_field :statustext, size: 120 %>
   </div>
   <div class="field">
      <span class='h3-Edit'><%= f.label :description, "Trail Description" %></span>
@@ -39,12 +38,12 @@
       <% end %>
       <%= ff.file_field :photo %><br>
        <span class='h3-Edit'><%= ff.label :credit %></span>
+      <span class='finePrint'>Note: this will only save after a photo is uploaded</span>
       <%= ff.text_field :credit %><br>
       <%= ff.hidden_field :source_id, value: @trail.source_id %>
       <%= ff.hidden_field :name, value: @trail.name %>
       <%= ff.hidden_field :id, value: @trail.photorecord.id %>
     <% end %> 
-    <span class='finePrint'>Note: this will only save after a photo is uploaded</span>
   </div>
   <div class="field">
     <span class='h3-Edit'><%= f.label "Delete current photo:" %></span>
@@ -56,9 +55,8 @@
   </div>
   <div class="field">
     <span class='h3-Edit'><%= f.label :steward %></span>
-    <%= f.select :steward_id, Organization.all.collect{ |org| [org.code, org.id]} %>
-    <br>
     <span class='finePrint'>This is the organization trail users should contact for more information.</span>
+    <%= f.select :steward_id, Organization.all.collect{ |org| [org.code, org.id]} %>
   </div>
   <div class="field">
     <span class='h3-Edit'><%= f.label :length, "Length" %></span>
