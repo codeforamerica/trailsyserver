@@ -267,6 +267,10 @@ table {
   border-spacing: 0;
 }
 
+ul {
+  list-style-type: none
+}
+
 .tableCaption {
   font-family: 'mission_gothiclight';
   color: #bbbdbf;
@@ -380,8 +384,15 @@ h3 {
   line-height: 20px;
   margin-top: 15px;
   margin-bottom: 15px;
+  margin-right:200px;
 
 }
+.formAnswer {
+  color: #58595b;
+  font-size:16px;
+  text-transform: none;
+}
+
 .formAnswer {
   color: #58595b;
   font-size:16px;
