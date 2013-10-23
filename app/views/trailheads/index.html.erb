@@ -48,9 +48,9 @@
           </ul>
         </td>
         <% if (current_user.admin? || current_user.organization == trailhead.source) %>
-        <td><%= link_to 'Show', trailhead, :class => "tableLink" %></td>
+        <td><%= link_to 'View', trailhead, :class => "tableLink" %></td>
         <td><%= link_to 'Edit', edit_trailhead_path(trailhead), :class => "tableLink" %></td>
-        <td><%= link_to 'Destroy', trailhead, :class => "tableLink-delete", method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to 'Delete', trailhead, :class => "tableLink-delete", method: :delete, data: { confirm: 'Are you sure?' } %></td>
         <% end %>
       </tr>
     <% end %>

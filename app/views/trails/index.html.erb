@@ -56,7 +56,7 @@ Upload a CSV of your current trail data to update this list. Note: this will rep
         <%= image_tag trail.photorecord.photo.url(:thumb) unless (trail.photorecord.nil? || trail.photorecord.photo.url =~ /missing.png$/) %>
       </td>
       <% if (current_user.admin? || current_user.organization == trail.source) %>
-      <td class="actions"><%= link_to 'Show', trail, :class => "tableLink" %></td>
+      <td class="actions"><%= link_to 'View', trail, :class => "tableLink" %></td>
       <td class="actions"><%= link_to 'Edit', edit_trail_path(trail), :class => "tableLink" %></td>
       <td class="actions"><%= link_to 'Delete', trail, :class => "tableLink-delete", method: :delete, data: { confirm: 'Are you sure?' } %></td>
       <% end %>
