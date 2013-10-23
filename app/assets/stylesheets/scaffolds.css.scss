@@ -227,6 +227,7 @@ div {
     */
   }
 }
+
 li.active a {
   color:white;
   background-color: #00adef;
@@ -241,11 +242,13 @@ td {
 }
 
 th {
-  font-family: 'mission_gothicregular';
-  font-size: 16px;
+  font-family: 'mission_gothiclight';
+  text-transform: uppercase;
+  font-size: 13px;
   color: #ffffff;
   padding: 10px;
-  border:1px solid #E3E3E1;
+  border:1px solid #96daf8;
+  border-top:1px solid white;
   background-color: #00adef;
 
 }
@@ -290,6 +293,53 @@ table {
   &:hover {
     text-decoration: underline;
   }
+}
+/* for tabs (buttons) above tables ------------------------------ */
+.tabLeft a {
+  color: #2aabe2;
+  background-color: #d9f0fc;
+  font-size: 13px;
+  text-transform: uppercase;
+  text-align: center;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-right: 20px;
+  padding-left: 20px;
+  display:inline-block;
+  text-decoration: none;
+  &.hover {
+    color:#2aabe2;
+    background-color: #96daf8;
+  }
+}
+
+.tabLeft.active a {
+    color:white;
+    background-color: #00adef;   
+  }
+
+.tabRight a {
+  color: #2aabe2;
+  background-color: #d9f0fc;
+  font-size: 13px;
+  text-transform: uppercase;
+  text-align: center;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-right: 20px;
+  padding-left: 20px;
+  display:inline-block;
+  margin-left:-5px;
+  text-decoration: none;
+  &.hover {
+    color:#2aabe2;
+    background-color: #96daf8;
+  }
+}
+
+.tabLeft.active a {
+    color:white;
+    background-color: #00adef;   
 }
 
 

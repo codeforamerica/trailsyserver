@@ -4,6 +4,13 @@
 <p class='tableCaption'>
   Summary of account privileges.
 </p>
+<span class='tabLeft'>
+  <%= link_to "All Users", :action => "index" %>
+</span>
+
+<span class='tabRight'>
+  <%= link_to "Users Awaiting Approval", :action => "index", :approved => "false" %>
+</span>
 <table border=1>
   <tr>
   <th>Email</th>
@@ -22,8 +29,3 @@
     </tr>
   <% end %>
 </table>
-
-
-<%= link_to "All Users", :action => "index" %>
-
-<%= link_to "Users awaiting approval", :action => "index", :approved => "false" %>
