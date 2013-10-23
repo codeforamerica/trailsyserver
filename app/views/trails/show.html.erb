@@ -14,11 +14,11 @@
 
   <h3>
     Status Text:
-    <span class='formAnswer'><%= @trail.statustext %></span>
+    <span class='formAnswer-Short'><%= @trail.statustext %></span>
 
   <h3>
     Description:
-    <span class='formAnswer'><%= @trail.description %></span>
+    <span class='formAnswer-Short'><%= @trail.description %></span>
   </h3>
 
   <h3>
@@ -89,7 +89,7 @@
 
   <h3>
     Map url:
-    <span class='formAnswer'><%= @trail.map_url %></span>
+    <span class='formAnswer'><a href="<%= @trail.map_url %>" target="_blank"><%= @trail.map_url %></a></span>
   </h3>
 
   <h3>
