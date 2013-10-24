@@ -348,7 +348,7 @@ ul {
 
 
 /* for buttons below tables ------------------------------ */
-.addNewButton a {
+.buttonBelow a {
   color: #2aabe2;
   background-color: #d9f0fc;
   text-align: center;
@@ -521,7 +521,7 @@ span.linkButton-Forgot a {
   }
 }
 
-/*default buttons ------------------------------ */
+/*buttons ------------------------------ */
 input[type=submit] {
   color:white;
   background-color: #00adef;
@@ -539,4 +539,22 @@ input[type=submit] {
       cursor:pointer;
 
     }
+}
+.addNewButton a {
+  color: #2aabe2;
+  background-color: #d9f0fc;
+  text-align: center;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-right: 20px;
+  padding-left: 20px;
+  text-decoration: none;
+  &:hover {
+    color:#2aabe2;
+    background-color: #96daf8;
+  }
+  &:visited {
+    color:#2aabe2;
+    background-color: #d9f0fc;
+  }
 }
