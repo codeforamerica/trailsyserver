@@ -1,6 +1,6 @@
 <h1>Segment List</h1>
 <p class='uploadDescription'>
-Upload new segments (this will replace all of your organization's current data!)
+Upload a CSV of your current trail segement data to update this list (make sure it follows the <a href="https://docs.google.com/a/codeforamerica.org/document/d/1frt5HkKTdqEaNEnfk2Dq9IYxctvPjVnoU_F33Px2zSQ/edit" target="_blank">standard</a>). Note: this will replace all of your organization's existing data! Before replacing content, we recommend downloading your current data in case anything goes wrong.
   <% if current_user.admin? %>
   <%= link_to "Current data for all sources", {action: "index", format: :json}, target: "_blank" %>
   <% else %>
