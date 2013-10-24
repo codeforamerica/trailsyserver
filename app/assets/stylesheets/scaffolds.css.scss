@@ -48,8 +48,8 @@ h1 {
   color: #00adef;
   font-size: 20px;
   margin-left: 200px;
-  margin-top:30px;
   margin-bottom: 5px;
+  margin-top:30px;
 }
 
 p, ol, ul, td {
@@ -557,4 +557,19 @@ input[type=submit] {
     color:#2aabe2;
     background-color: #d9f0fc;
   }
+}
+
+/* messages */
+.alert {
+  color:#9C2D23;
+  background-color:#edcecc;
+  margin-left:-30px;
+  padding-left:230px;
+}
+
+.notice {
+  color:#91C73D;
+  background-color:#EBF4DF;
+  margin-left:-30px;
+  padding-left:230px;
 }
