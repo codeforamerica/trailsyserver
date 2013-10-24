@@ -1,7 +1,9 @@
 <!-- TODO: consider merging this with other upload views -->
-<h1>Processed Trailsegment Upload</h1>
-<%= link_to "Back to Trailsegment Listing", trailsegments_path %>
-<h3>Source matches (matching "<%= @source.code %>")</h3>
+<h1>Trail Segment Upload Complete</h1>
+<p>Note: See the table below for specific information regarding the upload for each trail segment listing.</p> 
+<p>Errors are featured within the table.</p>
+<!--<%= link_to "Back to Trailsegment Listing", trailsegments_path %>-->
+<p class='tableCaption'>Source matches (matching "<%= @source.code %>")</p>
 
 <table>
   <tr>
@@ -85,4 +87,3 @@
 <% end %>
 </table>
 -->
-<%= link_to "Back to Trailsegment Listing", trailsegments_path %>

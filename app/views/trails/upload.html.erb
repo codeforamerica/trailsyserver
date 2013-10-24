@@ -1,12 +1,25 @@
-<h1>Processing Upload</h1>
-<%= link_to "Back to Trail Listing", trails_path %>
+<h1>Upload Complete</h1>
+<p>Note: See the table below for specific information regarding the upload for each trail listing.</p> 
+<p>Errors are featured within the table.</p>
+<!--
+<%= link_to "Back to Trail Listing", trails_path %>-->
 <% if current_user.admin? %>
-<h3>Source matches (matching "<%= @source.code %>")</h3>
+<p class='tableCaption'>Source matches (matching "<%= @source.code %>")</p>
 <% else %>
-<h3>Source matches (matching "<%= current_user.organization.code %>")</h3>
+<p class='tableCaption'>Source matches (matching "<%= current_user.organization.code %>")</p>
 <% end %>
 <table>
-
+  <tr>
+    <th>
+      Status
+    </th>
+    <th>
+      Trailhead Name
+    </th>
+    <th>
+      Import errors
+    </th>
+  </tr>
   <% @added_trails.each do |added_trail| %>
   <tr>
     <td>
@@ -57,4 +70,3 @@
   <% end %>
 </table>
 -->
-<%= link_to "Back to Trail Listing", trails_path %>
