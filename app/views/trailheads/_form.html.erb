@@ -18,6 +18,10 @@
     <%= f.text_field :name, size: 50 %>
   </div>
   <div class="field">
+    <span class='h3-Edit'><%= f.label :park %></span>
+    <%= f.text_field :park, size: 50 %>
+  </div>
+  <div class="field">
     <span class='h3-Edit'><%= f.label :source %></span>
     <span class='formAnswer'><%= @trailhead.source.code %></span>
   </div>
