@@ -10,7 +10,7 @@ class Trail < ActiveRecord::Base
   belongs_to :steward, class_name: 'Organization', foreign_key: "steward_id"
   belongs_to :source, class_name: 'Organization', foreign_key: "source_id"
 
-  accepts_nested_attributes_for :photorecord
+  accepts_nested_attributes_for :photorecord, allow_destroy: true
 
 
   def self.parse_csv(file)

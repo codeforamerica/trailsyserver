@@ -86,11 +86,11 @@ class TrailsController < ApplicationController
   def update
     respond_to do |format|
       if params[:trail][:delete_photo] && params[:trail][:delete_photo] == "1"
-        @trail.photorecord = nil
+        @trail.photorecord_attributes = { id: params[:trail][:photorecord_attributes][:id], _destroy: 1 }
       end
-      if params[:trail][:photorecord_attributes][:id] == "" && params[:trail][:photorecord_attributes][:photo].nil?
-        params[:trail].delete :photorecord_attributes
-      end
+      # if params[:trail][:photorecord_attributes][:id] == "" && params[:trail][:photorecord_attributes][:photo].nil?
+      #   params[:trail].delete :photorecord_attributes
+      # end
       if authorized? && @trail.update(trail_params)
         format.html { redirect_to trails_path, notice: 'Trail was successfully updated.' }
         format.json { head :no_content }
@@ -211,7 +211,7 @@ class TrailsController < ApplicationController
     def trail_params
       params.require(:trail).permit(:name, :status, :statustext, :description, 
         :source, :source_id, :steward, :steward_id, :length, :accessible, :hike, :equestrian, :xcntryski, :dogs, 
-        :roadbike, :mtnbike, :conditions, :map_url, :trlsurface, :delete_photo, :photorecord_attributes => [:photo, :source, :name, :id, :credit])
+        :roadbike, :mtnbike, :conditions, :map_url, :trlsurface, :delete_photo, :photorecord_attributes => [:photo, :source, :source_id, :name, :id, :credit])
     end
 
 
