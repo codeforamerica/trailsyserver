@@ -1,4 +1,4 @@
-<h1>Listing organizations</h1>
+<h1>Organizations</h1>
 <p class='tableCaption'>
   Manage organization information here.
 </p>
@@ -32,5 +32,5 @@
 </table>
 <br><br>
 <% if current_user.admin? %>
-<%= link_to 'Add New Organization', new_organization_path, :class => "addNewButton" %>
+<span class='buttonBelow'><%= link_to 'Add New Organization', new_organization_path%></span>
 <% end %>
