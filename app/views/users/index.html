@@ -4,11 +4,11 @@
 <p class='tableCaption'>
   Summary of account privileges.
 </p>
-<span class='tabLeft'>
+<span class='tabLeft <%= "active" if params[:all] == "true" || params[:all].nil? %>'>
   <%= link_to "All Users", :action => "index" %>
 </span>
 
-<span class='tabRight'>
+<span class='tabRight <%= "active" if params[:all] == "false"  %>'>
   <%= link_to "Users Awaiting Approval", :action => "index", :approved => "false" %>
 </span>
 <table border=1>

@@ -17,8 +17,8 @@ Upload new segments (this will replace all of your organization's current data!)
 Showing all trail segments.
 </p>
 <% else %>
-<span class='tabLeft'><%= link_to "All Segments", :action => "index", :all => "true" %></span>
-<span class='tabRight'><%= link_to "Only #{current_user.organization.code} Segments", :action => "index", :all => "false" %></span>
+<span class='tabLeft <%= "active" if params[:all] == "true" %>'><%= link_to "All Segments", :action => "index", :all => "true" %></span>
+<span class='tabRight <%= "active" if params[:all] == "false" || params[:all].nil? %>'><%= link_to "Only #{current_user.organization.code} Segments", :action => "index", :all => "false" %></span>
 <% end %>
 <table>
   <thead>
