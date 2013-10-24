@@ -24,8 +24,6 @@
   <h3>
     Photo:
     <span class='formAnswer'><% if @trail.photorecord && @trail.photorecord.photo? %>
-      original:
-      <%= image_tag @trail.photorecord.photo.url %>
       medium:
       <%= image_tag @trail.photorecord.photo.url(:medium) %>
       thumb:
