@@ -27,7 +27,7 @@ Upload a CSV of your current trail data to update this list. Note: this will rep
 <span class='tabRight <%= "active" if params[:all] == "false" || params[:all].nil? %>'><%= link_to "Only #{current_user.organization.code} Trails", :action => "index", :all => "false" %></span>
 <% end %>
 <% end %>
-<table>
+<table id='trails'>
   <thead>
     <tr>
       <th>Name</th>

@@ -239,6 +239,7 @@ td {
   padding:10px;
   border:1px solid #E3E3E1;
 
+
 }
 
 th {
@@ -251,6 +252,10 @@ th {
   border-top:1px solid white;
   background-color: #00adef;
 
+}
+
+table#trails td:nth-child(7) {
+    vertical-align: middle;
 }
 
 tr:nth-child(even) {
@@ -432,9 +437,7 @@ h3 {
 }
 
 .h3-Edit {
-  color: #bbbdbf;
-  text-transform: uppercase;
-  font-size:14px;
+  
   line-height: 20px;
   margin-top: 15px;
   margin-right:5px;
@@ -446,6 +449,12 @@ h3 {
   font-size: 11 !important;
   color: #808285;
   font-style: italic;
+  display:block;
+}
+
+.h3-Photo {
+  text-transform: uppercase;
+  font-size:14px;
   display:block;
 }
 

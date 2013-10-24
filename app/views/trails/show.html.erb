@@ -14,21 +14,23 @@
 
   <h3>
     Status Text:
-    <span class='formAnswer-Short'><%= @trail.statustext %></span>
+    <span class='formAnswer'><%= @trail.statustext %></span>
 
   <h3>
     Description:
-    <span class='formAnswer-Short'><%= @trail.description %></span>
+    <span class='formAnswer'><%= @trail.description %></span>
   </h3>
 
   <h3>
-    Photo:
+    Photo
     <span class='formAnswer'><% if @trail.photorecord && @trail.photorecord.photo? %>
-      original:
-      <%= image_tag @trail.photorecord.photo.url %>
-      medium:
+      <span class='h3-Photo'>original</span>
+    <%= image_tag @trail.photorecord.photo.url %>
+      <br><br>
+      <span class='h3-Photo'>medium</span>
       <%= image_tag @trail.photorecord.photo.url(:medium) %>
-      thumb:
+      <br><br>
+      <span class='h3-Photo'>thumb</span>
       <%= image_tag @trail.photorecord.photo.url(:thumb) %>
     <% else %>
       [None]
