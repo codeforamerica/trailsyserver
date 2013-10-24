@@ -1,6 +1,6 @@
 <h1>Trails</h1>
 <p class='uploadDescription'>
-Upload a CSV of your current trail data to update this list. Note: this will replace all of your organization's existing data! Before replacing content, we recommend downloading your current data in case anything goes wrong. 
+Upload a CSV of your current trail data to update this list. Note: this will replace all of your organization's existing data! Before replacing content, we recommend downloading your current data in case anything goes wrong.
     <% if current_user.admin? %>
     <%= link_to "Current data for all sources", {action: "index", format: :json}, target: "_blank" %>
     <% else %>

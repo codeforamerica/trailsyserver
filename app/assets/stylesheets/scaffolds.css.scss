@@ -249,7 +249,7 @@ th {
   color: #ffffff;
   padding: 10px;
   border:1px solid #96daf8;
-  border-top:1px solid white;
+
   background-color: #00adef;
 
 }
@@ -286,6 +286,16 @@ ul {
 .uploadDescription {
   margin-bottom: 20px;
   margin-right:200px;
+}
+
+.uploadDescription a {
+  color: #00adef;
+  font-size:16px;
+  text-transform: none;
+  text-decoration:none;
+  &:hover {
+    text-decoration: underline;
+  }
 }
 
 .tableLink {
@@ -346,7 +356,7 @@ ul {
   }
 }
 
-.tabLeft.active a {
+.tabRight.active a {
     color:white;
     background-color: #00adef;   
 }
@@ -533,7 +543,7 @@ span.linkButton-Forgot a {
 /*buttons ------------------------------ */
 input[type=submit] {
   color:white;
-  background-color: #00adef;
+  background-color: #91C73D;
   border:none;
   font-family: 'mission_gothiclight';
   font-size: 16px;
@@ -544,7 +554,7 @@ input[type=submit] {
   margin-top:15px;
   &:hover {
       color:white;
-      background-color: #00C2EF;
+      background-color: #B0D576;
       cursor:pointer;
 
     }
