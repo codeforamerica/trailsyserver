@@ -209,6 +209,7 @@ div {
   color:#00adef;
   text-transform: uppercase;
   text-align: left;
+  margin-top:10px;
   padding-left:30px;
   padding-right:10px;
   padding-top:20px;
@@ -239,6 +240,7 @@ td {
   padding:10px;
   border:1px solid #E3E3E1;
 
+
 }
 
 th {
@@ -248,9 +250,13 @@ th {
   color: #ffffff;
   padding: 10px;
   border:1px solid #96daf8;
-  border-top:1px solid white;
+
   background-color: #00adef;
 
+}
+
+table#trails td:nth-child(7) {
+    vertical-align: middle;
 }
 
 tr:nth-child(even) {
@@ -281,6 +287,16 @@ ul {
 .uploadDescription {
   margin-bottom: 20px;
   margin-right:200px;
+}
+
+.uploadDescription a {
+  color: #00adef;
+  font-size:16px;
+  text-transform: none;
+  text-decoration:none;
+  &:hover {
+    text-decoration: underline;
+  }
 }
 
 .tableLink {
@@ -341,7 +357,7 @@ ul {
   }
 }
 
-.tabLeft.active a {
+.tabRight.active a {
     color:white;
     background-color: #00adef;   
 }
@@ -434,7 +450,7 @@ h3 {
 .h3-Edit {
   color: #bbbdbf;
   text-transform: uppercase;
-  font-size:14px;
+  font-size:13px; 
   line-height: 20px;
   margin-top: 15px;
   margin-right:5px;
@@ -443,10 +459,30 @@ h3 {
 }
 
 .finePrint {
-  font-size: 11 !important;
+  font-size: 14px !important;
   color: #808285;
-  font-style: italic;
   display:block;
+  margin-right:200px;
+
+}
+
+.h3-Photo {
+  text-transform: uppercase;
+  font-size:14px;
+  display:block;
+}
+
+
+input[type=text] {
+  width:200px;
+}
+
+input#trail_statustext, input#trail_photorecord_attributes_credit, input#trail_map_url {
+  width:500px; 
+}
+
+input#trail_length, input#trailsegment_length, input#trail_trlsurface {
+  width:100px;
 }
 
 /* log in ------------------------------ */
@@ -524,7 +560,7 @@ span.linkButton-Forgot a {
 /*buttons ------------------------------ */
 input[type=submit] {
   color:white;
-  background-color: #00adef;
+  background-color: #91C73D;
   border:none;
   font-family: 'mission_gothiclight';
   font-size: 16px;
@@ -535,7 +571,7 @@ input[type=submit] {
   margin-top:15px;
   &:hover {
       color:white;
-      background-color: #00C2EF;
+      background-color: #B0D576;
       cursor:pointer;
 
     }
