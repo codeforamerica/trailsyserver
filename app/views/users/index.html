@@ -8,7 +8,7 @@
   <%= link_to "All Users", :action => "index", :all => "true"  %>
 </span>
 
-<span class='tabRight <%= "active" if params[:all] == "false"   || params[:all].nil? %>'>
+<span class='tabRight <%= "active" if params[:all] == "false"   %>'>
   <%= link_to "Users Awaiting Approval", :action => "index", :approved => "false", :all => "false" %>
 </span>
 <table border=1>
