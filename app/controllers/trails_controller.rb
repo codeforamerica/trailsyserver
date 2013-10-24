@@ -21,7 +21,11 @@ class TrailsController < ApplicationController
         end
       end
       format.json do
-        @trails = Trail.includes([:photorecord]).order("name")
+        if params[:source_id].nil?
+          @trails = Trail.includes([:photorecord]).order("name")
+        else
+          @trails = Trail.includes([:photorecord]).where(source_id: params[:source_id]).order("name")
+        end
         entity_factory = ::RGeo::GeoJSON::EntityFactory.instance
         features = []
         @trails.each do |trail|
