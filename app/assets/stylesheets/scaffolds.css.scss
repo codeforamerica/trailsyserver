@@ -447,7 +447,9 @@ h3 {
 }
 
 .h3-Edit {
-  
+  color: #bbbdbf;
+  text-transform: uppercase;
+  font-size:13px; 
   line-height: 20px;
   margin-top: 15px;
   margin-right:5px;
@@ -458,7 +460,6 @@ h3 {
 .finePrint {
   font-size: 11 !important;
   color: #808285;
-  font-style: italic;
   display:block;
 }
 
@@ -466,6 +467,19 @@ h3 {
   text-transform: uppercase;
   font-size:14px;
   display:block;
+}
+
+
+input[type=text] {
+  width:200px;
+}
+
+input#trail_statustext, input#trail_photorecord_attributes_credit, input#trail_map_url {
+  width:500px; 
+}
+
+input#trail_length, input#trailsegment_length, input#trail_trlsurface {
+  width:100px;
 }
 
 /* log in ------------------------------ */

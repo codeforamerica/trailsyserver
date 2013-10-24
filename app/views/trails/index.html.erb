@@ -22,7 +22,7 @@ Upload a CSV of your current trail data to update this list. Note: this will rep
   Showing all trails.
 </p>
 <% else %> 
-<span class='tabLeft <%= "active" if params[:all] == "true" %>' ><%= link_to "All Trails", :action => "index", :all => "true" %></span>
+<span class='tabLeft <%= "active" if params[:all] == "true" %>'><%= link_to "All Trails", :action => "index", :all => "true" %></span>
 <% if current_user.organization %>
 <span class='tabRight <%= "active" if params[:all] == "false" || params[:all].nil? %>'><%= link_to "Only #{current_user.organization.code} Trails", :action => "index", :all => "false" %></span>
 <% end %>
