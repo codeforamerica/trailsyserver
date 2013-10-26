@@ -114,6 +114,7 @@ class TrailheadsController < ApplicationController
     if !current_user
       head 403
     end
+    @confirmed = params[:confirmed] ? true : false
     redirect_to trails_url, notice: "Please enter a source organization code for uploading trailhead data." if params[:source_id].empty?
     source_id = params[:source_id]
     @source = Organization.find(source_id)
@@ -128,7 +129,11 @@ class TrailheadsController < ApplicationController
     source_trailheads.each do |old_trailhead|
       removed_trailhead = Hash.new
       removed_trailhead[:trailhead] = old_trailhead
-      removed_trailhead[:success] = old_trailhead.destroy
+      if @confirmed
+        removed_trailhead[:success] = old_trailhead.destroy
+      else
+        removed_trailhead[:success] = true
+      end
       @removed_trailheads.push(removed_trailhead)
     end
     @added_trailheads = []
@@ -142,11 +147,24 @@ class TrailheadsController < ApplicationController
         else
           added_trailhead[:message] = "No trailhead source found."
         end
-      elsif (new_trailhead.save)
-        added_trailhead[:success] = true
+      elsif @confirmed
+        if (new_trailhead.save)
+          added_trailhead[:success] = true
+        else
+          added_trailhead[:success] = false
+          added_trailhead[:message] = new_trailhead.errors.full_messages
+        end
       else
-        added_trailhead[:success] = false
-        added_trailhead[:message] = new_trailhead.errors.full_messages
+        if (new_trailhead.valid?)
+          added_trailhead[:success] = true
+        else
+          if new_trailhead.errors.full_messages == ["Name  has already been taken for this source"]
+            added_trailhead[:success] = true
+          else
+            added_trailhead[:success] = false
+            added_trailhead[:message] = new_trailhead.errors.full_messages
+          end
+        end
       end
       @added_trailheads.push(added_trailhead)
     end

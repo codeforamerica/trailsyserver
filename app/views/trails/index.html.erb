@@ -1,11 +1,13 @@
 <h1>Trails</h1>
 <p class='uploadDescription'>
-Upload a CSV of your current trail data to update this list (make sure it follows the <a href="https://docs.google.com/a/codeforamerica.org/document/d/1frt5HkKTdqEaNEnfk2Dq9IYxctvPjVnoU_F33Px2zSQ/edit" target="_blank">standard</a>). Note: this will replace all of your organization's existing data! Before replacing content, we recommend downloading your current data in case anything goes wrong.
-    <% if current_user.admin? %>
-    <%= link_to "Current data for all sources", {action: "index", format: :json}, target: "_blank" %>
+Upload a CSV of your current trail data to update this list (make sure it follows the <a href="https://docs.google.com/a/codeforamerica.org/document/d/1frt5HkKTdqEaNEnfk2Dq9IYxctvPjVnoU_F33Px2zSQ/edit" target="_blank">standard</a>). Note: this will replace all of your organization's existing data! Before replacing content, we recommend downloading your current data in case anything goes wrong. You can download the current data for 
+    
+<% if current_user.admin? %>
+    <%= link_to "all sources", {action: "index", format: :json}, target: "_blank" %>
     <% else %>
-    <%= link_to "Current data for #{current_user.organization.code}", {action: "index", source_id: current_user.organization_id, format: :json}, target: "_blank" %>    
+    <%= link_to "#{current_user.organization.code}", {action: "index", source_id: current_user.organization_id, format: :json}, target: "_blank" %>    
     <% end %>
+  here.
 </p>
 <%= form_tag({ action: :upload }, multipart: true) do %>
   <% if current_user.admin? %>
@@ -14,7 +16,10 @@ Upload a CSV of your current trail data to update this list (make sure it follow
   <%= hidden_field_tag 'source_id', current_user.organization.id %>
   <% end %>
   <%= file_field_tag 'trails' %><br>
-  <%= submit_tag "Submit", data: { confirm: 'Are you sure? This will replace all of your existing trail data.' } %>
+
+  <%= submit_tag "Test Upload", id: "submitData", data: { confirm: 'Are you sure? If the "Replace Existing Data" box is checked, this will replace all of your existing trail data.' } %>
+  <%= label_tag :confirmed, 'Replace Existing Data' %>
+  <%= check_box_tag 'confirmed', 'Confirm', false, {id: "confirmed", onclick: "if ($('#confirmed').is(':checked')) { $('#submitData').val('Upload Data') } else {  $('#submitData').val('Test Upload'); }"} %> 
 <% end %>
 <br>
 <% if current_user.admin? %>

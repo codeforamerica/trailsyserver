@@ -21,9 +21,9 @@
   <tr>
     <td>
       <% if added_trailsegment[:success] %>
-      <b>Added</b>
+      <b><%= @confirmed ? "Added" : "Would Be Added" %></b>
       <% else %>
-      <b>Not Added</b> 
+      <b><%= @confirmed ? "Not Added" : "Would Not Be Added" %></b> 
       <% end %>
     </td>
     <td>
@@ -43,9 +43,9 @@
   <tr>
     <td>  
       <% if removed_trailsegment[:success] %>
-      <b>Deleted</b> 
+      <b><%= @confirmed ? "Deleted" : "Would Be Deleted" %></b>  
       <% else %>
-      <b>Not Deleted</b>
+      <b><%= @confirmed ? "Not Deleted" : "Would Not Be Deleted" %></b>
       <% end %>
     </td>
     <td>

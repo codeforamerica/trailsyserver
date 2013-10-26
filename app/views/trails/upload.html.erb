@@ -3,11 +3,19 @@
 <p>Errors are featured within the table.</p>
 <!--
 <%= link_to "Back to Trail Listing", trails_path %>-->
+<p>
+<% if @confirmed %>
+  Trail data updated. Note the changes below.
+<% else %>
+  See your proposed changes below. Your trail data has NOT been permanently updated. To update your data, hit the "back" button on your browser and check the "Confirmed" checkbox before submitting. Note that duplicate trail names are not detected in this preview. 
+<% end %>
+</p>
 <% if current_user.admin? %>
 <p class='tableCaption'>Source matches (matching "<%= @source.code %>")</p>
 <% else %>
 <p class='tableCaption'>Source matches (matching "<%= current_user.organization.code %>")</p>
 <% end %>
+</p>
 <table>
   <tr>
     <th>
@@ -24,9 +32,9 @@
   <tr>
     <td>
       <% if added_trail[:success] %>
-      <b>Added</b>
+      <b><%= @confirmed ? "Added" : "Would Be Added" %></b>
       <% else %>
-      <b>Not Added</b> 
+      <b><%= @confirmed ? "Not Added" : "Would Not Be Added" %></b> 
       <% end %>
     </td>
     <td>
@@ -41,9 +49,9 @@
   <tr>
     <td>  
       <% if removed_trail[:success] %>
-      <b>Deleted</b> 
+      <b><%= @confirmed ? "Deleted" : "Would Be Deleted" %></b> 
       <% else %>
-      <b>Not Deleted</b>
+      <b><%= @confirmed ? "Not Deleted" : "Would Not Be Deleted" %></b>
       <% end %>
     </td>
     <td>

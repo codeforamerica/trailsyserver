@@ -148,6 +148,7 @@ class TrailsegmentsController < ApplicationController
     if !current_user
       head 403
     end
+    @confirmed = params[:confirmed] ? true : false
     redirect_to trailsegments_url, notice: "Please enter a source organization code for uploading trail segment data." if params[:source_id].empty?
     source_id = params[:source_id]
     @source = Organization.find(source_id)
@@ -158,13 +159,15 @@ class TrailsegmentsController < ApplicationController
     end
     source_trailsegments = Trailsegment.where(source: @source)
     @non_source_trailsegments = Trailsegment.where.not(source: @source)
-    # source_trailsegments = Trailsegment.source_trailsegments(parsed_trailsegments, current_user.organization || params[:source])
-    # @non_source_trailsegments = Trailsegment.non_source_trailsegments(parsed_trailsegments, current_user.organization || params[:source])
     @removed_trailsegments = []
     source_trailsegments.each do |old_trailsegment|
       removed_trailsegment = Hash.new
       removed_trailsegment[:trailsegment] = old_trailsegment
-      removed_trailsegment[:success] = old_trailsegment.destroy
+      if @confirmed
+        removed_trailsegment[:success] = old_trailsegment.destroy
+      else
+        removed_trailsegment[:success] = true
+      end
       @removed_trailsegments.push(removed_trailsegment)
     end
     @added_trailsegments = []
@@ -178,11 +181,24 @@ class TrailsegmentsController < ApplicationController
         else
           added_trailsegment[:message] = "No trail segment source found."
         end
-      elsif (new_trailsegment.save)
-        added_trailsegment[:success] = true
+      elsif @confirmed
+        if (new_trailsegment.save)
+          added_trailsegment[:success] = true
+        else
+          added_trailsegment[:success] = false
+          added_trailsegment[:message] = new_trailsegment.errors.full_messages
+        end
       else
-        added_trailsegment[:success] = false
-        added_trailsegment[:message] = new_trailsegment.errors.full_messages
+        if (new_trailsegment.valid?)
+          added_trailsegment[:success] = true
+        else
+          if new_trailsegment.errors.full_messages == ["Geom  has already been taken for this source"]
+            added_trailsegment[:success] = true
+          else
+            added_trailsegment[:success] = false
+            added_trailsegment[:message] = new_trailsegment.errors.full_messages
+          end
+        end
       end
       @added_trailsegments.push(added_trailsegment)
     end

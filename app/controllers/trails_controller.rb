@@ -124,6 +124,7 @@ class TrailsController < ApplicationController
     if !current_user
       head 403
     end
+    @confirmed = params[:confirmed] ? true : false
     redirect_to trails_url, notice: "Please enter a source organization code for uploading trail data." if params[:source_id].empty?
     source_id = params[:source_id]
     @source = Organization.find(source_id)
@@ -139,7 +140,11 @@ class TrailsController < ApplicationController
     source_trails.each do |old_trail|
       removed_trail = Hash.new
       removed_trail[:trail] = old_trail
-      removed_trail[:success] = old_trail.destroy
+      if @confirmed
+        removed_trail[:success] = old_trail.destroy
+      else
+        removed_trail[:success] = true
+      end
       @removed_trails.push(removed_trail)
     end
     # add all of the new trails
@@ -158,11 +163,26 @@ class TrailsController < ApplicationController
         else
           added_trail[:message] = "No trail source found."
         end
-      elsif (new_trail.save)
-        added_trail[:success] = true
-      else
-        added_trail[:success] = false
-        added_trail[:message] = new_trail.errors.full_messages
+      elsif @confirmed
+        if (new_trail.save)
+          added_trail[:success] = true
+        else
+          added_trail[:success] = false
+          added_trail[:message] = new_trail.errors.full_messages
+        end
+      else 
+        # we're just doing a test run, so check for validity
+        if (new_trail.valid?)
+          added_trail[:success] = true
+        else
+          # this is because we can't easily test name uniqueness without deleting data
+          if new_trail.errors.full_messages == ["Name  has already been taken for this source"]
+            added_trail[:success] = true
+          else
+            added_trail[:success] = false
+            added_trail[:message] = new_trail.errors.full_messages
+          end
+        end
       end
       @added_trails.push(added_trail)
     end
