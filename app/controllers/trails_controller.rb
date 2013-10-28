@@ -11,7 +11,9 @@ class TrailsController < ApplicationController
       format.html do
         authenticate_user!
         if !user_signed_in? || (!current_user.admin && current_user.organization.nil?)
-          redirect_to destroy_user_session_path
+          sign_out :user
+          redirect_to trails_path
+          return  
         end
         if @show_all == "true" || current_user.admin?
           @trails = Trail.all.includes([:photorecord]).order("name")
@@ -228,7 +230,7 @@ class TrailsController < ApplicationController
     end
 
     def authorized?
-      (current_user.organization == @trail.source) || current_user.admin?
+      current_user.admin? || (@trail && (current_user.organization == @trail.source)) 
     end
     
     # Never trust parameters from the scary internet, only allow the white list through.
