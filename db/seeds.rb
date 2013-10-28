@@ -26,7 +26,7 @@ cmp = Organization.create({
   })
 
 admin = User.find_by(email: ENV["DEFAULT_ADMIN_USER"])
-admin.destroy!
+admin.destroy unless admin_user.nil?
 User.create({ 
   email: ENV["DEFAULT_ADMIN_USER"].dup,
   admin: true,
@@ -35,7 +35,7 @@ User.create({
   password_confirmation: ENV["DEFAULT_ADMIN_PASSWORD"]
   })
 nps_user = User.find_by(email: ENV["TEST_NPS_USER"])
-nps_user.destroy!
+nps_user.destroy unless nps_user.nil?
 User.create({ 
   email: ENV["TEST_NPS_USER"].dup,
   admin: false,
@@ -45,7 +45,7 @@ User.create({
   password_confirmation: ENV["DEFAULT_ADMIN_PASSWORD"]
   })
 mpssc_user = User.find_by(email: ENV["TEST_MPSSC_USER"])
-mpssc_user.destroy!
+mpssc_user.destroy unless mpssc_user.nil?
 User.create({
   email: ENV["TEST_MPSSC_USER"].dup,
   admin: false,
