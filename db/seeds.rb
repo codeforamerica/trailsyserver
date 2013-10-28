@@ -26,7 +26,7 @@ cmp = Organization.create({
   })
 
 admin = User.find_by(email: ENV["DEFAULT_ADMIN_USER"])
-admin.destroy unless admin_user.nil?
+admin.destroy unless admin.nil?
 User.create({ 
   email: ENV["DEFAULT_ADMIN_USER"].dup,
   admin: true,
