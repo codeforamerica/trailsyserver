@@ -1,5 +1,5 @@
 class Photorecord < ActiveRecord::Base
-  has_attached_file :photo, :styles => { medium: "300x300>", thumb: "100x100>" }
+  has_attached_file :photo, :styles => { medium: "384", thumb: "100x100>" }
   belongs_to :trail
   # removing this for now, because it should be run less often than every save
   # after_save :clean_nils
