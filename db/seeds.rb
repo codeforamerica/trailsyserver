@@ -15,7 +15,7 @@ mpssc = Organization.create({
 nps = Organization.create({
   code: "NPS",
   full_name: "Cuyahoga Valley National Park",
-  phone: "216-524-1497",
+  phone: "330.657.2752",
   url: "http://www.nps.gov/cuva/"
   })
 cmp = Organization.create({
