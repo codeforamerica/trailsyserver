@@ -145,7 +145,7 @@ class TrailheadsController < ApplicationController
         if !new_trailhead.source.nil?
           added_trailhead[:message] = "Trailhead organization #{new_trailhead.source.code} doesn't match user organization #{@source.code}"
         else
-          added_trailhead[:message] = "No trailhead source found."
+          added_trailhead[:message] = "No trailhead source found or organization code in input does not match a known organization."
         end
       elsif @confirmed
         if (new_trailhead.save)
