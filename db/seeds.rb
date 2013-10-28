@@ -12,8 +12,8 @@ mpssc = Organization.create({
   phone: "330-867-5511",
   url: "http://www.summitmetroparks.org/"
   })
-cvnp = Organization.create({
-  code: "CVNP",
+nps = Organization.create({
+  code: "NPS",
   full_name: "Cuyahoga Valley National Park",
   phone: "216-524-1497",
   url: "http://www.nps.gov/cuva/"
@@ -25,6 +25,8 @@ cmp = Organization.create({
   url: "http://clevelandmetroparks.com"
   })
 
+admin = User.find_by(email: ENV["DEFAULT_ADMIN_USER"])
+admin.destroy!
 User.create({ 
   email: ENV["DEFAULT_ADMIN_USER"].dup,
   admin: true,
@@ -32,19 +34,23 @@ User.create({
   password: ENV["DEFAULT_ADMIN_PASSWORD"],
   password_confirmation: ENV["DEFAULT_ADMIN_PASSWORD"]
   })
+nps_user = User.find_by(email: ENV["TEST_NPS_USER"])
+nps_user.destroy!
 User.create({ 
-  email: ENV["TEST_CVNP_USER"].dup,
+  email: ENV["TEST_NPS_USER"].dup,
   admin: false,
   approved: true,
-  organization: cvnp,
+  organization: Organization.find_by(code: "NPS"),
   password: ENV["DEFAULT_ADMIN_PASSWORD"],
   password_confirmation: ENV["DEFAULT_ADMIN_PASSWORD"]
   })
+mpssc_user = User.find_by(email: ENV["TEST_MPSSC_USER"])
+mpssc_user.destroy!
 User.create({
   email: ENV["TEST_MPSSC_USER"].dup,
   admin: false,
   approved: true,
-  organization: mpssc,
+  organization: Organization.find_by(code: "MPSSC"),
   password: ENV["DEFAULT_ADMIN_PASSWORD"],
   password_confirmation: ENV["DEFAULT_ADMIN_PASSWORD"]
   })
