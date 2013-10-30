@@ -1,6 +1,6 @@
 <h1>Trails</h1>
 <p class='uploadDescription'>
-Upload a CSV of your current trail data to update this list (make sure it follows the <a href="https://docs.google.com/a/codeforamerica.org/document/d/1frt5HkKTdqEaNEnfk2Dq9IYxctvPjVnoU_F33Px2zSQ/edit" target="_blank">standard</a>). Note: this will replace all of your organization's existing data! Before replacing content, we recommend downloading your current data in case anything goes wrong. You can download the current data for 
+Upload a CSV or GeoJSON (any geodata supplied will be ignored) of your current trail data to update this list (make sure it follows the <a href="https://docs.google.com/a/codeforamerica.org/document/d/1frt5HkKTdqEaNEnfk2Dq9IYxctvPjVnoU_F33Px2zSQ/edit" target="_blank">standard</a>). Note: this will replace all of your organization's existing data! Before replacing content, we recommend downloading your current data in case anything goes wrong. You can download the current data for 
     
 <% if current_user.admin? %>
     <%= link_to "all sources", {action: "index", format: :json}, target: "_blank" %>
