@@ -1,23 +1,27 @@
 # TrailsyServer
 
-This will eventually provide:
+Trailsyserver is one of the components, along with [Trailsy](http://www.github.com/danavery/trailsy), of [To The Trails](http://tothetrails.com), a web application for storing and displaying hiking/biking/equestrian trail data.
 
- - a REST-style interface to trail data for consumption by [Trailsy](http://www.github.com/danavery/trailsy) (and possibly others). 
- - an interface for trail stewards to upload and maintain their trail data in the Trailsy database, as well as provide status updates, closure updates, photos, and institutional information for invidivual trails.
- - data structure and API informed by [trail standards draft](https://docs.google.com/document/d/1frt5HkKTdqEaNEnfk2Dq9IYxctvPjVnoU_F33Px2zSQ).
+To The Trails was developed by [2013 Code for America Fellows](http://www.codeforamerica.org/cities/summitcounty/) working with park and trail organizations in Summit County, Ohio.  The application is lightly customized for use in Summit County, but could be repurposed with minimal effort.
+
+The Trailsyserver component includes:
+
+  - a REST-style interface to trail data for consumption by [Trailsy](http://www.github.com/danavery/trailsy) (and possibly others). 
+  - an interface for organizations that maintain trail data to upload and maintain their trail data in the Trailsy database, as well as provide status updates, closure updates, photos, and institutional information for invidivual trails.
+  - data structure and API informed by [trail standards draft](https://docs.google.com/document/d/1frt5HkKTdqEaNEnfk2Dq9IYxctvPjVnoU_F33Px2zSQ).
  
 ## Requirements
 
- - Ruby 1.9.3 or newer. (All testing so far has been with Ruby 2.0.0)
- - An instance of Postgres with the PostGIS extension installed (can be local or remote)
- - An Amazon S3 bucket for photo storage. (Not needed for development environment, which stores photos in the local filesystem. See "Local setup" below.)
+  - Ruby 1.9.3 or newer. (All testing so far has been with Ruby 2.0.0)
+  - An instance of Postgres with the PostGIS extension installed (can be local or remote--the current production version uses Heroku PostGIS hosting)
+  - An Amazon S3 bucket for photo storage. (Not needed for development environment, which stores photos in the local filesystem. See "Local setup" below.)
 
 We hope to merge this repo and the [Trailsy](http://www.github.com/danavery/trailsy) repo soon.
 
 ### Sample working resource requests
- - [http://trailsyserver-prod.herokuapp.com/trails.json](http://trailsyserver-prod.herokuapp.com/trails.json)
- - [http://trailsyserver-prod.herokuapp.com/trailheads.json?loc=41.1,-81.5](http://trailsyserver-prod.herokuapp.com/trailheads.json?loc=41.1,-81.5)
- - [http://trailsyserver-prod.herokuapp.com/trailsegments.json](http://trailsyserver-prod.herokuapp.com/trailsegments.json)
+  - [http://trailsyserver-prod.herokuapp.com/trails.json]()
+  - [http://trailsyserver-prod.herokuapp.com/trailheads.json?loc=41.1,-81.5]()
+  - [http://trailsyserver-prod.herokuapp.com/trailsegments.json]()
 
 ## Setup notes
 
@@ -25,9 +29,9 @@ We hope to merge this repo and the [Trailsy](http://www.github.com/danavery/trai
 
 (Note: more instructions to come -- for example, you need a database user that can create databases and tables. After setup, you can remove those privileges if you prefer.)
 
-To set up an instance on Heroku, you need a instance of PostGIS available (we're currently using one installed an EC2 server.)
+To set up an instance on Heroku, you need a instance of PostGIS available. The production To The Trails application uses Heroku's PostGIS service.
 
-An Amazon Web Services account is also required for photo storage in Amazon S3.
+An Amazon Web Services account is also required for photo storage in Amazon S3. The application uses [https://github.com/thoughtbot/paperclip](Paperclip) to manage photo attachments, so it could be converted to use any other Paperclip-supported storage backend.
 
 To install on Heroku, you'll need to set the following app config vars:
 
@@ -51,7 +55,7 @@ To initialize the database:
 
     heroku run rake db:create && db:migrate && db:seed
 
-To populate the database with sample trails, trailheads, and segments from CVNP and MPSSC:
+To populate the database with sample trails, trailheads, and segments from Cuyahoga Valley National Park and Metro Parks, Serving Summit County:
 
     heroku run rake load:all
 
@@ -65,7 +69,7 @@ You need the GDAL/OGR package installed locally.
 
 There are two "development" Rails environments available: 
 
- - "development" uses a local instance of PostGIS, using the pg gem adapter defaults, and local file storage for photos.
+ - "development" uses a local instance of PostGIS, using the 'pg' gem adapter defaults, and local file storage for photos. You'll need to change the "development" portion of `config/database.yml` to point to your database.
 
  - "development-aws" uses a remote instance of PostGIS, and S3 for photos, based on the environmental variables below
 
@@ -104,8 +108,18 @@ These users will have organization field values of "CVNP" and "MPSSC" respective
  - TEST_CVNP_USER
  - TEST_MPSSC_USER
 
-All of these initial users will share the password in the following environment variable:
+All of these initial users will share the single password in the following environment variable:
 
  - DEFAULT_ADMIN_PASSWORD
 
-To start the server
+Then run 
+
+  rake db:create && db:migrate && db:seed
+
+to initialize the database, and optionally run
+
+  rake load:all
+
+to load sample data from Cuyahoga Valley National Park and Metro Parks, Serving Summit County.
+
+To start Trailsyserver, start it with `rails server`. If you're planning on using it with the [Trailsy](http://www.github.com/danavery/trailsy) fronr-end, change `API_HOST` in the first lines of `trailhead.js` to point to your instance of Trailsyserver. 
