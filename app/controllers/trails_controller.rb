@@ -40,6 +40,14 @@ class TrailsController < ApplicationController
         my_geojson = RGeo::GeoJSON::encode(collection)
         render json: Oj.dump(my_geojson)
       end
+      format.csv do
+        if params[:source_id].nil?
+          @trails = Trail.includes([:photorecord]).order("name")
+        else
+          @trails = Trail.includes([:photorecord]).where(source_id: params[:source_id]).order("name")
+        end
+        render text: @trails.to_csv
+      end
     end
   end
 

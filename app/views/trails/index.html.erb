@@ -1,13 +1,15 @@
 <h1>Trails</h1>
 <p class='uploadDescription'>
-Upload a CSV or GeoJSON (any geodata supplied will be ignored) of your current trail data to update this list (make sure it follows the <a href="https://docs.google.com/a/codeforamerica.org/document/d/1frt5HkKTdqEaNEnfk2Dq9IYxctvPjVnoU_F33Px2zSQ/edit" target="_blank">standard</a>). Note: this will replace all of your organization's existing data! Before replacing content, we recommend downloading your current data in case anything goes wrong. You can download the current data for 
+Upload a CSV or GeoJSON (any geodata supplied will be ignored) of your current trail data to update this list (make sure it follows the <a href="https://docs.google.com/a/codeforamerica.org/document/d/1frt5HkKTdqEaNEnfk2Dq9IYxctvPjVnoU_F33Px2zSQ/edit" target="_blank">standard</a>). Note: this will replace all of your organization's existing data! Before replacing content, we recommend downloading your current data in case anything goes wrong. You can download the current data for <%= current_user.admin? ? "all sources" : "#{current_user.organization.code}" %> in 
     
 <% if current_user.admin? %>
-    <%= link_to "all sources", {action: "index", format: :json}, target: "_blank" %>
+    <%= link_to "JSON", {action: "index", format: :json}, target: "_blank" %> or 
+    <%= link_to "CSV", {action: "index", format: :csv}, target: "_blank" %>.
     <% else %>
-    <%= link_to "#{current_user.organization.code}", {action: "index", source_id: current_user.organization_id, format: :json}, target: "_blank" %>    
+    <%= link_to "JSON", {action: "index", source_id: current_user.organization_id, format: :json}, target: "_blank" %> or
+    <%= link_to "CSV", {action: "index", source_id: current_user.organization_id, format: :csv}, target: "_blank" %>.
     <% end %>
-  here.
+
 </p>
 <%= form_tag({ action: :upload }, multipart: true) do %>
   <% if current_user.admin? %>

@@ -23,15 +23,27 @@ class Trail < ActiveRecord::Base
     CSV.foreach(file_ident, headers: true) do |row|
       new_trail = Trail.new
       next if (row.to_s =~ /^source/)
+
       row.headers.each do |header|
+        logger.info header
+        value = row[header]
         next if header == "id"
+        unless value.nil?
+          if value.to_s.downcase == "yes" || value == "Y"
+            value = "y"
+          end
+          if value.to_s.downcase == "no" || value == "N"
+            value = "n"
+          end
+        end
         # next if header == "source"
         if new_trail.attributes.has_key? header
-          new_trail[header] = row[header]
+          logger.info "added"
+          new_trail[header] = value
         elsif header == "source"
-          new_trail.source = Organization.find_by code: row[header]
+          new_trail.source = Organization.find_by code: value
         elsif header == "steward"
-          new_trail.steward = Organization.find_by code: row[header]
+          new_trail.steward = Organization.find_by code: value
         end
       end
       parsed_trails.push new_trail
@@ -51,8 +63,18 @@ class Trail < ActiveRecord::Base
       properties = feature["properties"]
       properties.each do |fieldname, fieldvalue|
         next if fieldname == "id"
+        unless fieldvalue.nil?
+          if fieldvalue.to_s.downcase == "yes" || fieldvalue == "Y"
+            fieldvalue = "y"
+          end
+          if fieldvalue.to_s.downcase == "no" || fieldvalue == "N"
+            fieldvalue = "n"
+          end
+        end
         # next if fieldname == "source"
         if new_trail.attributes.has_key? fieldname
+          logger.info fieldname
+          logger.info fieldvalue
           new_trail[fieldname] = fieldvalue
         elsif fieldname == 'source'
          new_trail.source = Organization.find_by code: fieldvalue
@@ -75,4 +97,12 @@ class Trail < ActiveRecord::Base
     end
   end
   
+  def self.to_csv
+    CSV.generate do |csv|
+      csv << column_names
+      all.each do |trail|
+        csv << trail.attributes.values_at(*column_names)
+      end
+    end
+  end
 end
