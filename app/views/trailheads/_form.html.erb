@@ -22,6 +22,22 @@
     <%= f.text_field :park, size: 50 %>
   </div>
   <div class="field">
+    <span class='h3-Edit'><%= f.label :address %></span>
+    <%= f.text_field :address, size: 50 %>
+  </div>
+  <div class="field">
+    <span class='h3-Edit'><%= f.label :city %></span>
+    <%= f.text_field :city, size: 50 %>
+  </div>
+  <div class="field">
+    <span class='h3-Edit'><%= f.label :state %></span>
+    <%= f.text_field :state, size: 50 %>
+  </div>
+  <div class="field">
+    <span class='h3-Edit'><%= f.label :zip %></span>
+    <%= f.text_field :zip, size: 50 %>
+  </div>
+  <div class="field">
     <span class='h3-Edit'><%= f.label :source %></span>
     <span class='formAnswer'><%= @trailhead.source.code %></span>
   </div>

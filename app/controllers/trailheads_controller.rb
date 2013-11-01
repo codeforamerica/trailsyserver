@@ -209,7 +209,7 @@ class TrailheadsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def trailhead_params
-      params.require(:trailhead).permit(:name, :park, :source_id, :trail1, :trail2, 
+      params.require(:trailhead).permit(:name, :park, :address, :city, :state, :zip, :source_id, :trail1, :trail2, 
         :trail3, :geom, :distance, :steward_id, :parking, :drinkwater, :restrooms, 
         :kiosk, :trail4, :trail5, :trail6)
     end
