@@ -192,7 +192,7 @@ class TrailsegmentsController < ApplicationController
         if (new_trailsegment.valid?)
           added_trailsegment[:success] = true
         else
-          if new_trailsegment.errors.full_messages == ["Geom  has already been taken for this source"]
+          if new_trailsegment.errors.full_messages == ["Geom has already been taken"]
             added_trailsegment[:success] = true
           else
             added_trailsegment[:success] = false

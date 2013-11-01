@@ -10,10 +10,13 @@ class Trailsegment < ActiveRecord::Base
   belongs_to :source, class_name: 'Organization', foreign_key: "source_id"
 
   def self.parse_geojson(file)
+    logger.info file.class
     if file.class == ActionDispatch::Http::UploadedFile
       feature_collection = RGeo::GeoJSON.decode(File.read(file.path), json_parser: :json)
     elsif file.class == String
       feature_collection = RGeo::GeoJSON.decode(File.new(file), json_parser: :json)
+    elsif file.class == File
+      feature_collection = RGeo::GeoJSON.decode(file, json_parser: :json)
     end
     parsed_trailsegments = []
     feature_collection.each do |feature|
@@ -67,6 +70,8 @@ class Trailsegment < ActiveRecord::Base
              #{json_path} \
              #{shp_path} \
              -nlt PROMOTE_TO_MULTI)
+
+    logger.info `#{cmd}`
 
     return self.parse_geojson(File.new("#{json_path}", "r")) 
   end

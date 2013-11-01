@@ -17,6 +17,8 @@ class Trailhead < ActiveRecord::Base
       feature_collection = RGeo::GeoJSON.decode(File.read(file.path), json_parser: :json)
     elsif file.class == String
       feature_collection = RGeo::GeoJSON.decode(File.new(file), json_parser: :json)
+    elsif file.class == File
+      feature_collection = RGeo::GeoJSON.decode(file, json_parser: :json)
     end
     parsed_trailheads = []
     feature_collection.each do |feature|
@@ -68,7 +70,7 @@ class Trailhead < ActiveRecord::Base
              #{s_srs_string} \
              #{json_path} \
              #{shp_path})
-
+    logger.info `#{cmd}`
     return self.parse_geojson(File.new("#{json_path}", "r"))
   end
 
