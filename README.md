@@ -10,6 +10,8 @@ The Trailsyserver component includes:
   - an interface for organizations that maintain trail data to upload and maintain their trail data in the Trailsy database, as well as provide status updates, closure updates, photos, and institutional information for invidivual trails.
   - data structure and API informed by [trail standards draft](https://docs.google.com/document/d/1frt5HkKTdqEaNEnfk2Dq9IYxctvPjVnoU_F33Px2zSQ).
  
+**Special Note:** The Trailsy repository is currently a submodule of this Trailsyserver repository, so if you clone this repository, you can use `git submodule init` then `git submodule update` to create a copy of Trailsy in the 'public' directory of Trailsyserver. This setup reduces from two to one the number of Heroku app instances required to run a full instance of To The Trails.
+
 ## Requirements
 
   - Ruby 1.9.3 or newer. (All testing so far has been with Ruby 2.0.0)
