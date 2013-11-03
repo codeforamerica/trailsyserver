@@ -33,7 +33,7 @@ We hope to merge this repo and the [Trailsy](http://www.github.com/danavery/trai
 
 To set up an instance on Heroku, you need a instance of PostGIS available. The production To The Trails application uses Heroku's PostGIS service.
 
-An Amazon Web Services account is also required for photo storage in Amazon S3. The application uses [https://github.com/thoughtbot/paperclip](Paperclip) to manage photo attachments, so it could be converted to use any other Paperclip-supported storage backend.
+An Amazon Web Services account is also required for photo storage in Amazon S3. The application uses [Paperclip](https://github.com/thoughtbot/paperclip) to manage photo attachments, so it could be converted to use any other Paperclip-supported storage backend.
 
 To install on Heroku, you'll need to set the following app config vars:
 
@@ -44,7 +44,7 @@ To install on Heroku, you'll need to set the following app config vars:
  - TRAILSY_AWS_ACCESS_KEY_ID:             [your AWS access key id]
  - TRAILSY_AWS_ACCESS_SECRET_ACCESS_KEY:  [your AWS access key]
 
-To add these to your Heroku app (Heroku toolbelt required):
+To add these to your Heroku app ([Heroku Toolbelt](https://toolbelt.heroku.com/) required):
 
     heroku config:add BUILDPACK_URL=https://github.com/ddollar/heroku-buildpack-multi.git
     heroku config:add GDAL_BINDIR=/app/vendor/gdal/1.10.0/bin
@@ -53,7 +53,7 @@ To add these to your Heroku app (Heroku toolbelt required):
     heroku config:add TRAILSY_AWS_ACCESS_KEY_ID=[id] 
     heroky config:add TRAILSY_AWS_ACCESS_SECRET_ACCESS_KEY=[key]
 
-To initialize the database:
+To initialize the database and set up the initial users:
 
     heroku run rake db:create && db:migrate && db:seed
 
@@ -105,9 +105,9 @@ The first is the admin user. This user can approve new user accounts:
 
  - DEFAULT_ADMIN_USER
 
-These users will have organization field values of "CVNP" and "MPSSC" respectively (more generic user names and organizations should be provide for testing, but for now they're not):
+These users will have organization field values of "NPS" and "MPSSC" respectively (more generic user names and organizations should be provide for testing, but for now they're not):
 
- - TEST_CVNP_USER
+ - TEST_NPS_USER
  - TEST_MPSSC_USER
 
 All of these initial users will share the single password in the following environment variable:
@@ -116,12 +116,12 @@ All of these initial users will share the single password in the following envir
 
 Then run 
 
-  rake db:create && db:migrate && db:seed
+    rake db:create && db:migrate && db:seed
 
 to initialize the database, and optionally run
 
-  rake load:all
+    rake load:all
 
 to load sample data from Cuyahoga Valley National Park and Metro Parks, Serving Summit County.
 
-To start Trailsyserver, start it with `rails server`. If you're planning on using it with the [Trailsy](http://www.github.com/danavery/trailsy) fronr-end, change `API_HOST` in the first lines of `trailhead.js` to point to your instance of Trailsyserver. 
+To start Trailsyserver, start it with `rails server`. If you're planning on using it with the [Trailsy](http://www.github.com/danavery/trailsy) front-end, change `API_HOST` in the first lines of `trailhead.js` to point to your instance of Trailsyserver. 
