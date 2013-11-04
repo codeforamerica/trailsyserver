@@ -1,4 +1,4 @@
 [submodule "public"]
 	path = public
-	url = git://github.com/danavery/trailsy.git
+	url = git://github.com/codeforamerica/trailsy.git
 	branch = master

@@ -1,12 +1,12 @@
 # TrailsyServer
 
-Trailsyserver is one of the components, along with [Trailsy](http://www.github.com/danavery/trailsy), of [To The Trails](http://tothetrails.com), a web application for storing and displaying hiking/biking/equestrian trail data.
+Trailsyserver is one of the components, along with [Trailsy](http://www.github.com/codeforamerica/trailsy), of [To The Trails](http://tothetrails.com), a web application for storing and displaying hiking/biking/equestrian trail data.
 
 To The Trails was developed by [2013 Code for America Fellows](http://www.codeforamerica.org/cities/summitcounty/) working with park and trail organizations in Summit County, Ohio.  The application is lightly customized for use in Summit County, but could be repurposed with minimal effort.
 
 The Trailsyserver component includes:
 
-  - a REST-style interface to trail data for consumption by [Trailsy](http://www.github.com/danavery/trailsy) (and possibly others). 
+  - a REST-style interface to trail data for consumption by [Trailsy](http://www.github.com/codeforamerica/trailsy) (and possibly others). 
   - an interface for organizations that maintain trail data to upload and maintain their trail data in the Trailsy database, as well as provide status updates, closure updates, photos, and institutional information for invidivual trails.
   - data structure and API informed by [trail standards draft](https://docs.google.com/document/d/1frt5HkKTdqEaNEnfk2Dq9IYxctvPjVnoU_F33Px2zSQ).
  
@@ -18,7 +18,7 @@ The Trailsyserver component includes:
   - An instance of Postgres with the PostGIS extension installed (can be local or remote--the current production version uses Heroku PostGIS hosting)
   - An Amazon S3 bucket for photo storage. (Not needed for development environment, which stores photos in the local filesystem. See "Local setup" below.)
 
-The [Trailsy](http://www.github.com/danavery/trailsy) repo is included in this app's "/public" directory as a git submodule. This allows for a single Heroku instance to run both the front-end and back-end code, while keeping the repositories separate. In development, it's recommended to check out the repositories separately, as updating submodule code can be challenging.
+The [Trailsy](http://www.github.com/codeforamerica/trailsy) repo is included in this app's "/public" directory as a git submodule. This allows for a single Heroku instance to run both the front-end and back-end code, while keeping the repositories separate. In development, it's recommended to check out the repositories separately, as updating submodule code can be challenging.
 
 ### Sample working resource requests
   - [http://trailsyserver-prod.herokuapp.com/trails.json]()
@@ -29,7 +29,7 @@ The [Trailsy](http://www.github.com/danavery/trailsy) repo is included in this a
 
 ### Heroku setup
 
-*(For quick step-by-step instructions for creating a new deploy of To The Trails/Trailsy, try the [new deploy instructions](https://github.com/codeforamerica/trailsy/wiki/Deploying-a-New-Instance) on the Trailsy repository [wiki](https://github.com/danavery/trailsy/wiki).)*
+*(For quick step-by-step instructions for creating a new deploy of To The Trails/Trailsy, try the [new deploy instructions](https://github.com/codeforamerica/trailsy/wiki/Deploying-a-New-Instance) on the Trailsy repository [wiki](https://github.com/codeforamerica/trailsy/wiki).)*
 
 To set up an instance on Heroku, you need a instance of PostGIS available. The production To The Trails application uses Heroku's PostGIS service.
 
@@ -124,4 +124,4 @@ to initialize the database, and optionally run
 
 to load sample data from Cuyahoga Valley National Park and Metro Parks, Serving Summit County.
 
-To start Trailsyserver, start it with `rails server`. If you're planning on using it with the [Trailsy](http://www.github.com/danavery/trailsy) front-end, change `API_HOST` in the first lines of `trailhead.js` to point to your instance of Trailsyserver. 
+To start Trailsyserver, start it with `rails server`. If you're planning on using it with the [Trailsy](http://www.github.com/codeforamerica/trailsy) front-end, change `API_HOST` in the first lines of `trailhead.js` to point to your instance of Trailsyserver. 
