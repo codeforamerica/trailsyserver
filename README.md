@@ -29,7 +29,7 @@ We hope to merge this repo and the [Trailsy](http://www.github.com/danavery/trai
 
 ### Heroku setup
 
-(Note: more instructions to come -- for example, you need a database user that can create databases and tables. After setup, you can remove those privileges if you prefer.)
+For quick step-by-step instructions for creating a new deploy of To The Trails/Trailsy, try the [new deploy instructions](https://github.com/codeforamerica/trailsy/wiki/Deploying-a-New-Instance) on the project [wiki](https://github.com/danavery/trailsy/wiki)
 
 To set up an instance on Heroku, you need a instance of PostGIS available. The production To The Trails application uses Heroku's PostGIS service.
 
