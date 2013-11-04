@@ -18,7 +18,7 @@ The Trailsyserver component includes:
   - An instance of Postgres with the PostGIS extension installed (can be local or remote--the current production version uses Heroku PostGIS hosting)
   - An Amazon S3 bucket for photo storage. (Not needed for development environment, which stores photos in the local filesystem. See "Local setup" below.)
 
-We hope to merge this repo and the [Trailsy](http://www.github.com/danavery/trailsy) repo soon.
+The [Trailsy](http://www.github.com/danavery/trailsy) repo is included in this app's "/public" directory as a git submodule. This allows for a single Heroku instance to run both the front-end and back-end code, while keeping the repositories separate. In development, it's recommended to check out the repositories separately, as updating submodule code can be challenging.
 
 ### Sample working resource requests
   - [http://trailsyserver-prod.herokuapp.com/trails.json]()
@@ -29,7 +29,7 @@ We hope to merge this repo and the [Trailsy](http://www.github.com/danavery/trai
 
 ### Heroku setup
 
-For quick step-by-step instructions for creating a new deploy of To The Trails/Trailsy, try the [new deploy instructions](https://github.com/codeforamerica/trailsy/wiki/Deploying-a-New-Instance) on the project [wiki](https://github.com/danavery/trailsy/wiki)
+*(For quick step-by-step instructions for creating a new deploy of To The Trails/Trailsy, try the [new deploy instructions](https://github.com/codeforamerica/trailsy/wiki/Deploying-a-New-Instance) on the Trailsy repository [wiki](https://github.com/danavery/trailsy/wiki).)*
 
 To set up an instance on Heroku, you need a instance of PostGIS available. The production To The Trails application uses Heroku's PostGIS service.
 
