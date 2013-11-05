@@ -99,9 +99,28 @@ class Trail < ActiveRecord::Base
   
   def self.to_csv
     CSV.generate do |csv|
-      csv << column_names
+      headers = column_names
+      headers.each_index do |index|
+        if headers[index] == "source_id"
+          headers[index] = "source"
+        end
+        if headers[index] == "steward_id"
+          headers[index] = "steward"
+        end
+      end
+      csv << headers
       all.each do |trail|
-        csv << trail.attributes.values_at(*column_names)
+        row_ary = []
+        headers.each do |header|
+          if header == "source"
+            row_ary.push trail.source.code
+          elsif header == "steward"
+            row_ary.push trail.steward.code
+          else
+            row_ary.push trail.read_attribute("#{header}")
+          end
+        end
+        csv << row_ary
       end
     end
   end
