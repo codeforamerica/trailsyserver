@@ -30,6 +30,10 @@
   </div>
   <div class="field">
     <span class='h3-Edit'><%= f.label :logo %></span>
+    <div class='finePrint'>Logo files should be cropped in completely to the edge of the artwork. This way, all of the logos will have consistant margins in the footer of the app.
+    <br>
+    <br>
+    Accepted file types: .jpeg (if the logo is on a white background) and .png</div>
     <% if @organization.logo.url =~ /missing.png/ %>
       <span class='formAnswer'>[None]</span>
     <% else %>

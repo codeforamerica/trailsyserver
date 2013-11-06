@@ -33,7 +33,9 @@
   <div class="field">
     <%= f.fields_for :photorecord do |ff| %>
        <span class='h3-Edit'><%= ff.label :photo %></span>
-       <span class='finePrint'>Note:  The app was designed for standard horizontal images. These dimensions allow people to see the photo, plus important information about the trail (length, popular activities) before scrolling. </span>
+       <span class='finePrint'>Note:  The app was designed for standard horizontal images. These dimensions allow people to see the photo, plus important information about the trail (length, popular activities) before scrolling. 
+        <br><br>
+        Accepted file types: .jpegs and .pngs</span>
       <% @trail.photorecord.photo.url %>
       <% unless @trail.photorecord.photo.url =~ /missing.png/ %>
       <%= link_to image_tag(@trail.photorecord.photo.url(:thumb)), @trail.photorecord.photo.url %>

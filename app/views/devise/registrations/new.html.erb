@@ -24,10 +24,12 @@
     </div>
     <div>
       <span class='h3-Edit'><%= f.label :password %></span>
+      <span class='finePrint'>Your password needs to be 8 characters long.</span>
       <%= f.password_field :password %></div>
 
     <div>
-      <span class='h3-Edit'><%= f.label :password_confirmation %></span>
+      <span class='h3-Edit'>
+        <%= f.label :password_confirmation %></span>
       <%= f.password_field :password_confirmation %></div>
 
     <br>
