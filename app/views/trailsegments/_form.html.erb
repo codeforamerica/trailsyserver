@@ -28,6 +28,34 @@
     <span class='formAnswer'>miles</span>
   </div>
   <div class="field">
+    <span class='h3-Edit'><%= f.label :trail1 %></span>
+    <%= f.text_field :trail1, size: 80 %>
+  </div>
+  <div class="field">
+    <span class='h3-Edit'><%= f.label :trail2 %></span>
+    <%= f.text_field :trail2, size: 80 %>
+  </div>
+  <div class="field">
+    <span class='h3-Edit'><%= f.label :trail3 %></span>
+    <%= f.text_field :trail3, size: 80 %>
+  </div>
+  <div class="field">
+    <span class='h3-Edit'><%= f.label :trail4 %></span>
+    <%= f.text_field :trail4, size: 80 %>
+  </div>
+  <div class="field">
+    <span class='h3-Edit'><%= f.label :trail5 %></span>
+    <%= f.text_field :trail5, size: 80 %>
+  </div>
+  <div class="field">
+    <span class='h3-Edit'><%= f.label :trail6 %></span>
+    <%= f.text_field :trail6, size: 80 %>
+  </div>
+  
+  <br>
+  <div class='finePrint'>The following y/n fields are not currently being used in the user-facing app. Feel free to input this information for future use.</div>
+
+  <div class="field">
     <span class='h3-Edit'><%= f.label :accessible, "Accessible" %></span>
     <%= f.select :accessible, ["y", "n"], {include_blank: true} %>
   </div>
@@ -57,30 +85,8 @@
     <span class='finePrint'>This field has been manually disabled in the user-facing app (the button is gray). If you select "y" get in touch with the admin so that the html/css can be updated and users can begin filtering for mountain bikes.</span>
     <%= f.select :mtnbike, ["y", "n"], {include_blank: true} %>
   </div>
-  <div class="field">
-    <span class='h3-Edit'><%= f.label :trail1 %></span>
-    <%= f.text_field :trail1, size: 80 %>
-  </div>
-  <div class="field">
-    <span class='h3-Edit'><%= f.label :trail2 %></span>
-    <%= f.text_field :trail2, size: 80 %>
-  </div>
-  <div class="field">
-    <span class='h3-Edit'><%= f.label :trail3 %></span>
-    <%= f.text_field :trail3, size: 80 %>
-  </div>
-  <div class="field">
-    <span class='h3-Edit'><%= f.label :trail4 %></span>
-    <%= f.text_field :trail4, size: 80 %>
-  </div>
-  <div class="field">
-    <span class='h3-Edit'><%= f.label :trail5 %></span>
-    <%= f.text_field :trail5, size: 80 %>
-  </div>
-  <div class="field">
-    <span class='h3-Edit'><%= f.label :trail6 %></span>
-    <%= f.text_field :trail6, size: 80 %>
-  </div>
+
+
   <div class="actions">
     <%= f.submit %>
     <%= f.submit :Cancel %>
