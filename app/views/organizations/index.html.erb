@@ -30,7 +30,10 @@
     <% end %>
   </tbody>
 </table>
-<br><br>
-<% if current_user.admin? %>
-<span class='buttonBelow'><%= link_to 'Add New Organization', new_organization_path%></span>
-<% end %>
+<div class='formButtons'>
+  <div class='finePrint'>When an organization is deleted, all of the users, trails, trailheads, and trailsegments associated with that organization are deleted as well, except in the case of stewards, in which case the value will be blank. Don't delete an organization unless it is absolutely necessary.</div>
+  <br><br>
+  <% if current_user.admin? %>
+  <span class='buttonBelow'><%= link_to 'Add New Organization', new_organization_path%></span>
+  <% end %>
+</div>

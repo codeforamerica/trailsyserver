@@ -9,7 +9,7 @@ Upload a CSV or GeoJSON (any geodata supplied will be ignored) of your current t
     <%= link_to "JSON", {action: "index", source_id: current_user.organization_id, format: :json}, target: "_blank" %> or
     <%= link_to "CSV", {action: "index", source_id: current_user.organization_id, format: :csv}, target: "_blank" %>.
     <% end %>
-
+Note: The data standard includes a field for allowing dogs on the trails, but due to feedback it has been removed from the user-facing application.
 </p>
 <%= form_tag({ action: :upload }, multipart: true) do %>
   <% if current_user.admin? %>
