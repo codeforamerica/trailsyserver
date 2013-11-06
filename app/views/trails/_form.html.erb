@@ -18,11 +18,12 @@
   </div>
   <div class="field">
     <span class='h3-Edit'><%= f.label :status %></span>
+    <span class='finePrint'>Note: Notices appear in yellow, and are good for displaying information about events or non-closure related notes. Closures appear in red.</span>
     <%= f.select :status, [["Open", 0], ["Notice", 1], ["Closed", 2]] %>
   </div>
   <div class="field">
-    <span class='h3-Edit'><%= f.label :statustext, "Status Text" %></span>   
-    <span class='finePrint'>Note: Text doesn't display if Status is 'Open'</span>
+    <span class='h3-Edit'><%= f.label :statustext, "Status Description" %></span>   
+    <span class='finePrint'>Note: You need to include a short description if the trail status is "Notice" or "Closed". We don't have any prepopulated messages, so your description is critical for the user to understand why an alert icon appears in a trail description. "Open" trails do not display a status description.</span>
     <%= f.text_field :statustext, size: 120 %>
   </div>
   <div class="field">
@@ -39,7 +40,6 @@
       <% end %>
       <%= ff.file_field :photo %><br>
        <span class='h3-Edit'><%= ff.label :credit %></span>
-      <span class='finePrint'>Note: this will only save after a photo is uploaded.</span>
       <%= ff.text_field :credit %><br>
       <%= ff.hidden_field :source_id, value: @trail.source_id %>
       <%= ff.hidden_field :name, value: @trail.name %>
@@ -90,10 +90,12 @@
   </div>
   <div class="field">
     <span class='h3-Edit'><%= f.label :mtnbike, "Mountain Bikes" %></span>
+    <span class='finePrint'>This field has been manually disabled in the user-facing app (the button is gray). If you select "y" get in touch with the admin so that the html/css can be updated and users can begin filtering for mountain bikes.</span>
     <%= f.select :mtnbike, ["y", "n"], {include_blank: true} %>
   </div>
   <div class="field">
-    <span class='h3-Edit'><%= f.label :conditions, "Special Notes on Accessibility or Use" %></span>
+    <span class='h3-Edit'><%= f.label :conditions, "ADDITIONAL TRAIL CONDITIONS" %></span>
+      <span class='finePrint'>This is extra space to describe special circumstances for the trail types (hiking, cycling, wheelchair accessibility, equestrian use, skiing, and mountain biking).</span>
     <%= f.text_area :conditions, cols: 69, rows: 5 %>
   </div>
   <div class="field">
