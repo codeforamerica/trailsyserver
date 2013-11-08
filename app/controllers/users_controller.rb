@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_action :set_user, only: [:edit, :update]
+  before_action :set_user, only: [:edit, :update,:destroy]
   before_action :authenticate_user!
   before_action :check_admin
   before_action :count_admins
@@ -26,6 +26,18 @@ class UsersController < ApplicationController
       redirect_to action: "index" , notice: 'User was successfully updated.'
     else
       render action: 'edit'
+    end
+  end
+
+  def destroy
+    if current_user.admin?
+      if @user.destroy
+        redirect_to users_path, notice: "User was successfully deleted."
+      else
+        redirect_to :back, alert: "An error occurred when deleting the user."
+      end
+    else
+      redirect_to :back, alert: "Your account is not authorized to delete users."
     end
   end
   

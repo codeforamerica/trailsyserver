@@ -1,0 +1,15 @@
+defaults: &defaults
+  adapter: postgis
+  encoding: unicode
+  user: trailsy
+  host: localhost
+  schema_search_path: "public,postgis"
+  postgis_extension: true
+
+development:
+  database: trailsy_development
+  <<: *defaults
+
+test:
+database: trailsy_test
+<<: *defaults
