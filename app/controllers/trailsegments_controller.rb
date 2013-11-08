@@ -23,12 +23,25 @@ class TrailsegmentsController < ApplicationController
         end
       end
       format.json do
+        trailID = params[:trail_id]
         simplify_factor = params[:simplify].to_i
         if simplify_factor > 0
           @trailsegments = Trailsegment.find_by_sql(["select *, st_linemerge(geom::geometry) as merged_geom from trailsegments"]);
         else
-          @trailsegments = Trailsegment.all
+          if trailID
+            trail_name = Trail.find(trailID).name
+            @trailsegments = Trailsegment.where("trail1 = ? 
+              OR trail2 = ? 
+              OR trail3 = ?
+              OR trail4 = ?
+              OR trail5 = ?
+              OR trail6 = ?", trail_name, trail_name, trail_name, trail_name, trail_name, trail_name)
+          else
+            @trailsegments = Trailsegment.all
+          end
         end
+
+
         @entity_factory = ::RGeo::GeoJSON::EntityFactory.instance
         line_factory = ::RGeo::Geographic.spherical_factory(:srid => 4326)
         features = []
