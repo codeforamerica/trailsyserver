@@ -1,9 +1,12 @@
 class UsersController < ApplicationController
-  before_action :set_user, only: [:edit, :update,:destroy]
+  before_action :set_user, only: [:edit, :update, :approve, :destroy]
   before_action :authenticate_user!
   before_action :check_admin
   before_action :count_admins
 
+  def new
+    @user = User.new
+  end
 
   def index
     if params[:approved] == "false"
@@ -30,24 +33,33 @@ class UsersController < ApplicationController
   end
 
   def destroy
-    if current_user.admin?
-      if @user.destroy
-        redirect_to users_path, notice: "User was successfully deleted."
-      else
-        redirect_to :back, alert: "An error occurred when deleting the user."
-      end
+    if @user.destroy
+      redirect_to users_path, notice: "User was successfully deleted."
     else
-      redirect_to :back, alert: "Your account is not authorized to delete users."
+      redirect_to :back, alert: "An error occurred when deleting the user."
+    end
+  end
+
+  def create
+    @user = User.new(user_params)
+
+    if @user.save
+      redirect_to users_path, notice: "User was successfully created."
+    else
+      render :new
     end
   end
   
+  def approve
+  end
+
   private
     def set_user
       @user = User.find(params[:id])
     end
 
     def user_params
-      params.require(:user).permit(:approved, :organization_id, :admin)
+      params.require(:user).permit(:approved, :organization_id, :admin, :password, :password_confirmation, :email)
     end
 
     def check_admin
