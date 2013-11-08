@@ -6,6 +6,11 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
+ADMIN_USER = (ENV["DEFAULT_ADMIN_USER"] || "admin@example.com").freeze
+PASSWORD   = (ENV["DEFAULT_ADMIN_PASSWORD"] || "password").freeze
+MPSSC_USER = (ENV["DEFAULT_MPSSC_USER"] || "mpssc@example.com").freeze
+NPS_USER   = (ENV["TEST_NPS_USER"] || "nps@example.com").freeze
+
 mpssc = Organization.create({
   code: "MPSSC",
   full_name: "Metro Parks, Serving Summit County",
@@ -25,33 +30,32 @@ cmp = Organization.create({
   url: "http://clevelandmetroparks.com"
   })
 
-admin = User.find_by(email: ENV["DEFAULT_ADMIN_USER"])
+admin = User.find_by(email: ADMIN_USER.dup)
 admin.destroy unless admin.nil?
 User.create({ 
-  email: ENV["DEFAULT_ADMIN_USER"].dup,
+  email: ADMIN_USER.dup,
   admin: true,
   approved: true,
-  password: ENV["DEFAULT_ADMIN_PASSWORD"],
-  password_confirmation: ENV["DEFAULT_ADMIN_PASSWORD"]
+  password: PASSWORD.dup,
+  password_confirmation: PASSWORD.dup
   })
-nps_user = User.find_by(email: ENV["TEST_NPS_USER"])
+nps_user = User.find_by(email: NPS_USER.dup)
 nps_user.destroy unless nps_user.nil?
 User.create({ 
-  email: ENV["TEST_NPS_USER"].dup,
+  email: NPS_USER.dup,
   admin: false,
   approved: true,
   organization: Organization.find_by(code: "NPS"),
-  password: ENV["DEFAULT_ADMIN_PASSWORD"],
-  password_confirmation: ENV["DEFAULT_ADMIN_PASSWORD"]
+  password: PASSWORD.dup,
+  password_confirmation: PASSWORD.dup
   })
-mpssc_user = User.find_by(email: ENV["TEST_MPSSC_USER"])
+mpssc_user = User.find_by(email: MPSSC_USER.dup)
 mpssc_user.destroy unless mpssc_user.nil?
 User.create({
-  email: ENV["TEST_MPSSC_USER"].dup,
+  email: MPSSC_USER.dup,
   admin: false,
   approved: true,
   organization: Organization.find_by(code: "MPSSC"),
-  password: ENV["DEFAULT_ADMIN_PASSWORD"],
-  password_confirmation: ENV["DEFAULT_ADMIN_PASSWORD"]
+  password: PASSWORD.dup,
+  password_confirmation: PASSWORD.dup
   })
-
