@@ -25,9 +25,9 @@ class Trail < ActiveRecord::Base
       next if (row.to_s =~ /^source/)
 
       row.headers.each do |header|
-        logger.info header
+        header_dc = header.downcase
         value = row[header]
-        next if header == "id"
+        next if header_dc == "id"
         unless value.nil?
           if value.to_s.downcase == "yes" || value == "Y"
             value = "y"
@@ -37,12 +37,12 @@ class Trail < ActiveRecord::Base
           end
         end
         # next if header == "source"
-        if new_trail.attributes.has_key? header
+        if new_trail.attributes.has_key? header_dc
           logger.info "added"
-          new_trail[header] = value
-        elsif header == "source"
+          new_trail[header_dc] = value
+        elsif header_dc == "source"
           new_trail.source = Organization.find_by code: value
-        elsif header == "steward"
+        elsif header_dc == "steward"
           new_trail.steward = Organization.find_by code: value
         end
       end
