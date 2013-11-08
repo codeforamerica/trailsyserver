@@ -4,7 +4,11 @@ Trailsyserver::Application.routes.draw do
   devise_for :users, :controllers => { :registrations => "registrations" }
   
   scope "/admin" do
-    resources :users
+    resources :users do
+      member do
+        get :approve
+      end
+    end
   end
   
   resources :trailsegments do
