@@ -63,8 +63,10 @@ class UsersController < ApplicationController
     end
 
     def check_admin
-      # TODO: make error message
-      redirect_to controller: "trails", action: "index", notice: "Admin account required to access users page." unless current_user.admin?
+      unless current_user.admin?
+        flash[:notice] = "Admin account required to access users page."
+        redirect_to trails_path
+      end
     end
 
     def count_admins
