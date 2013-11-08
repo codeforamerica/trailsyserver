@@ -18,6 +18,7 @@
   <th>Admin</th>
   <th>Organization</th>
   <th>Edit</th>
+  <th>Delete</th>
   </tr>
   <% @users.each do |user| %>
     <tr>
@@ -26,6 +27,11 @@
       <td><%= user.admin? %></td>
       <td><%= user.organization.code if user.organization %></td>
       <td><%= link_to "Edit", edit_user_path(user), :class => "tableLink" %></td>
+      <% if user == current_user %>
+        <td>Delete</td>
+      <% else %>
+        <td><%= link_to "Delete", user_path(user), :class => "tableLink", :method => "delete" %></td>
+      <% end %>
     </tr>
   <% end %>
 </table>

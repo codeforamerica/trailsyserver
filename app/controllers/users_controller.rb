@@ -28,6 +28,17 @@ class UsersController < ApplicationController
       render action: 'edit'
     end
   end
+
+  def destroy
+    if current_user.admin?
+      @user = User.find(params[:id])
+      if @user.destroy
+        redirect_to users_path, notice: "User was successfully deleted."
+      end
+    else
+      redirect_to :back, alert: "Your account is not authorized to delete users."
+    end
+  end
   
   private
     def set_user
