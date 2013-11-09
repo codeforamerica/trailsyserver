@@ -20,14 +20,13 @@ class Trail < ActiveRecord::Base
     else
       file_ident = file
     end
-    CSV.foreach(file_ident, headers: true) do |row|
+    CSV.foreach(file_ident, headers: true, header_converters: :downcase) do |row|
       new_trail = Trail.new
       next if (row.to_s =~ /^source/)
 
       row.headers.each do |header|
-        header_dc = header.downcase
         value = row[header]
-        next if header_dc == "id"
+        next if header == "id"
         unless value.nil?
           if value.to_s.downcase == "yes" || value == "Y"
             value = "y"
@@ -37,12 +36,11 @@ class Trail < ActiveRecord::Base
           end
         end
         # next if header == "source"
-        if new_trail.attributes.has_key? header_dc
-          logger.info "added"
-          new_trail[header_dc] = value
-        elsif header_dc == "source"
+        if new_trail.attributes.has_key? header
+          new_trail[header] = value
+        elsif header == "source"
           new_trail.source = Organization.find_by code: value
-        elsif header_dc == "steward"
+        elsif header == "steward"
           new_trail.steward = Organization.find_by code: value
         end
       end
