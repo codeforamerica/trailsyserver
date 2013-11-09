@@ -20,7 +20,15 @@ class Trail < ActiveRecord::Base
     else
       file_ident = file
     end
-    CSV.foreach(file_ident, headers: true, header_converters: :downcase) do |row|
+
+    # if the encoding is bad, assume windows-1252
+    
+    contents = File.read(file_ident)
+    unless contents.valid_encoding?
+      contents.encode!("utf-8", "windows-1252", :invalid => :replace)
+    end
+
+    CSV.parse(contents, headers: true, header_converters: :downcase) do |row|
       new_trail = Trail.new
       next if (row.to_s =~ /^source/)
 
