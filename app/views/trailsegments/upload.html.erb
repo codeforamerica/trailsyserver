@@ -27,12 +27,13 @@
       <% end %>
     </td>
     <td>
-      <%= [added_trailsegment[:trailsegment].trail1,
+      <% segment_list = [added_trailsegment[:trailsegment].trail1,
       added_trailsegment[:trailsegment].trail2,
       added_trailsegment[:trailsegment].trail3,
       added_trailsegment[:trailsegment].trail4,
       added_trailsegment[:trailsegment].trail5,
-      added_trailsegment[:trailsegment].trail6].reject!(&:blank?).join("|") %>
+      added_trailsegment[:trailsegment].trail6].reject!(&:blank?) %>
+      <%= segment_list.join("|") unless segment_list.nil? %>
     </td>
     <td>
       <%= added_trailsegment[:message] %>
@@ -54,8 +55,8 @@
       removed_trailsegment[:trailsegment].trail3,
       removed_trailsegment[:trailsegment].trail4,
       removed_trailsegment[:trailsegment].trail5,
-      removed_trailsegment[:trailsegment].trail6] %>
-      <%= segment_list.reject!(&:blank?).join("|") %>
+      removed_trailsegment[:trailsegment].trail6].reject!(&:blank?) %>
+      <%= segment_list.join("|") unless segment_list.nil? %>
     </td>
     <td>
       <%= removed_trailsegment[:trailsegment].created_at %>
