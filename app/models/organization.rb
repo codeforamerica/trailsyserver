@@ -1,5 +1,5 @@
 class Organization < ActiveRecord::Base
-  has_attached_file :logo, :styles => { medium: "80x80>"}
+  has_attached_file :logo, :styles => { medium: "150x150>"}
 
   validates :code, uniqueness: true
   has_many :sourcetrails, class_name: "Trail", foreign_key: "source_id", dependent: :destroy
