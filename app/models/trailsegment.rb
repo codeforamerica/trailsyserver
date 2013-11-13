@@ -25,6 +25,14 @@ class Trailsegment < ActiveRecord::Base
         key = property[0].downcase
         value = property[1]
         next if key == "id" || value == "" || value == " "
+        unless value.nil?
+          if value.to_s.downcase == "yes" || value == "Y"
+            value = "y"
+          end
+          if value.to_s.downcase == "no" || value == "N"
+            value = "n"
+          end
+        end
         if new_trailsegment.attributes.has_key? key
           new_trailsegment[key] = value
         elsif key == "source"

@@ -27,6 +27,14 @@ class Trailhead < ActiveRecord::Base
         key = property[0].downcase
         value = property[1]
         next if key == "id"
+        unless value.nil?
+          if value.to_s.downcase == "yes" || value == "Y"
+            value = "y"
+          end
+          if value.to_s.downcase == "no" || value == "N"
+            value = "n"
+          end
+        end
         if new_trailhead.attributes.has_key? key
           new_trailhead[key] = value
         elsif key == "source"
